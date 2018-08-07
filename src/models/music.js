@@ -9,7 +9,7 @@ export default{
       songUrl:'',
       player:{
         isPlay: false,
-        currentSondId: null,
+        currentSongId: null,
         currentSongUrl: null,
         playlist:[],
         loopType:0,
@@ -23,7 +23,7 @@ export default{
          ...state,
          player:{
            ...state.player,
-           currentSondId: payload,
+           currentSongId: payload,
            currentSongUrl,
            playlist: [...state.player.playlist, currentSongUrl],
            isPlay: true,
@@ -31,7 +31,6 @@ export default{
        }
      },
      songDetail(state,{payload}){
-       console.log(123,payload)
        return{
          ...state,
          player:{
@@ -50,13 +49,15 @@ export default{
      playerPrev(state){
         let {playlist,currentSongUrl} = state.player;
         let currentIndex = null;
+        let currentSongId = null;
         playlist.map((item,index) => {
           if(item === currentSongUrl){
             currentIndex = index;
           }
         });
         currentSongUrl = currentIndex-1 >=0 ? playlist[currentIndex-1] :playlist[playlist.length-1];
-        let player = {...state.player, isPlay:true, currentSongUrl};
+        currentSongId = Number(currentSongUrl.split('=')[1].split('.')[0]);
+        let player = {...state.player, isPlay:true, currentSongUrl, currentSongId};
         return {
           ...state,
           player
@@ -65,13 +66,15 @@ export default{
      playerNext(state){
        let {playlist,currentSongUrl} = state.player;
        let currentIndex = null;
+       let currentSongId = null;
        playlist.map((item,index) => {
          if(item === currentSongUrl){
            currentIndex = index;
          }
        });
        currentSongUrl = currentIndex+1 >= playlist.length ? playlist[0] : playlist[currentIndex+1];
-       let player = {...state.player, isPlay:true, currentSongUrl};
+       currentSongId = Number(currentSongUrl.split('=')[1].split('.')[0]);
+       let player = {...state.player, isPlay:true, currentSongUrl, currentSongId};
        return {
          ...state,
          player
@@ -141,13 +144,18 @@ export default{
          payload
        });
      },
-     * fetchPlayerPrev({payload,state}, {call,put}){
+     * fetchPlayerPrev({payload}, {call,put,select}){
        yield put({
          type: 'playerPrev',
+       });
+       let currentSongId = null;
+       yield  select(state=>{
+         // 此处处理上一首
+         currentSongId = state.music.player.currentSongId;
+         console.log(12346,state.music.player)
        })
-       console.log('sss',state)
-       let id = 347230;
-       const result = yield call(getSongDetail, id);
+       console.log('上一首点击，当前id',currentSongId);
+       const result = yield call(getSongDetail, currentSongId);
        console.log('result', result);
        const song = result.data.songs[0];
        let songDetail = {
@@ -161,7 +169,31 @@ export default{
          payload: songDetail
        });
      },
-
+     * fetchPlayerNext({payload}, {call,put,select}){
+       yield put({
+         type: 'playerNext',
+       });
+       let currentSongId = null;
+       yield  select(state=>{
+         // 此处处理上一首
+         currentSongId = state.music.player.currentSongId;
+         console.log(12346,state.music.player)
+       })
+       console.log('上一首点击，当前id',currentSongId);
+       const result = yield call(getSongDetail, currentSongId);
+       console.log('result', result);
+       const song = result.data.songs[0];
+       let songDetail = {
+         songName: song.name,
+         singer: song.ar[0].name,
+         picUrl: song.al.picUrl,
+         dt: song.dt
+       };
+       yield put({
+         type: 'songDetail',
+         payload: songDetail
+       });
+     },
    },
   subscriptions: {
     setup ({ dispatch, history }) {

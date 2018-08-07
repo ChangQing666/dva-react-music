@@ -5,7 +5,6 @@ import formatDuring from '../../../utils/formatDuring';
 class Player extends React.Component{
   constructor(props){
     super(props);
-    console.log('props', props)
   }
   handlePlay(){
     const _player = document.getElementById('player');
