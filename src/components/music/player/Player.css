@@ -1,0 +1,78 @@
+.wrapper{
+  background:rgba(0,0,0,.75);
+  position:fixed;
+  bottom:0;
+  height:50px;
+  width:100%;
+}
+.container{
+  width:980px;
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  justify-content: start;
+}
+.controlContainer{
+  width:135px;
+  height:100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.shangyishou,.xiayishou{
+  font-size:30px;
+  color:#dfdfdf;
+  cursor:pointer;
+}
+.shangyishou:hover,.xiayishou:hover,.bofang:hover,.zanting:hover{
+  color:#fff;
+}
+.bofang,.zanting{
+  font-size:40px;
+  color:#dfdfdf;
+  cursor:pointer;
+}
+.durationContainer{
+  width:500px;
+  height:100%;
+  margin-left:30px;
+  position:relative;
+}
+.pic{
+  position: absolute;
+  left:0;
+  top:7px;
+  width:36px;
+  height:36px;
+}
+.songName{
+  position:absolute;
+  left: 50px;
+  top:8px;
+  line-height:14px;
+  font-size:12px;
+  color:#fff;
+}
+.singerName{
+   margin-left:10px;
+   color:#9b9b9b;
+}
+.progressContainer{
+  width:550px;
+  position:absolute;
+  left:50px;
+  top:60%;
+  transform:translate(0,-50%);
+}
+.progress{
+  width: 480px;
+}
+.dt{
+  position:absolute;
+  right:0;
+  top:60%;
+  transform:translate(0,-50%);
+  font-size:12px;
+  color: #9b9b9b;
+}
+

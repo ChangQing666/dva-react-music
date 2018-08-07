@@ -1,0 +1,68 @@
+.container{
+  display:flex;
+  padding: 25px 30px;
+  width:100%;
+  justify-content: start;
+}
+.container>img{
+  display:block;
+  width:147px;
+  height:147px;
+}
+.container>.info{
+  margin-left:20px;
+  position:relative;
+}
+.info .countBox{
+  position:absolute;
+  right:0;
+  top:3px;
+}
+.title{
+  font-size:22px;
+  color:#000;
+  font-weight:bold;
+}
+.desc{
+  font-size:13px;
+  font-weight:bold;
+  margin-top:50px;
+  color:#000;
+}
+.desc>span{
+  font-weight:normal;
+}
+.countBox .item{
+  float:left;
+  margin-left:10px;
+}
+.countBox .item:first-child{
+  position:relative;
+  margin-right:15px;
+}
+.countBox .item:first-child:after{
+  content:'';
+  display:block;
+  position:absolute;
+  width:1px;
+  height:35px;
+  background:#f60;
+  top:2px;
+  right:-18px;
+  transform:rotate(20deg);
+}
+.countBox .item>p{
+  font-size:12px;
+  color:#aaa;
+  font-style: italic;
+  text-align:right;
+  margin:0;
+}
+.countBox .item>div{
+  font-size:14px;
+  font-weight:bold;
+  color:#000;
+  font-style: italic;
+  text-align:right;
+}
+

@@ -1,0 +1,30 @@
+.playlistItem{
+  display:flex;
+  justify-content: start;
+
+  padding:0 20px;
+  line-height:30px;
+}
+.playlistItem:nth-child(2n+1){
+  background:#f5f5f5;
+}
+.playlistItem>span{
+
+}
+.songName{
+  cursor: pointer;
+  width:500px;
+}
+.arName{
+  width:300px;
+}
+.alName{
+  width:200px;
+  padding:0 10px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.dt{
+  width:100px;
+}
