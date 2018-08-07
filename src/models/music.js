@@ -140,7 +140,28 @@ export default{
          type: 'addToPlaylist',
          payload
        });
-     }
+     },
+     * fetchPlayerPrev({payload,state}, {call,put}){
+       yield put({
+         type: 'playerPrev',
+       })
+       console.log('sss',state)
+       let id = 347230;
+       const result = yield call(getSongDetail, id);
+       console.log('result', result);
+       const song = result.data.songs[0];
+       let songDetail = {
+         songName: song.name,
+         singer: song.ar[0].name,
+         picUrl: song.al.picUrl,
+         dt: song.dt
+       };
+       yield put({
+         type: 'songDetail',
+         payload: songDetail
+       });
+     },
+
    },
   subscriptions: {
     setup ({ dispatch, history }) {

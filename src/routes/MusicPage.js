@@ -35,7 +35,7 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
   function handlePlayerPrev(){
     alert('上一首')
     dispatch({
-      type:'music/playerPrev'
+      type:'music/fetchPlayerPrev'
     })
   }
   function handlePlayerNext(){
