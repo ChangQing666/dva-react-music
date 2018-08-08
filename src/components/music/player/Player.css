@@ -33,7 +33,7 @@
   cursor:pointer;
 }
 .durationContainer{
-  width:500px;
+  width:600px;
   height:100%;
   margin-left:30px;
   position:relative;
@@ -65,7 +65,7 @@
   transform:translate(0,-50%);
 }
 .progress{
-  width: 480px;
+  width: 470px;
 }
 .dt{
   position:absolute;
@@ -74,5 +74,37 @@
   transform:translate(0,-50%);
   font-size:12px;
   color: #9b9b9b;
+}
+.volumeContainer{
+  margin-left:15px;
+  position:relative;
+  display:table;
+  top:63%;
+  transform:translate(0,-50%);
+}
+.shengyin{
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+}
+.slider{
+  height:80px;
+  position:absolute;
+  top:-90px;
+  left:50%;
+  transform:translate(-50%,0);
+}
+.loop{
+  font-size:20px;
+  cursor: pointer;
+  color:#fff;
+  margin-left:15px;
+  position:relative;
+  display:table;
+  top:63%;
+  transform:translate(0,-50%);
+}
+:global .ant-slider-handle{
+  border-color:#f60;
 }
 

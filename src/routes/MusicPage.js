@@ -25,7 +25,6 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
       type: 'music/fetchSongDetail',
       payload: id
     });
-    alert(id)
   }
   function handlePlayerPlay(){
     dispatch({
@@ -42,6 +41,11 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
       type:'music/fetchPlayerNext'
     })
   }
+  function handlePlayerLoop(){
+    dispatch({
+     type:'music/loop',
+    })
+  }
   return(
     <div>
       <TopListDesc topListDesc={topListDesc} onPlayAll={handlePlayAll}/>
@@ -50,7 +54,12 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
         <button onClick={handleFetchTopList}>点击获取列表</button>
       </div>
       <Playlist playlist={playlist} onPlay={handlePlay}/>
-      <Player player={player} onPlay={handlePlayerPlay} onPlayPrev={handlePlayerPrev} onPlayNext={handlePlayerNext}/>
+      <Player player={player}
+              onPlay={handlePlayerPlay}
+              onPlayPrev={handlePlayerPrev}
+              onPlayNext={handlePlayerNext}
+              onPlayLoop={handlePlayerLoop}
+       />
     </div>
   )
 }

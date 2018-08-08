@@ -80,6 +80,16 @@ export default{
          player
        };
      },
+     loop(state){
+       let loopType = state.player.loopType+1 > 2 ? 0 : state.player.loopType+1;
+       return {
+         ...state,
+         player:{
+           ...state.player,
+           loopType
+         }
+       }
+     },
      play(state,{payload}){
        let currentSongUrl = `http://music.163.com/song/media/outer/url?id=${payload}.mp3`;
        return {
