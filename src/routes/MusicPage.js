@@ -49,7 +49,7 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
   function handlePlayerEnded(){
     console.log('music/ended');
     dispatch({
-      type:'music/ended',
+      type:'music/fetchPlayerNext',
     })
   }
   return(
@@ -65,7 +65,7 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
               onPlayPrev={handlePlayerPrev}
               onPlayNext={handlePlayerNext}
               onPlayLoop={handlePlayerLoop}
-              onEnded={handlePlayerEnded}
+              onPlayEnded={handlePlayerEnded}
        />
     </div>
   )
