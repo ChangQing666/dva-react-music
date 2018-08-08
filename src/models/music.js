@@ -90,6 +90,9 @@ export default{
          }
        }
      },
+     ended(state){
+       return state;
+     },
      play(state,{payload}){
        let currentSongUrl = `http://music.163.com/song/media/outer/url?id=${payload}.mp3`;
        return {
@@ -109,7 +112,6 @@ export default{
        }
      },
      topListDesc(state,{payload}){
-       console.log('p', payload)
        return {
          ...state,
          topListDesc: payload
