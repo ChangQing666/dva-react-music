@@ -3,7 +3,7 @@
   position:fixed;
   bottom:0;
   left:0;
-  height:50px;
+  height:75px;
   width:100%;
 }
 
@@ -38,20 +38,45 @@
 .durationContainer{
   width:620px;
   height:100%;
-  margin-left:30px;
+  margin-left:21px;
   position:relative;
 }
-.pic{
+.picWrapper{
   position: absolute;
-  left:0;
-  top:7px;
-  width:36px;
-  height:36px;
+  left: 0;
+  top: 5px;
+  width:65px;
+  height:65px;
+  background: url('../../../assets/imgs/cover.png') no-repeat;
+  background-size: contain;
+  animation: rotate-animation 20s infinite linear;
+}
+.pic{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-left:-21px;
+  margin-top:-20px;
+
+}
+@keyframes rotate-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .songName{
   position:absolute;
-  left: 50px;
-  top:8px;
+  left: 75px;
+  top:17px;
   line-height:14px;
   font-size:12px;
   color:#fff;
@@ -63,7 +88,7 @@
 .progressContainer{
   width:565px;
   position:absolute;
-  left:50px;
+  left:70px;
   top:60%;
   transform:translate(0,-50%);
 }

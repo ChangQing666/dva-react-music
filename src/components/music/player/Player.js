@@ -166,7 +166,9 @@ class Player extends React.Component {
             </i>
           </div>
           <div className={styles.durationContainer}>
-            <img className={styles.pic} src={this.props.player.songDetail.picUrl} alt=""/>
+            <div className={styles.picWrapper}>
+              <img className={styles.pic} src={this.props.player.songDetail.picUrl} alt=""/>
+            </div>
             <div className={styles.songName}>
               {this.props.player.songDetail.songName}
               <span className={styles.singerName}>{this.props.player.songDetail.singer}</span>
