@@ -48,9 +48,8 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
     })
   }
   function handlePlayerEnded(){
-    console.log('music/playerEnded');
     dispatch({
-      type:'music/playerEnded',
+      type:'music/fetchPlayerEnded',
     })
   }
 
@@ -66,14 +65,15 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
       payload: id
     })
   }
-
+  function handlePlaylistPlay(id){
+    dispatch({
+      type:'music/fetchPlaylistPlay',
+      payload: id
+    })
+  }
   return(
     <>
       <TopListDesc topListDesc={topListDesc} onPlayAll={handlePlayAll}/>
-      <div>
-        <button onClick={handleClickTopList}>点击获取id</button>
-        <button onClick={handleFetchTopList}>点击获取列表</button>
-      </div>
       <Songlist songlist={songlist} onPlay={handlePlay} onPlayAdd={handlePlayAdd} onAddToPlaylist={handleAddToPlaylist}/>
       <Player player={player}
               onPlay={handlePlayerPlay}
@@ -81,6 +81,7 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
               onPlayNext={handlePlayerNext}
               onPlayLoop={handlePlayerLoop}
               onPlayEnded={handlePlayerEnded}
+              onPlaylistPlay={handlePlaylistPlay}
        />
 
     </>
@@ -90,8 +91,8 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
 function mapStateToProps(state){
   return {
     topListDesc: state.music.topListDesc,
-    songlist: state.music.songlist,
-    player: state.music.player
+    songlist   : state.music.songlist,
+    player     : state.music.player,
   }
 }
 

@@ -25,6 +25,7 @@ export default {
     songUrl: '',
     player: {
       isPlay: false,
+      ended: false,
       currentSongId: null,
       currentSongUrl: null,
       playlist: [],
@@ -95,7 +96,7 @@ export default {
       let currentSongUrl = null;
       if (currentSongId && playlist.length > 0) {
         // 根据循环类型决定下一首歌曲的url
-       if (loopType === 0||1) {
+       if (loopType === 0||loopType === 1) {
           //单曲循环 或 循环
           playlist.map((item, index) => {
             if (item.id == currentSongId) {
@@ -110,7 +111,6 @@ export default {
         }
         currentSongUrl =  `http://music.163.com/song/media/outer/url?id=${currentSongId}.mp3`;
       }
-      alert(currentSongId)
       let player = {...state.player, currentSongUrl, currentSongId};
       return {
         ...state,
@@ -118,34 +118,32 @@ export default {
       };
     },
     playerNext(state) {
-      let {playlist, currentSongUrl, loopType} = state.player;
+      let {playlist, currentSongId, loopType} = state.player;
       let currentIndex = null;
-      let currentSongId = null;
-      if (currentSongUrl && playlist.length > 0) {
+      let currentSongUrl = null;
+      if (currentSongId && playlist.length > 0) {
         // 根据循环类型决定下一首歌曲的url
-        if (loopType === 0) {
-          // 单曲循环
-          currentSongUrl = currentSongUrl;
-        } else if (loopType === 1) {
-          //循环
+        if (loopType === 0||loopType === 1) {
+          //单曲循环 或 循环
           playlist.map((item, index) => {
-            if (item === currentSongUrl) {
+            if (item.id == currentSongId) {
               currentIndex = index;
             }
           });
-          currentSongUrl = currentIndex + 1 >= playlist.length ? playlist[0] : playlist[currentIndex + 1];
+          currentSongId = currentIndex + 1 >= playlist.length ? playlist[0].id : playlist[currentIndex + 1].id;
         } else {
           //随机循环
           let nextIndex = Math.floor(Math.random() * (playlist.length + 1));
-          currentSongUrl = playlist[nextIndex];
+          currentSongId = playlist[nextIndex].id;
         }
-        currentSongId = Number(currentSongUrl.split('=')[1].split('.')[0]);
+        currentSongUrl =  `http://music.163.com/song/media/outer/url?id=${currentSongId}.mp3`;
       }
-      let player = {...state.player, isPlay: true, currentSongUrl, currentSongId};
+      let player = {...state.player, currentSongUrl, currentSongId};
       return {
         ...state,
         player
       };
+
     },
     loop(state) {
       let loopType = state.player.loopType + 1 > 2 ? 0 : state.player.loopType + 1;
@@ -154,6 +152,15 @@ export default {
         player: {
           ...state.player,
           loopType
+        }
+      }
+    },
+    ended(state){
+      return {
+        ...state,
+        player: {
+          ...state.player,
+          ended: true,
         }
       }
     },
@@ -166,7 +173,7 @@ export default {
         }
       }
     },
-    setCurrentSong(state, payload){
+    setCurrentSong(state, {payload}){
       return {
         ...state,
         player: {
@@ -176,12 +183,21 @@ export default {
         }
       }
     },
-    play(state, payload) {
+    play(state) {
       return {
         ...state,
         player: {
           ...state.player,
           isPlay: true,
+        }
+      }
+    },
+    pause(state) {
+      return {
+        ...state,
+        player: {
+          ...state.player,
+          isPlay: false,
         }
       }
     },
@@ -250,21 +266,24 @@ export default {
       yield put({
         type: 'setCurrentSong',
         payload,
-      })
+      });
       yield put({
         type: 'fetchSongDetail',
         payload,
-      })
+      });
       yield put({
         type: 'play',
         payload,
-      })
+      });
       yield put({
         type: 'fetchAddToPlaylist',
         payload,
-      })
+      });
     },
     * fetchPlayerPrev({payload}, {call, put, select}) {
+      yield put({
+        type: 'pause',
+      });
       yield put({
         type: 'playerPrev',
       });
@@ -282,29 +301,62 @@ export default {
     },
     * fetchPlayerNext({payload}, {call, put, select}) {
       yield put({
+        type: 'pause',
+      });
+      yield put({
         type: 'playerNext',
       });
       let currentSongId = null;
-      yield  select(state => {
-        // 此处处理上一首
+      yield select(state => {
         currentSongId = state.music.player.currentSongId;
-        console.log(12346, state.music.player)
-      })
-      console.log('上一首点击，当前id', currentSongId);
-      const result = yield call(getSongDetail, currentSongId);
-      console.log('result', result);
-      const song = result.data.songs[0];
-      let songDetail = {
-        songName: song.name,
-        singer: song.ar[0].name,
-        picUrl: song.al.picUrl,
-        dt: song.dt
-      };
-      yield put({
-        type: 'songDetail',
-        payload: songDetail
       });
+      yield put({
+        type: 'fetchSongDetail',
+        payload: currentSongId
+      });
+      yield put({
+        type: 'play',
+      })
     },
+    * fetchPlayerEnded({call, put, select}){
+      yield put({
+        type: 'pause',
+      });
+      let loopType = null;
+      yield select(state => {
+        loopType = state.music.player.loopType;
+      });
+      if(loopType === 0){
+        let currentSongId = null;
+        yield select(state => {
+          currentSongId = state.music.player.currentSongId;
+        });
+        yield put({
+          type: 'fetchSongDetail',
+          payload: currentSongId
+        });
+        yield put({
+          type: 'play',
+        });
+      }else{
+        yield put({
+          type: 'fetchPlayerNext'
+        })
+      }
+    },
+    * fetchPlaylistPlay({payload}, {call, put}){
+      yield put({
+        type: 'setCurrentSong',
+        payload,
+      });
+      yield put({
+        type: 'fetchSongDetail',
+        payload: payload
+      });
+      yield put({
+        type: 'play',
+      });
+    }
   },
   subscriptions: {
     setup({dispatch, history}) {

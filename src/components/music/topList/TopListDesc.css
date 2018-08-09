@@ -6,8 +6,9 @@
 }
 .container>img{
   display:block;
-  width:147px;
-  height:147px;
+  width: 150px;
+  height: 151px;
+  border-radius: 50%;
 }
 .container>.info{
   margin-left:20px;
@@ -26,7 +27,7 @@
 .desc{
   font-size:13px;
   font-weight:bold;
-  margin-top:50px;
+  margin-top:44px;
   color:#000;
 }
 .desc>span{
@@ -65,4 +66,17 @@
   font-style: italic;
   text-align:right;
 }
-
+.btnPlayAll{
+  width:128px;
+  line-height:30px;
+  outline:none;
+  background:#31c27c;
+  color:#fff;
+  border-radius:5px;
+  box-shadow: none;
+  text-align:center;
+  cursor:pointer;
+}
+.btnPlayAll:hover{
+  background:#2caf6f;
+}

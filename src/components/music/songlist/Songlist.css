@@ -2,25 +2,51 @@
   background:#fff;
   margin-bottom:80px;
 }
+.title{
+  line-height:50px;
+  font-size:30px;
+  padding-left:20px;
+}
 .songlistItem{
   display:flex;
   justify-content: start;
-
   padding:0 20px;
-  line-height:30px;
+  line-height:50px;
 }
-.songlistItem:nth-child(2n+1){
-  background:#f5f5f5;
+.songlistItem:nth-child(2n){
+  background:#fbfbfb;
 }
 .songlistItem>span{
 
 }
 .songName{
   cursor: pointer;
-  width:500px;
+  width:300px;
+}
+.controlContainer{
+  width:150px;
+  display:inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.play,.add,.download,.share{
+  font-size:20px;
+  cursor: pointer;
+  color:#333;
+  display:none;
+}
+.songlistItem:hover .play,.songlistItem:hover .add,.songlistItem:hover .download,.songlistItem:hover .share{
+  display:block;
+}
+.play:hover,.add:hover,.download:hover,.share:hover{
+  color:#f60;
 }
 .arName{
   width:300px;
+  margin-left:50px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .alName{
   width:200px;
@@ -31,4 +57,5 @@
 }
 .dt{
   width:100px;
+  text-align:right;
 }

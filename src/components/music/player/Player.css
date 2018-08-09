@@ -36,7 +36,7 @@
   cursor:pointer;
 }
 .durationContainer{
-  width:600px;
+  width:620px;
   height:100%;
   margin-left:30px;
   position:relative;
@@ -61,7 +61,7 @@
    color:#9b9b9b;
 }
 .progressContainer{
-  width:550px;
+  width:565px;
   position:absolute;
   left:50px;
   top:60%;
@@ -96,8 +96,9 @@
   top:-90px;
   left:50%;
   transform:translate(-50%,0);
+  z-index:100;
 }
-.loop{
+.loop,.list{
   font-size:20px;
   cursor: pointer;
   color:#fff;
@@ -106,6 +107,9 @@
   display:table;
   top:63%;
   transform:translate(0,-50%);
+}
+.list:hover{
+  color:#31c27c;
 }
 :global .ant-slider-handle{
   border-color:#f60;

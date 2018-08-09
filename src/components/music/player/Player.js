@@ -85,7 +85,7 @@ class ListIcon extends React.Component{
   }
   render(){
     return (
-        <i onClick={this.props.onShowPlaylist} className={`${styles.loop} iconfont icon-bofangliebiao`}></i>
+        <i onClick={this.props.onShowPlaylist} className={`${styles.list} iconfont icon-bofangliebiao`}></i>
     )
   }
 }
@@ -189,7 +189,7 @@ class Player extends React.Component {
             this.state.isShowPlaylist &&
             <>
               <Playlist playlist={this.props.player.playlist}
-                onPlay={this.props.onPlay}
+                        onPlaylistPlay={this.props.onPlaylistPlay}
               />
               <Lyric lyric={l} />
             </>

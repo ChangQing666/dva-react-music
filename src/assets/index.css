@@ -5,7 +5,7 @@ body{
   position:relative;
 }
 #root{
-  width:960px;
+  width:980px;
   min-height:100%;
   margin: 0 auto;
   background:#fff;
