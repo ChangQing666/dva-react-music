@@ -4,6 +4,14 @@ import styles from './Songlist.css';
 
 const Songlist = ({songlist, onPlay, onPlayAdd, onAddToPlaylist}) => {
   let list = null;
+  let title =(
+    <div className={styles.songlistItem}>
+      <span className={styles.songName}>歌曲</span>
+      <span className={styles.controlContainer}></span>
+      <span className={styles.arName}>歌手</span>
+      <span className={styles.alName}>专辑</span>
+      <span className={styles.dt}>时长</span>
+    </div>);
   if(songlist){
     list = songlist.map((item,index)=>
       <div className={styles.songlistItem} key={index}>
@@ -23,6 +31,7 @@ const Songlist = ({songlist, onPlay, onPlayAdd, onAddToPlaylist}) => {
   return(
     <div className={styles.listContainer}>
       <div className={styles.title}>歌曲列表</div>
+      {title}
       {list}
     </div>
   )

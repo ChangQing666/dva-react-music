@@ -69,6 +69,7 @@
 }
 .progress{
   width: 470px;
+  margin-top:20px;
 }
 .dt{
   position:absolute;
@@ -112,6 +113,16 @@
   color:#31c27c;
 }
 :global .ant-slider-handle{
-  border-color:#f60;
+  border:none;
+  width:10px;
+  height:10px;
+  margin-top:-4px;
+}
+:global .ant-slider-rail{
+  height:2px;
+}
+:global .ant-slider-track{
+  height:2px;
+  background-color:#31c27c;
 }
 
