@@ -188,17 +188,7 @@ class Player extends React.Component {
           {
             this.state.isShowPlaylist &&
             <>
-              <Playlist playlist={[
-                {
-                  name: '完美世界诶',
-                  ar:[{name:'后弦'}],
-                  dt:121000
-                },
-                {
-                  name: '死了',
-                  ar:[{name:'信乐团'}],
-                  dt:151000
-                }]}
+              <Playlist playlist={this.props.player.playlist}
                 onPlay={this.props.onPlay}
               />
               <Lyric lyric={l} />

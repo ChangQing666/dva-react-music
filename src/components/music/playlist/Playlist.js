@@ -7,8 +7,8 @@ const Playlist = ({playlist,onPlay}) => {
   if(playlist){
     list = playlist.map((item,index)=>
       <div className={styles.playlistItem} key={index}>
-        <span onClick={()=>onPlay(item.id)} className={styles.songName}>{item.name}</span>
-        <span className={styles.arName}>{item.ar[0].name}</span>
+        <span onClick={()=>onPlay(item.id)} className={styles.songName}>{item.songName}</span>
+        <span className={styles.arName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
         <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
       </div>
     )

@@ -53,6 +53,20 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
       type:'music/playerEnded',
     })
   }
+
+  function handlePlayAdd(id){
+    dispatch({
+      type:'music/fetchPlayAdd',
+      payload: id
+    })
+  }
+  function handleAddToPlaylist(id){
+    dispatch({
+      type:'music/fetchAddToPlaylist',
+      payload: id
+    })
+  }
+
   return(
     <>
       <TopListDesc topListDesc={topListDesc} onPlayAll={handlePlayAll}/>
@@ -60,7 +74,7 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
         <button onClick={handleClickTopList}>点击获取id</button>
         <button onClick={handleFetchTopList}>点击获取列表</button>
       </div>
-      <Songlist songlist={songlist} onPlay={handlePlay}/>
+      <Songlist songlist={songlist} onPlay={handlePlay} onPlayAdd={handlePlayAdd} onAddToPlaylist={handleAddToPlaylist}/>
       <Player player={player}
               onPlay={handlePlayerPlay}
               onPlayPrev={handlePlayerPrev}
