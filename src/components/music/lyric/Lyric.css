@@ -1,0 +1,21 @@
+.lyricContainer{
+  position:absolute;
+  bottom:50px;
+  right:0;
+  width:400px;
+  height:500px;
+  overflow:hidden;
+  background:rgba(0,0,0,.8);
+}
+.lyricWrapper{
+  height:100%;
+  overflow-y: scroll;
+}
+.lyricItem{
+  line-height:26px;
+  text-align:center;
+  color:#f5f5f5;
+}
+.lyricItem.highlight{
+  color:#f60;
+}

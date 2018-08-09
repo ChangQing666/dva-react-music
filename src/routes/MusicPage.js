@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'dva';
 import TopListDesc from '../components/music/topList/TopListDesc';
-import Playlist from '../components/music/playList/Playlist';
+import Songlist from '../components/music/songlist/Songlist';
 import Player from '../components/music/player/Player';
-const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
+
+const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
   function handleClickTopList(){
     let id = 0;
     dispatch({
@@ -47,19 +48,19 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
     })
   }
   function handlePlayerEnded(){
-    console.log('music/ended');
+    console.log('music/playerEnded');
     dispatch({
-      type:'music/fetchPlayerNext',
+      type:'music/playerEnded',
     })
   }
   return(
-    <div>
+    <>
       <TopListDesc topListDesc={topListDesc} onPlayAll={handlePlayAll}/>
       <div>
         <button onClick={handleClickTopList}>点击获取id</button>
         <button onClick={handleFetchTopList}>点击获取列表</button>
       </div>
-      <Playlist playlist={playlist} onPlay={handlePlay}/>
+      <Songlist songlist={songlist} onPlay={handlePlay}/>
       <Player player={player}
               onPlay={handlePlayerPlay}
               onPlayPrev={handlePlayerPrev}
@@ -67,14 +68,15 @@ const MusicPage = ({dispatch, topListDesc, playlist, player}) => {
               onPlayLoop={handlePlayerLoop}
               onPlayEnded={handlePlayerEnded}
        />
-    </div>
+
+    </>
   )
 }
 
 function mapStateToProps(state){
   return {
     topListDesc: state.music.topListDesc,
-    playlist: state.music.playlist,
+    songlist: state.music.songlist,
     player: state.music.player
   }
 }

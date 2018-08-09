@@ -15,4 +15,9 @@ export function getSongDetail(id){
   let detail = request('json',`${apiPath.SONG_DETAIL}?ids=${id}`,{method:'get'});
   return detail;
 }
+export function getLyric(id){
+  let detail = request('json',`${apiPath.LYRIC}?id=${id}`,{method:'get'});
+  return detail;
+}
+
 

@@ -1,11 +1,26 @@
-import {getPlayistDetail, getSongDetail} from '../services/musicService';
-
+import {getPlayistDetail, getSongDetail, getLyric} from '../services/musicService';
+function formatToSeconds(v){
+  var minutes = Number(v.split(':')[0])
+  var seconds = Number(v.split(':')[1])
+  return minutes*60+seconds
+}
+function formatLyric(str){
+  let arr = str.split('\n');
+  let lyric = arr.map(item=>{
+    let obj = {};
+    let time = formatToSeconds(item.split(']')[0].slice(1));
+    obj.time = time;
+    obj.text = item.split(']')[1];
+    return obj;
+  })
+  return lyric;
+}
 export default {
   namespace: 'music',
   state: {
     topListId: 0,
     topListDesc: {},
-    playlist: '',
+    songlist: '',
     songUrl: '',
     player: {
       isPlay: false,
@@ -14,12 +29,40 @@ export default {
       playlist: [],
       loopType: 0,
       songDetail: {},
+      lyric:null,
     }
   },
   reducers: {
+    topListId(state, {payload}) {
+      return {
+        ...state,
+        topListId: payload
+      }
+    },
+    topListDesc(state, {payload}) {
+      return {
+        ...state,
+        topListDesc: payload
+      }
+    },
+    topList(state, {payload}) {
+      console.log('排行榜列表', payload);
+      const {name, coverImgUrl, description, trackCount, playCount} = payload;
+      const topListDesc = {name, coverImgUrl, description, trackCount, playCount};
+      const tracks = payload.tracks;
+      return {
+        ...state,
+        topListDesc,
+        songlist: tracks
+      }
+    },
     addToPlaylist(state, {payload}) {
       let currentSongUrl = `http://music.163.com/song/media/outer/url?id=${payload}.mp3`;
       let playlist = Array.from(new Set([...state.player.playlist, currentSongUrl]));// 数组去重Array.from(new Set(arr))
+
+      // 添加到播放列表
+      // 1.根据该歌曲id，
+      // 2.查询该 {歌曲url 歌曲ID，歌手名字，歌手ID，歌曲时长}
       return {
         ...state,
         player: {
@@ -118,6 +161,15 @@ export default {
         }
       }
     },
+    lyric(state, {payload}){
+      return {
+        ...state,
+        player: {
+          ...state.player,
+          lyric: payload
+        }
+      }
+    },
     play(state, {payload}) {
       let currentSongUrl = `http://music.163.com/song/media/outer/url?id=${payload}.mp3`;
       return {
@@ -130,36 +182,24 @@ export default {
         }
       }
     },
-    topListId(state, {payload}) {
-      return {
-        ...state,
-        topListId: payload
-      }
-    },
-    topListDesc(state, {payload}) {
-      return {
-        ...state,
-        topListDesc: payload
-      }
-    },
-    topList(state, {payload}) {
-      console.log('排行榜列表', payload);
-      const {name, coverImgUrl, description, trackCount, playCount} = payload;
-      const topListDesc = {name, coverImgUrl, description, trackCount, playCount};
-      const tracks = payload.tracks;
-      return {
-        ...state,
-        topListDesc,
-        playlist: tracks
-      }
-    },
+
   },
   effects: {
+
     * fetchTopList({payload}, {call, put}) {
       const result = yield call(getPlayistDetail, payload);
       yield put({
         type: 'topList',
         payload: result.data.playlist,
+      });
+    },
+    * fetchLyric({payload}, {call, put}){
+      const result = yield call(getLyric, payload);
+      let lyric = result.data.lrc.lyric;
+      lyric = formatLyric(lyric);
+      yield put({
+        type: 'lyric',
+        payload: lyric,
       });
     },
     * fetchSongDetail({payload}, {call, put}) {
@@ -181,14 +221,17 @@ export default {
         payload
       });
     },
+    * addToPlaylist2({payload}, {call, put}){
+
+    },
     * fetchPlayerPrev({payload}, {call, put, select}) {
       yield put({
         type: 'playerPrev',
       });
       let currentSongId = null;
-      yield  select(state => {
+      yield select(state => {
         currentSongId = state.music.player.currentSongId;
-      })
+      });
       const result = yield call(getSongDetail, currentSongId);
       const song = result.data.songs[0];
       let songDetail = {

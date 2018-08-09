@@ -2,6 +2,26 @@ import React from 'react';
 import {Slider} from 'antd';
 import styles from './Player.css';
 import formatTime from '../../../utils/formatTime';
+import Lyric from '../lyric/Lyric';
+import Playlist from '../playlist/Playlist';
+function formatToSeconds(v){
+  var minutes = Number(v.split(':')[0])
+  var seconds = Number(v.split(':')[1])
+  return minutes*60+seconds
+}
+function formatLyric(str){
+  let arr = str.split('\n');
+  let lyric = arr.map(item=>{
+    let obj = {};
+    let time = formatToSeconds(item.split(']')[0].slice(1));
+    obj.time = time;
+    obj.text = item.split(']')[1];
+    return obj;
+  })
+  return lyric;
+}
+const l = formatLyric( "[00:27.440]窗外的麻雀 在电线杆上多嘴\n[00:34.308]妳说这一句 很有夏天的感觉\n[00:41.298]手中的铅笔 在纸上来来回回\n[00:49.600]我用几行字形容妳是我的谁\n[00:51.998]\n[00:54.289]秋刀鱼 的滋味 猫跟妳都想了解\n[01:01.218]初恋的香味就这样被我们寻回\n[01:07.218]那温暖 的阳光 像刚摘的鲜艳草莓\n[01:14.689]你说妳舍不得吃掉这一种感觉\n[01:19.288]\n[01:21.198]雨下整夜 我的爱溢出就像雨水\n[01:27.158]院子落叶 跟我的思念厚厚一叠\n[01:34.498]几句是非 也无法将我的热情冷却\n[01:41.398]妳出现在我诗的每一页\n[01:45.668]\n[01:47.528]雨下整夜 我的爱溢出就像雨水\n[01:54.118]窗台蝴蝶 像诗里纷飞的美丽章节\n[02:01.198]我接着写 把永远爱妳写进诗的结尾\n[02:07.927]妳是我唯一想要的了解\n[02:12.999]\n[02:42.199]雨下整夜 我的爱溢出就像雨水\n[02:48.219]院子落叶 跟我的思念厚厚一叠\n[02:54.949]几句是非 也无法将我的热情冷却\n[03:02.549]妳出现在我诗的每一页\n[03:08.449]\n[03:09.449]那饱满 的稻穗 幸福了这个季节\n[03:16.489]而妳的脸颊像田里熟透的蕃茄\n[03:22.469]妳突然 对我说 七里香的名字很美\n[03:29.199]我此刻却只想亲吻妳倔强的嘴\n[03:34.979]\n[03:35.979]雨下整夜 我的爱溢出就像雨水\n[03:42.319]院子落叶 跟我的思念厚厚一叠\n[03:48.969]几句是非 也无法将我的热情冷却\n[03:56.459]妳出现在我诗的每一页\n[04:00.479]\n[04:03.269]整夜\n[04:05.129]我的爱溢出就像雨水\n[04:09.399]窗台蝴蝶 像诗里纷飞的美丽章节\n[04:16.199]我接着写 把永远爱妳写进诗的结尾\n[04:23.579]妳是我唯一想要的了解\n[04:29.100]\n[04:59.699]\n")
+
 
 class Volume extends React.Component {
   constructor(props) {
@@ -40,7 +60,6 @@ class Loop extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     let loopClass = null;
     switch (this.props.loopType) {
@@ -60,6 +79,17 @@ class Loop extends React.Component {
   }
 }
 
+class ListIcon extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
+        <i onClick={this.props.onShowPlaylist} className={`${styles.loop} iconfont icon-bofangliebiao`}></i>
+    )
+  }
+}
+
 class Player extends React.Component {
   constructor(props) {
     super(props);
@@ -67,11 +97,13 @@ class Player extends React.Component {
     this.onTimeUpdate = this.onTimeUpdate.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
+    this.handleShowPlaylist = this.handleShowPlaylist.bind(this);
     this.state = {
       currentTime: 0,
       duration: 0,
       percent: 0,
-      volume: 0.5
+      volume: 0.5,
+      isShowPlaylist: false,
     }
   }
 
@@ -93,9 +125,13 @@ class Player extends React.Component {
   onTimeUpdate(e) {
     // let currentTime = e.target.currentTime;
   }
-
+  handleShowPlaylist(){
+    this.setState({
+      isShowPlaylist: !this.state.isShowPlaylist
+    })
+  }
   onEnded() {
-    console.log('播放已暂停。。。')
+    console.log('播放已暂停。。。');
   }
 
   componentDidUpdate() {
@@ -148,6 +184,26 @@ class Player extends React.Component {
           </div>
           <Volume volume={this.state.volume} volumeChange={this.handleVolumeChange}/>
           <Loop loopType={this.props.player.loopType} onPlayLoop={this.props.onPlayLoop}/>
+          <ListIcon onShowPlaylist={this.handleShowPlaylist}/>
+          {
+            this.state.isShowPlaylist &&
+            <>
+              <Playlist playlist={[
+                {
+                  name: '完美世界诶',
+                  ar:[{name:'后弦'}],
+                  dt:121000
+                },
+                {
+                  name: '死了',
+                  ar:[{name:'信乐团'}],
+                  dt:151000
+                }]}
+                onPlay={this.props.onPlay}
+              />
+              <Lyric lyric={l} />
+            </>
+          }
         </div>
         <audio ref={player => this.player = player}
                onEnded={this.props.onPlayEnded}
