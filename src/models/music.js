@@ -203,9 +203,14 @@ export default {
         payload: result.data.playlist,
       });
     },
-    * fetchLyric({payload}, {call, put}){
-      const result = yield call(getLyric, payload);
+    * fetchLyric({payload}, {call, put, select}){
+      let currentSongId = null;
+      yield select(state=>{
+        currentSongId = state.music.player.currentSongId;
+      })
+      const result = yield call(getLyric, currentSongId);
       let lyric = result.data.lrc.lyric;
+      console.log('ci',lyric);
       lyric = formatLyric(lyric);
       yield put({
         type: 'lyric',
@@ -229,6 +234,10 @@ export default {
       yield put({
         type: 'songDetail',
         payload: songDetail
+      });
+      yield put({
+        type: 'fetchLyric',
+        payload
       });
     },
     * fetchAddToPlaylist({payload}, {call, put}){ // 添加到播放列表

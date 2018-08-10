@@ -61,6 +61,11 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
       payload: id
     })
   }
+  function handleGetLyric(){
+    dispatch({
+      type:'music/fetchLyric'
+    })
+  }
   return(
     <>
       <TopListDesc topListDesc={topListDesc} onPlayAll={handlePlayAll}/>
@@ -71,6 +76,7 @@ const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
               onPlayNext={handlePlayerNext}
               onPlayLoop={handlePlayerLoop}
               onPlayEnded={handlePlayerEnded}
+              onGetLyric={handleGetLyric}
               onPlaylistPlay={handlePlaylistPlay}
        />
 
