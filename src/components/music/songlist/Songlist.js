@@ -1,6 +1,6 @@
 import React from 'react';
-import formatTime from '../../../utils/formatTime'
 import styles from './Songlist.css';
+import {formatTime} from "../../../utils/tool";
 
 const Songlist = ({songlist, onPlay, onPlayAdd, onAddToPlaylist}) => {
   let list = null;

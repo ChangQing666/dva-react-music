@@ -1,20 +1,5 @@
 import {getPlaylistDetail, getSongDetail, getLyric} from '../services/musicService';
-function formatToSeconds(v){
-  const minutes = Number(v.split(':')[0]);
-  const seconds = Number(v.split(':')[1]);
-  return minutes*60+seconds;
-}
-function formatLyric(str){
-  let arr = str.split('\n');
-  let lyric = arr.map(item=>{
-    let obj = {};
-    let time = formatToSeconds(item.split(']')[0].slice(1));
-    obj.time = time;
-    obj.text = item.split(']')[1];
-    return obj;
-  });
-  return lyric;
-}
+import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 
 export default {
   namespace: 'music',
@@ -69,11 +54,7 @@ export default {
     },
     addToPlaylist(state, {payload}) {
       let _playlist = [...state.player.playlist, payload];
-      let hash = {};
-      let playlist = _playlist.reduce(function(item, next) {
-        hash[next.id] ? '' : hash[next.id] = true && item.push(next);
-        return item;
-      }, []);
+      let playlist =dumplicateRemoveArr(_playlist)
       // const playlist = Array.from(new Set([...state.player.playlist, payload]));// 数组去重Array.from(new Set(arr))
       return {
         ...state,
