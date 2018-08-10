@@ -105,15 +105,20 @@ class Player extends React.Component {
   }
   onTimeUpdate(e) {
     let T = e.target.currentTime;
-    let No = this.state.lyricActiveNo;
     let lyricActiveNo = 0;
     let lyricArr = this.props.player.lyric;
     if(lyricArr){
-      if(lyricArr[No].time && lyricArr[No].time<= T && lyricArr[No+1].time && T<=lyricArr[No+1].time){
-        lyricActiveNo = No;
-      }else{
-        lyricActiveNo = No+1;
-      }
+      lyricArr.map((item, index)=>{
+        if(index<lyricArr.length-1){
+          if(item.time<=T && T<=lyricArr[index+1].time){
+            lyricActiveNo = index;
+          }
+        }else{
+          if(item.time<=T){
+            lyricActiveNo = index;
+          }
+        }
+      })
       this.setState({
         lyricActiveNo,
       });

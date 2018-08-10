@@ -28,7 +28,7 @@ function formatToSeconds(v){
 }
 // 格式化lyric
 const formatLyric = function(str){
-  let arr = str.split('\n');
+  let arr = str.split('\n').slice(0,-1);
   let lyric = arr.map(item=>{
     let obj = {};
     let time = formatToSeconds(item.split(']')[0].slice(1));

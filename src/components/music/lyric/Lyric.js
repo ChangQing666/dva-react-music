@@ -32,7 +32,6 @@ class Lyric extends React.Component{
     }
     return(
       <div className={styles.lyricContainer}>
-        <button onClick={this.scrollActiveLine}>固{this.state.scrollTop}</button>
         <div ref={container=>this.container=container} className={styles.lyricWrapper} >
           <h1>歌词</h1>
           {list}
