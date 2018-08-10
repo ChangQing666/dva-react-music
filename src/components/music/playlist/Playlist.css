@@ -3,11 +3,11 @@
   height:500px;
   overflow:hidden;
   position:absolute;
-  bottom:50px;
+  bottom:75px;
   left:0;
   background:rgba(0,0,0,.8);
   box-sizing: border-box;
-
+  overflow-y: scroll;
 }
 .playlistItem{
   height:30px;

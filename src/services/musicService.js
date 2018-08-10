@@ -7,7 +7,7 @@ import request from '../utils/request';
 //   return list;
 // }
 
-export function getPlayistDetail(id){
+export function getPlaylistDetail(id){
   let list = request('json',`${apiPath.PLAYLIST_DETAIL}?id=${id}`,{method:'get'});
   return list;
 }

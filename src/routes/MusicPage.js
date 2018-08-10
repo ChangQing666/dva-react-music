@@ -5,41 +5,31 @@ import Songlist from '../components/music/songlist/Songlist';
 import Player from '../components/music/player/Player';
 
 const MusicPage = ({dispatch, topListDesc, songlist, player}) => {
-  function handleClickTopList(){
-    let id = 0;
+  function handlePlayAll(id){
     dispatch({
-      type: 'music/topListId',
-      payload: id
+      type: 'music/playAll',
+      payload:id,
     })
-  }
-  function handleFetchTopList(){
-    dispatch({
-      type: 'music/fetchTopList',
-      payload: 0
-    })
-  }
-  function handlePlayAll(){
-    alert('播放全部')
   }
   function handlePlay(id){
     dispatch({
       type: 'music/fetchSongDetail',
-      payload: id
+      payload: id,
     });
   }
   function handlePlayerPlay(){
     dispatch({
-      type:'music/playerPlay'
+      type:'music/playerPlay',
     })
   }
   function handlePlayerPrev(){
     dispatch({
-      type:'music/fetchPlayerPrev'
+      type:'music/fetchPlayerPrev',
     })
   }
   function handlePlayerNext(){
     dispatch({
-      type:'music/fetchPlayerNext'
+      type:'music/fetchPlayerNext',
     })
   }
   function handlePlayerLoop(){

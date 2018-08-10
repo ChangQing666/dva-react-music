@@ -8,7 +8,8 @@ const TopListDesc = ({topListDesc,onPlayAll})=>{
       <div className={styles.info}>
         <div className={styles.title}>{name}</div>
         <p className={styles.desc}>简介：<span>{description}</span></p>
-        <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`} onClick={onPlayAll}> 播放全部</button>
+        <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`}
+                onClick={()=>onPlayAll(3779629)}> 播放全部</button>
         <div className={styles.countBox}>
           <div className={styles.item}>
             <p>歌曲数</p>

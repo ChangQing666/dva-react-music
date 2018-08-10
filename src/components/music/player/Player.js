@@ -73,8 +73,8 @@ class ListIcon extends React.Component{
   }
   render(){
     return (
-        <span className={styles.listIconWrapper}>
-          <i onClick={this.props.onShowPlaylist} className={`${styles.list} iconfont icon-bofangliebiao`}></i>
+        <span onClick={this.props.onShowPlaylist} className={styles.listIconWrapper}>
+          <i className={`${styles.list} iconfont icon-bofangliebiao`}></i>
           {this.props.count}
         </span>
     )

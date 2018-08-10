@@ -1,4 +1,4 @@
-import {getPlayistDetail, getSongDetail, getLyric} from '../services/musicService';
+import {getPlaylistDetail, getSongDetail, getLyric} from '../services/musicService';
 function formatToSeconds(v){
   const minutes = Number(v.split(':')[0]);
   const seconds = Number(v.split(':')[1]);
@@ -143,7 +143,6 @@ export default {
         ...state,
         player
       };
-
     },
     loop(state) {
       let loopType = state.player.loopType + 1 > 2 ? 0 : state.player.loopType + 1;
@@ -201,11 +200,22 @@ export default {
         }
       }
     },
-
+    addAllToPlaylist(state, {payload}){
+      return {
+        ...state,
+        player:{
+          ...state.player,
+          playlist:[
+            ...state.player.playlist,
+            ...payload
+          ]
+        }
+      };
+    }
   },
   effects: {
     * fetchTopList({payload}, {call, put}) {
-      const result = yield call(getPlayistDetail, payload);
+      const result = yield call(getPlaylistDetail, payload);
       yield put({
         type: 'topList',
         payload: result.data.playlist,
@@ -351,6 +361,48 @@ export default {
       yield put({
         type: 'fetchSongDetail',
         payload: payload
+      });
+      yield put({
+        type: 'play',
+      });
+    },
+    * playAll({payload}, {call, put, takeEvery, select}){
+      // 1.根据歌单id查询歌曲列表
+      // 2.遍历列表根据每个id 添加到播放列表
+      // 3.将播放列表第一项id设为当前播放歌曲
+      // 4.获取歌曲详情
+      // 5.播放
+      let result = yield  call(getPlaylistDetail, payload);
+      let tracks = result.data.playlist.tracks;
+      tracks = tracks.map(song=>{
+        const songItem = {
+          id      : song.id,
+          url     : `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`,
+          songName: song.name,
+          singer  : song.ar[0].name,
+          singerId: song.ar[0].id,
+          picUrl  : song.al.picUrl,
+          alId    : song.al.id,
+          alName  : song.al.name,
+          dt      : song.dt
+        };
+        return songItem;
+      });
+      yield put({
+        type: 'addAllToPlaylist',
+        payload: tracks,
+      });
+      let currentSongId = null;
+      yield select(state=>{
+        currentSongId= state.music.player.playlist[0].id;
+      });
+      yield put({
+        type: 'setCurrentSong',
+        payload: currentSongId,
+      });
+      yield put({
+        type: 'fetchSongDetail',
+        payload: currentSongId
       });
       yield put({
         type: 'play',
