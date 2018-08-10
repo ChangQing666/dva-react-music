@@ -86,14 +86,16 @@
    color:#9b9b9b;
 }
 .progressContainer{
-  width:565px;
+  width:530px;
+  padding-right:80px;
+  box-sizing:border-box;
   position:absolute;
   left:70px;
   top:60%;
   transform:translate(0,-50%);
 }
 .progress{
-  width: 470px;
+  width: 450px;
   margin-top:20px;
 }
 .dt{
@@ -107,14 +109,21 @@
 .volumeContainer{
   margin-left:15px;
   position:relative;
-  display:table;
-  top:63%;
-  transform:translate(0,-50%);
+  display:inline-flex;
+  height:30px;
+  bottom:10px;
 }
 .shengyin{
   color:#fff;
   font-size:20px;
   cursor:pointer;
+  margin-top:32px;
+  margin-left:15px;
+}
+.volBar{
+  width:80px;
+  margin-top:42px;
+  margin-left:8px;
 }
 .slider{
   height:80px;
@@ -124,18 +133,36 @@
   transform:translate(-50%,0);
   z-index:100;
 }
-.loop,.list{
+.loop{
   font-size:20px;
   cursor: pointer;
   color:#fff;
   margin-left:15px;
-  position:relative;
-  display:table;
-  top:63%;
-  transform:translate(0,-50%);
+  margin-top:32px;
 }
-.list:hover{
+.listIconWrapper{
+  background:#0f0f0f;
+  width:52px;
+  height:24px;
+  border-radius:12px;
+  box-sizing: border-box;
+  padding-left:25px;
+  position:relative;
+  margin-left:13px;
+  margin-top:34px;
+  color:#fff;
+  font-size:12px;
+  line-height:24px;
+  cursor:pointer;
+}
+.listIconWrapper:hover{
   color:#31c27c;
+}
+.list{
+  position:absolute;
+  top:50%;
+  left:8px;
+  transform:translate(0,-50%);
 }
 :global .ant-slider-handle{
   border:none;

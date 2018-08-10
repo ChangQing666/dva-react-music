@@ -26,32 +26,20 @@ const l = formatLyric( "[00:27.440]窗外的麻雀 在电线杆上多嘴\n[00:34
 class Volume extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isShow: false}
   }
-
-  handleShow = () => this.setState({isShow: !this.state.isShow});
-
   render() {
     return (
-      <div className={styles.volumeContainer}>
-        <i
-          onClick={this.handleShow}
-          className={`iconfont ${this.props.volume == 0 ? 'icon-jingyin' : 'icon-shengyin'} ${styles.shengyin}`}
-          style={{color: '#fff'}}></i>
-        {
-          this.state.isShow ? (
-              <div className={styles.slider}>
-                <Slider tipFormatter={null}
-                        vertical
-                        defaultValue={this.props.volume}
-                        max={1}
-                        min={0}
-                        step={0.01}
-                        onChange={this.props.volumeChange}/>
-              </div>)
-            : null
-        }
-      </div>
+      <>
+        <i onClick={this.props.switchMuted}
+           className={`iconfont ${this.props.muted ? 'icon-jingyin' : 'icon-shengyin'} ${styles.shengyin}`}></i>
+        <Slider className={styles.volBar}
+                tipFormatter={null}
+                defaultValue={this.props.volume}
+                max={1}
+                min={0}
+                step={0.01}
+                onChange={this.props.volumeChange}/>
+      </>
     )
   }
 }
@@ -85,7 +73,10 @@ class ListIcon extends React.Component{
   }
   render(){
     return (
-        <i onClick={this.props.onShowPlaylist} className={`${styles.list} iconfont icon-bofangliebiao`}></i>
+        <span className={styles.listIconWrapper}>
+          <i onClick={this.props.onShowPlaylist} className={`${styles.list} iconfont icon-bofangliebiao`}></i>
+          {this.props.count}
+        </span>
     )
   }
 }
@@ -95,6 +86,7 @@ class Player extends React.Component {
     super(props);
     this.onEnded = this.onEnded.bind(this);
     this.onTimeUpdate = this.onTimeUpdate.bind(this);
+    this.handleSwitchMuted = this.handleSwitchMuted.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.handleShowPlaylist = this.handleShowPlaylist.bind(this);
@@ -104,6 +96,7 @@ class Player extends React.Component {
       percent: 0,
       volume: 0.5,
       isShowPlaylist: false,
+      muted: false,
     }
   }
 
@@ -114,10 +107,16 @@ class Player extends React.Component {
       this.player.pause();
     }
   }
-
+  handleSwitchMuted(){
+    this.setState({muted:!this.state.muted},()=>{
+        this.player.muted = this.state.muted
+    });
+  }
   handleVolumeChange(volume) {
-    this.setState({volume});
-    this.player.volume = volume;
+    this.setState({muted: false, volume},()=>{
+      this.player.muted = this.state.muted
+      this.player.volume = volume;
+    });
   }
   handleCurrentTimeChange(v) {
     this.player.currentTime = (v/100)*(this.player.duration);
@@ -184,9 +183,9 @@ class Player extends React.Component {
                 className={styles.dt}>{formatTime(this.state.currentTime) + '/ ' + formatTime(this.props.player.songDetail.dt / 1000)}</div>
             </div>
           </div>
-          <Volume volume={this.state.volume} volumeChange={this.handleVolumeChange}/>
           <Loop loopType={this.props.player.loopType} onPlayLoop={this.props.onPlayLoop}/>
-          <ListIcon onShowPlaylist={this.handleShowPlaylist}/>
+          <Volume volume={this.state.volume} muted={this.state.muted} switchMuted={this.handleSwitchMuted} volumeChange={this.handleVolumeChange}/>
+          <ListIcon onShowPlaylist={this.handleShowPlaylist} count={this.props.player.playlist.length||0}/>
           {
             this.state.isShowPlaylist &&
             <>
