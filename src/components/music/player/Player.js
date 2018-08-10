@@ -1,7 +1,7 @@
 import React from 'react';
 import {Slider} from 'antd';
 import styles from './Player.css';
-import formatTime from '../../../utils/formatTime';
+import {formatTime} from "../../../utils/tool";
 import Lyric from '../lyric/Lyric';
 import Playlist from '../playlist/Playlist';
 function formatToSeconds(v){

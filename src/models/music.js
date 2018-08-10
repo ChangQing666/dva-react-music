@@ -182,14 +182,15 @@ export default {
       }
     },
     addAllToPlaylist(state, {payload}){
+      let playlist = dumplicateRemoveArr([
+        ...state.player.playlist,
+        ...payload
+      ]);
       return {
         ...state,
         player:{
           ...state.player,
-          playlist:[
-            ...state.player.playlist,
-            ...payload
-          ]
+          playlist,
         }
       };
     }

@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Lyric.css';
-import formatTime from '../../../utils/formatTime';
 
 const Lyric = ({lyric}) => {
   const list = lyric.map((item, index) =>{
