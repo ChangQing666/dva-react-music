@@ -72,7 +72,7 @@ export default {
       let hash = {};
       let playlist = _playlist.reduce(function(item, next) {
         hash[next.id] ? '' : hash[next.id] = true && item.push(next);
-        return item
+        return item;
       }, []);
       // const playlist = Array.from(new Set([...state.player.playlist, payload]));// 数组去重Array.from(new Set(arr))
       return {
@@ -240,22 +240,21 @@ export default {
       });
     },
     * fetchAddToPlaylist({payload}, {call, put}){ // 添加到播放列表
-      // 添加到播放列表
       // 1.根据该歌曲id，
       // 2.查询该 {歌曲url 歌曲ID，歌手名字，歌手ID，歌曲时长}
       // 3.添加到state.playlist
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
-      let songDetail = {
-        id:       song.id,
-        url:      `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+      const songDetail = {
+        id      : song.id,
+        url     : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
         songName: song.name,
-        singer:   song.ar[0].name,
+        singer  : song.ar[0].name,
         singerId: song.ar[0].id,
-        picUrl:   song.al.picUrl,
-        alId:     song.al.id,
-        alName:   song.al.name,
-        dt:       song.dt
+        picUrl  : song.al.picUrl,
+        alId    : song.al.id,
+        alName  : song.al.name,
+        dt      : song.dt
       };
       yield put({
         type: 'addToPlaylist',
@@ -312,13 +311,13 @@ export default {
       });
       yield put({
         type: 'fetchSongDetail',
-        payload: currentSongId
+        payload: currentSongId,
       });
       yield put({
         type: 'play',
       })
     },
-    * fetchPlayerEnded({call, put, select}){
+    * fetchPlayerEnded({payload}, {call, put, select}){
       yield put({
         type: 'pause',
       });
@@ -341,10 +340,10 @@ export default {
       }else{
         yield put({
           type: 'fetchPlayerNext'
-        })
+        });
       }
     },
-    * fetchPlaylistPlay({payload}, {call, put}){
+    * fetchPlaylistPlay({payload}, {call, put}){  // 从播放列表播放
       yield put({
         type: 'setCurrentSong',
         payload,
@@ -362,7 +361,7 @@ export default {
     setup({dispatch, history}) {
       history.listen(({pathname}) => {
         if (pathname === '/music') {
-          dispatch({type: 'fetchTopList', payload: 3779629})
+          dispatch({type: 'fetchTopList', payload: 3779629});
         }
       })
     },
