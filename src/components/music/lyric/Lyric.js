@@ -6,19 +6,14 @@ class Lyric extends React.Component{
     super(props);
     this.state={scrollTop: 100};
   }
-  // static getDerivedStateFromProps(nextProps, prevState){
-  //   return {
-  //     scrollTop: nextProps.lyricActiveNo
-  //   }
-  // }
   componentDidUpdate(){
     // 目标位置200
     // 高亮行距离0的距离
     // 每行高度30
     let N = this.props.lyricActiveNo;
     let scrollTop=0;
-    if(N>6){
-      scrollTop=(N-6)*30
+    if(N>3){
+      scrollTop=(N-3)*34
     }
     this.container.scrollTop=scrollTop;
   }
@@ -31,9 +26,14 @@ class Lyric extends React.Component{
       })
     }
     return(
-      <div className={styles.lyricContainer}>
-        <div ref={container=>this.container=container} className={styles.lyricWrapper} >
-          <h1>歌词</h1>
+      <div className={styles.lyricWrapper}>
+        <div className={styles.songInfoContainer}>
+          <img className={styles.albumPic} src={this.props.songDetail.picUrl}/>
+          <div className={styles.songName}>歌曲名：{this.props.songDetail.songName}</div>
+          <div className={styles.singerName}>歌手名：{this.props.songDetail.singer}</div>
+          <div className={styles.albumName}>专辑名：{this.props.songDetail.alName}</div>
+        </div>
+        <div ref={container=>this.container=container} className={styles.lyricContainer} >
           {list}
         </div>
       </div>

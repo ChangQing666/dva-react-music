@@ -4,17 +4,32 @@ import {formatTime} from "../../../utils/tool";
 
 const Playlist = ({playlist, onPlaylistPlay}) => {
   let list = null;
+
   if(playlist){
     list = playlist.map((item,index)=>
-      <div className={styles.playlistItem} key={index}>
-        <span onClick={()=>onPlaylistPlay(item.id)} className={styles.songName}>{item.songName}</span>
-        <span className={styles.arName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
-        <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
-      </div>
+      <>
+        <div className={styles.playlistItem} key={index}>
+          <img src="../../../assets/imgs/wave.gif" alt=""/>
+          <span className={styles.number}>{index+1}</span>
+          <span onClick={()=>onPlaylistPlay(item.id)} className={styles.songName}>{item.songName}</span>
+          <span className={styles.singerName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
+          <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
+        </div>
+        <i className={styles.itemLine}></i>
+      </>
     )
   }
   return(
-    <div className={styles.listContainer}>
+    <div className={styles.playlistContainer}>
+      <i className={styles.itemLine}></i>
+      <div className={styles.playlistItem}>
+        <img src="../../../assets/imgs/wave.gif" alt=""/>
+        <span className={styles.number}></span>
+        <span className={styles.songName}>歌曲</span>
+        <span className={styles.singerName}>歌手</span>
+        <span className={styles.dt}>时长</span>
+      </div>
+      <i className={styles.itemLine}></i>
       {list}
     </div>
   )

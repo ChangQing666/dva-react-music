@@ -9,6 +9,7 @@ class Volume extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <>
@@ -30,6 +31,7 @@ class Loop extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     let loopClass = null;
     switch (this.props.loopType) {
@@ -49,15 +51,16 @@ class Loop extends React.Component {
   }
 }
 
-class ListIcon extends React.Component{
-  constructor(props){
+class ListIcon extends React.Component {
+  constructor(props) {
     super(props);
   }
-  render(){
+
+  render() {
     return (
-        <span onClick={this.props.onPlaylistShow} className={styles.listIconWrapper}>
+      <span onClick={this.props.onPlaylistShow} className={styles.listIconWrapper}>
           <i className={`${styles.list} iconfont icon-bofangliebiao`}></i>
-          {this.props.count}
+        {this.props.count}
         </span>
     )
   }
@@ -89,32 +92,36 @@ class Player extends React.Component {
       this.player.pause();
     }
   }
-  handleSwitchMuted(){
-    this.setState({muted:!this.state.muted},()=>{
-        this.player.muted = this.state.muted;
+
+  handleSwitchMuted() {
+    this.setState({muted: !this.state.muted}, () => {
+      this.player.muted = this.state.muted;
     });
   }
+
   handleVolumeChange(volume) {
-    this.setState({muted: false, volume},()=>{
+    this.setState({muted: false, volume}, () => {
       this.player.muted = this.state.muted;
       this.player.volume = volume;
     });
   }
+
   handleCurrentTimeChange(v) {
-    this.player.currentTime = (v/100)*(this.player.duration);
+    this.player.currentTime = (v / 100) * (this.player.duration);
   }
+
   onTimeUpdate(e) {
     let T = e.target.currentTime;
     let lyricActiveNo = 0;
     let lyricArr = this.props.player.lyric;
-    if(lyricArr){
-      lyricArr.map((item, index)=>{
-        if(index<lyricArr.length-1){
-          if(item.time<=T && T<=lyricArr[index+1].time){
+    if (lyricArr) {
+      lyricArr.map((item, index) => {
+        if (index < lyricArr.length - 1) {
+          if (item.time <= T && T <= lyricArr[index + 1].time) {
             lyricActiveNo = index;
           }
-        }else{
-          if(item.time<=T){
+        } else {
+          if (item.time <= T) {
             lyricActiveNo = index;
           }
         }
@@ -124,12 +131,14 @@ class Player extends React.Component {
       });
     }
   }
-  handlePlaylistShow(){
+
+  handlePlaylistShow() {
     this.setState({
       isShowPlaylist: !this.state.isShowPlaylist,
     });
     this.props.onGetLyric();
   }
+
   componentDidUpdate() {
     this.handlePlay();
   }
@@ -146,61 +155,77 @@ class Player extends React.Component {
 
   render() {
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <div className={styles.controlContainer}>
-            <i onClick={this.props.onPlayPrev}
-               className={`iconfont icon-shangyishou ${styles.shangyishou}`}>
-            </i>
-            <i onClick={this.props.onPlay}
-               className={
-                 `iconfont
+      <>
+        <div className={`${styles.playerWrapper}  ${this.state.isShowPlaylist? styles.transparent : ''}`}>
+          <div className={styles.playerContainer}>
+            <div className={styles.controlContainer}>
+              <i onClick={this.props.onPlayPrev}
+                 className={`iconfont icon-shangyishou ${styles.shangyishou}`}>
+              </i>
+              <i onClick={this.props.onPlay}
+                 className={
+                   `iconfont
                 ${!this.props.player.isPlay ? 'icon-bofang ' + styles.bofang : 'icon-zanting ' + styles.zanting}`}>
-            </i>
-            <i onClick={this.props.onPlayNext}
-               className={`iconfont icon-xiayishou ${styles.xiayishou}`}>
-            </i>
+              </i>
+              <i onClick={this.props.onPlayNext}
+                 className={`iconfont icon-xiayishou ${styles.xiayishou}`}>
+              </i>
+            </div>
+            <div className={styles.durationContainer}>
+              <div className={styles.picWrapper}>
+                <img className={styles.pic} src={this.props.player.songDetail.picUrl} alt=""/>
+              </div>
+              <div className={styles.songName}>
+                {this.props.player.songDetail.songName}
+                <span className={styles.singerName}>{this.props.player.songDetail.singer}</span>
+              </div>
+              <div className={styles.progressContainer}>
+                <Slider className={styles.progress}
+                        tipFormatter={null}
+                        value={this.state.percent || 0}
+                        step={1}
+                        onChange={this.handleCurrentTimeChange}
+                />
+                <div
+                  className={styles.dt}>{formatTime(this.state.currentTime) + '/ ' + formatTime(this.props.player.songDetail.dt / 1000)}</div>
+              </div>
+            </div>
+            <Loop loopType={this.props.player.loopType} onPlayLoop={this.props.onPlayLoop}/>
+            <Volume volume={this.state.volume} muted={this.state.muted} switchMuted={this.handleSwitchMuted}
+                    volumeChange={this.handleVolumeChange}/>
+            <ListIcon onPlaylistShow={this.handlePlaylistShow} count={this.props.player.playlist.length || 0}/>
+
           </div>
-          <div className={styles.durationContainer}>
-            <div className={styles.picWrapper}>
-              <img className={styles.pic} src={this.props.player.songDetail.picUrl} alt=""/>
-            </div>
-            <div className={styles.songName}>
-              {this.props.player.songDetail.songName}
-              <span className={styles.singerName}>{this.props.player.songDetail.singer}</span>
-            </div>
-            <div className={styles.progressContainer}>
-              <Slider className={styles.progress}
-                      tipFormatter={null}
-                      value={this.state.percent || 0}
-                      step={1}
-                      onChange={this.handleCurrentTimeChange}
-              />
-              <div
-                className={styles.dt}>{formatTime(this.state.currentTime) + '/ ' + formatTime(this.props.player.songDetail.dt / 1000)}</div>
-            </div>
-          </div>
-          <Loop loopType={this.props.player.loopType} onPlayLoop={this.props.onPlayLoop}/>
-          <Volume volume={this.state.volume} muted={this.state.muted} switchMuted={this.handleSwitchMuted} volumeChange={this.handleVolumeChange}/>
-          <ListIcon onPlaylistShow={this.handlePlaylistShow} count={this.props.player.playlist.length||0}/>
-          {
-            this.state.isShowPlaylist &&
-            <>
-              <Playlist playlist={this.props.player.playlist}
-                        onPlaylistPlay={this.props.onPlaylistPlay}
-              />
-              {<Lyric lyric={this.props.player.lyric}  lyricActiveNo={this.state.lyricActiveNo}/>}
-            </>
-          }
+          <audio ref={player => this.player = player}
+                 onEnded={this.props.onPlayEnded}
+                 onTimeUpdate={this.onTimeUpdate}
+                 src={this.props.player.currentSongUrl}
+                 controls="controls">
+            您的浏览器不支持 audio 标签。
+          </audio>
         </div>
-        <audio ref={player => this.player = player}
-               onEnded={this.props.onPlayEnded}
-               onTimeUpdate={this.onTimeUpdate}
-               src={this.props.player.currentSongUrl}
-               controls="controls">
-          您的浏览器不支持 audio 标签。
-        </audio>
-      </div>
+        {
+          this.state.isShowPlaylist &&
+          <>
+            <div className={styles.mask}></div>
+            <div className={styles.bgMask}
+                 style={{
+                   backgroundImage: ` url(${this.props.player.songDetail.picUrl})`
+                 }}></div>
+            <div className={styles.playlistLyricWrapper}>
+              <div className={styles.playlistLyricContainer}
+                  >
+                <Playlist playlist={this.props.player.playlist}
+                          onPlaylistPlay={this.props.onPlaylistPlay}
+                />
+                {<Lyric lyric={this.props.player.lyric} songDetail={this.props.player.songDetail} lyricActiveNo={this.state.lyricActiveNo}/>}
+              </div>
+            </div>
+          </>
+
+        }
+      </>
+
     )
   }
 }
