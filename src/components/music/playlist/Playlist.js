@@ -30,7 +30,9 @@ const Playlist = ({playlist, onPlaylistPlay}) => {
         <span className={styles.dt}>时长</span>
       </div>
       <i className={styles.itemLine}></i>
-      {list}
+      <div div className={styles.listContent}>
+        {list}
+      </div>
     </div>
   )
 }

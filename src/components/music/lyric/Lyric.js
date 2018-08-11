@@ -12,8 +12,8 @@ class Lyric extends React.Component{
     // 每行高度30
     let N = this.props.lyricActiveNo;
     let scrollTop=0;
-    if(N>3){
-      scrollTop=(N-3)*34
+    if(N>2){
+      scrollTop=(N-2)*34
     }
     this.container.scrollTop=scrollTop;
   }

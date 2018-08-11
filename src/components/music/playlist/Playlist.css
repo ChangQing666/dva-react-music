@@ -2,6 +2,11 @@
   box-sizing: border-box;
   width:60%;
   height:100%;
+
+}
+.listContent{
+  width:100%;
+  height:423px;
   overflow:hidden;
   overflow-y: scroll;
 }
@@ -12,6 +17,7 @@
   justify-content: start;
   align-items: center;
   color:#ccc;
+  padding-right:15px;
 }
 .itemLine{
   display: block;
@@ -20,13 +26,10 @@
   background-color: #fff;
   opacity: .02;
 }
-
-.playlistItem.active{
-  background:#000;
-}
 .number{
   width:50px;
   text-align: right;
+  color:rgba(255,255,255,.8);
 }
 .songName{
   width:68%;
@@ -36,10 +39,15 @@
   text-align:left;
 }
 .songName:hover{
-  color:#f60;
+  color:#31c27c;
+  transition: all linear 0.3s;
+}
+.songName:first-child:hover{
+  color:inherit;
+  cursor: no-drop;
 }
 .singerName{
-  width:26%;
+  width:30%;
   padding-left:15px;
 }
 .dt{
@@ -47,7 +55,8 @@
 }
 .songName,
 .singerName,
-.albumName{
+.albumName,
+.dt{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

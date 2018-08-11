@@ -112,7 +112,7 @@ class Player extends React.Component {
 
   onTimeUpdate(e) {
     let T = e.target.currentTime;
-    let lyricActiveNo = 0;
+    let lyricActiveNo = 1;
     let lyricArr = this.props.player.lyric;
     if (lyricArr) {
       lyricArr.map((item, index) => {
@@ -200,18 +200,22 @@ class Player extends React.Component {
                  onEnded={this.props.onPlayEnded}
                  onTimeUpdate={this.onTimeUpdate}
                  src={this.props.player.currentSongUrl}
-                 controls="controls">
+                 >
             您的浏览器不支持 audio 标签。
           </audio>
         </div>
         {
           this.state.isShowPlaylist &&
           <>
+            <i className={`iconfont icon-exitFullScreen ${styles.btnExitFullScreen}`}
+               onClick={this.handlePlaylistShow}></i>
             <div className={styles.mask}></div>
             <div className={styles.bgMask}
                  style={{
                    backgroundImage: ` url(${this.props.player.songDetail.picUrl})`
-                 }}></div>
+                 }}>
+
+            </div>
             <div className={styles.playlistLyricWrapper}>
               <div className={styles.playlistLyricContainer}
                   >

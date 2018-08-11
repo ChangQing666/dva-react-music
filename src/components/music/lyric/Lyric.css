@@ -31,13 +31,22 @@
   overflow-y: scroll;
   -webkit-mask-image: linear-gradient(to bottom,rgba(255,255,255,0) 0,rgba(255,255,255,.6) 15%,rgba(255,255,255,1) 25%,rgba(255,255,255,1) 75%,rgba(255,255,255,.6) 85%,rgba(255,255,255,0) 100%);
 }
+.lyricContainer::-webkit-scrollbar {
+  width: 0!important;
+}
 .lyricItem{
   font-size:14px;
+  height:34px;
   line-height:34px;
   text-align:center;
   color:#f5f5f5;
   color:rgba(255,255,255,.8);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .highlight{
   color:#31c27c;
+  font-size:16px;
+  transition: all ease-in-out .65s;
 }
