@@ -1,22 +1,36 @@
 import React from 'react';
-import { Router, Route, Switch } from 'dva/router';
+import {Router, Route, Switch, Link} from 'dva/router';
+
 import IndexPage from './routes/IndexPage';
 import Products from './routes/Products';
 import Countor from './routes/Countor';
 import ClickTimesPage from './routes/ClickTimesPage';
 import TranslatorPage from './routes/TranslatorPage';
-import MusicPage from './routes/MusicPage';
-function RouterConfig({ history }) {
+
+
+import Header from './routes/common/Header';
+import Footer from './routes/Footer';
+import Toplist from './routes/Toplist';
+import ToplistDetail from './routes/ToplistDetail';
+
+function RouterConfig({history}) {
   return (
     <Router history={history}>
-      <Switch>
-        <Route path="/" exact component={IndexPage} />
-        <Route path="/products" component={Products} />
-        <Route path="/countor" component={Countor} />
-        <Route path="/clicktimes" component={ClickTimesPage} />
-        <Route path="/translator" component={TranslatorPage} />
-        <Route path="/music" component={MusicPage} />
-      </Switch>
+      <>
+        <Header/>
+        <Footer/>
+        <Switch>
+          <Route path="/toplist" exact component={Toplist}/>
+          <Route path="/toplistDetail" exact component={ToplistDetail}/>
+
+
+          <Route path="/products" component={Products}/>
+          <Route path="/countor" component={Countor}/>
+          <Route path="/clicktimes" component={ClickTimesPage}/>
+          <Route path="/translator" component={TranslatorPage}/>
+          <Route path="/topList" component={ToplistDetail}/>
+        </Switch>
+      </>
     </Router>
   );
 }

@@ -1,0 +1,71 @@
+import React from 'react';
+import {connect} from 'dva';
+import {Link} from 'dva/router';
+import Player from '../components/music/player/Player';
+
+const Footer = ({dispatch, player}) => {
+  function handlePlayerPlay() {
+    dispatch({
+      type: 'music/playerPlay',
+    })
+  }
+
+  function handlePlayerPrev() {
+    dispatch({
+      type: 'music/fetchPlayerPrev',
+    })
+  }
+
+  function handlePlayerNext() {
+    dispatch({
+      type: 'music/fetchPlayerNext',
+    })
+  }
+
+  function handlePlayerLoop() {
+    dispatch({
+      type: 'music/loop',
+    })
+  }
+
+  function handlePlayerEnded() {
+    dispatch({
+      type: 'music/fetchPlayerEnded',
+    })
+  }
+
+  function handlePlaylistPlay(id) {
+    dispatch({
+      type   : 'music/fetchPlaylistPlay',
+      payload: id
+    })
+  }
+
+  function handleGetLyric() {
+    dispatch({
+      type: 'music/fetchLyric'
+    })
+  }
+
+  return (
+    <>
+      <Link to='/'>跳转</Link>
+      <Player player        ={player}
+              onPlay        ={handlePlayerPlay}
+              onPlayPrev    ={handlePlayerPrev}
+              onPlayNext    ={handlePlayerNext}
+              onPlayLoop    ={handlePlayerLoop}
+              onPlayEnded   ={handlePlayerEnded}
+              onGetLyric    ={handleGetLyric}
+              onPlaylistPlay={handlePlaylistPlay}/>
+    </>
+  )
+}
+
+function mapStateToProps(state) {
+  return {
+    player: state.music.player,
+  }
+}
+
+export default connect(mapStateToProps)(Footer);

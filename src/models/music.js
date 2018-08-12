@@ -1,4 +1,4 @@
-import {getPlaylistDetail, getSongDetail, getLyric} from '../services/musicService';
+import {getToplist, getPlaylistDetail, getSongDetail, getLyric} from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 
 export default {
@@ -6,6 +6,7 @@ export default {
   state: {
     topListId: 0,
     topListDesc: {},
+    toplist:[],
     songlist: '',
     songUrl: '',
     player: {
@@ -32,7 +33,13 @@ export default {
         topListDesc: payload
       }
     },
-    topList(state, {payload}) {
+    toplist(state, {payload}){
+      return {
+        ...state,
+        toplist: payload
+      }
+    },
+    toplistDetail(state, {payload}) {
       console.log('排行榜列表', payload);
       const {name, coverImgUrl, description, trackCount, playCount} = payload;
       const topListDesc = {name, coverImgUrl, description, trackCount, playCount};
@@ -196,10 +203,31 @@ export default {
     }
   },
   effects: {
-    * fetchTopList({payload}, {call, put}) {
+    * fetchToplist({payload}, {call, put}){
+      const [list0, list1, list2, list3] = yield [
+        call(getToplist, 0),
+        call(getToplist, 1),
+        call(getToplist, 2),
+        call(getToplist, 3),
+      ];
+      console.log(888,[list0, list1, list2, list3]);
+      let result = [list0, list1, list2, list3];
+      let toplist =result.map(item=>{
+        let {id, name, playCount, coverImgUrl, tracks}=item.data.playlist;
+        tracks = tracks.slice(0,3);
+        return  {id, name, playCount, coverImgUrl, tracks}
+      });
+      yield put({
+        type   :'toplist',
+        payload:toplist
+      })
+      console.log(899,toplist)
+    },
+
+    * fetchToplistDetail({payload}, {call, put}) {
       const result = yield call(getPlaylistDetail, payload);
       yield put({
-        type: 'topList',
+        type: 'toplistDetail',
         payload: result.data.playlist,
       });
     },
@@ -403,8 +431,10 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname}) => {
-        if (pathname === '/music') {
-          dispatch({type: 'fetchTopList', payload: 3779629});
+        if(pathname === '/toplist') {
+          dispatch({type: 'fetchToplist'});
+        }else if (pathname === '/toplistDetail') {
+          dispatch({type: 'fetchToplistDetail', payload: 3778678});
         }
       })
     },
