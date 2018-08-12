@@ -1,5 +1,12 @@
 import {routerRedux} from 'dva/router';
-import {getToplist, getPlaylistDetail, getSongDetail, getLyric} from '../services/musicService';
+import {
+  getToplist,
+  getPlaylistDetail,
+  getSongDetail,
+  getLyric,
+  getTopArtistList,
+  getArtistDetail,
+} from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 
 export default {
@@ -9,7 +16,8 @@ export default {
     topListDesc: {},
     toplist:[],
     songlist: '',
-    songUrl: '',
+    topArtistList:[],
+    artistDetail:{},
     player: {
       isPlay: false,
       ended: false,
@@ -41,7 +49,6 @@ export default {
       }
     },
     toplistDetail(state, {payload}) {
-      console.log('排行榜列表', payload);
       const {id, name, coverImgUrl, description, trackCount, playCount} = payload;
       const topListDesc = {id, name, coverImgUrl, description, trackCount, playCount};
       const tracks = payload.tracks;
@@ -51,6 +58,19 @@ export default {
         songlist: tracks
       }
     },
+    topArtistList(state, {payload}){
+      return {
+        ...state,
+        topArtistList: payload,
+      }
+    },
+    artistDetail(state, {payload}) {
+      return {
+        ...state,
+        artistDetail: payload,
+      }
+    },
+
     songDetail(state, {payload}) {
       return {
         ...state,
@@ -204,6 +224,14 @@ export default {
     }
   },
   effects: {
+    * fetchTopArtistList({payload}, {call, put}){
+      let result = yield call(getTopArtistList);
+      let topArtistList =result.data.list.artists;
+      yield put({
+        type   :'topArtistList',
+        payload:topArtistList,
+      })
+    },
     * fetchToplist({payload}, {call, put}){
       let callArr = [];
       for(let i=0; i<24; i++){
@@ -225,6 +253,13 @@ export default {
       yield put({
         type: 'toplistDetail',
         payload: result.data.playlist,
+      });
+    },
+    * fetchArtistDetail({payload}, {call, put}) {
+      const result = yield call(getArtistDetail, payload);
+      yield put({
+        type: 'artistDetail',
+        payload: result.data.hotSongs,
       });
     },
     * fetchLyric({payload}, {call, put, select}){
@@ -433,6 +468,10 @@ export default {
           dispatch({type: 'fetchToplist'});
         }else if (pathname === '/toplistDetail') {
           dispatch({type: 'fetchToplistDetail', payload: query && query.id||0});
+        }else if(pathname === '/topArtistList'){
+          dispatch({type: 'fetchTopArtistList'});
+        }else if(pathname === '/artistDetail'){
+          dispatch({type: 'fetchArtistDetail',payload: query && query.id||0});
         }
       })
     },

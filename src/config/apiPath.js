@@ -5,6 +5,7 @@ const apiPath = {
   MUSIC_URL:       `${domain}/music/url`,        //获取音乐url   GET /music/url?id=33894312
   SONG_DETAIL:     `${domain}/song/detail`,      //歌曲详情    song/detail?ids=1297750680
   LYRIC:           `${domain}/lyric`,            //获取歌词          /lyric?id=33894312
-  ARTISTS:          `${domain}/artists`,         // 歌手单曲 /artists?id=1203045
+  ARTISTS:         `${domain}/artists`,         // 歌手单曲 /artists?id=1203045
+  TOP_ARTISTS_LIST:`${domain}/toplist/artist`,         // 歌手榜 /artists
 }
 export default apiPath;

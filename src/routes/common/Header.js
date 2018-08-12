@@ -15,7 +15,7 @@ class Header extends React.Component{
         },
          {
           name: '歌手',
-          path:'/toplist',
+          path:'/topArtistList',
           id:1,
         },
          {

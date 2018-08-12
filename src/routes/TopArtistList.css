@@ -1,0 +1,47 @@
+.toplistWrapper{
+  display:flex;
+  justify-content: start;
+  align-content: space-between;
+  flex-wrap: wrap;
+}
+.title{
+  line-height:100px;
+  text-align:center;
+  color:#000;
+  font-size:30px;
+  font-weight: 700;
+}
+.itemContainer{
+  width: 224px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding:25px 0;
+  box-sizing: border-box;
+  margin-right:28px;
+  background-color: #fbfbfd;
+}
+.itemContainer:nth-child(4n){
+  margin-right:0;
+}
+.pic{
+  display: block;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+.name{
+  font-size: 16px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  zoom: 1;
+  text-align:center;
+  margin: 20px 30px 4px;
+  cursor:pointer;
+}
+.name:hover{
+  color:#31c27c;
+  transition: color ease-in-out .5s;
+}

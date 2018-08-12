@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './TopListDesc.css';
 
-const TopListDesc = ({topListDesc,onPlayAll})=>{
-  const {id, name, coverImgUrl, description,  trackCount, playCount} = topListDesc;
+const TopListDesc = ({topListDesc, onPlayAll}) => {
+  const {id, name, coverImgUrl, description, trackCount, playCount} = topListDesc;
   return (
     <div className={styles.container}>
       <img src={coverImgUrl} alt=""/>
@@ -10,8 +10,8 @@ const TopListDesc = ({topListDesc,onPlayAll})=>{
         <div className={styles.title}>{name}</div>
         <p className={styles.desc}>简介：<span>{description}</span></p>
         <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`}
-                onClick={()=>onPlayAll(id)}> 播放全部</button>
-
+                onClick={() => onPlayAll(id)}> 播放全部
+        </button>
         <div className={styles.countBox}>
           <div className={styles.item}>
             <p>歌曲数</p>

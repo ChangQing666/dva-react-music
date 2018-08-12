@@ -12,6 +12,8 @@ import Header from './routes/common/Header';
 import Footer from './routes/Footer';
 import Toplist from './routes/Toplist';
 import ToplistDetail from './routes/ToplistDetail';
+import TopArtistList from './routes/TopArtistList';
+import ArtistDetail from './routes/ArtistDetail';
 
 function RouterConfig({history}) {
   return (
@@ -21,7 +23,9 @@ function RouterConfig({history}) {
         <Footer/>
         <Switch>
           <Route path="/toplist" exact component={Toplist}/>
-          <Route path="/toplistDetail" exact component={ToplistDetail}/>
+          <Route path="/toplistDetail"  component={ToplistDetail}/>
+          <Route path="/topArtistList"  component={TopArtistList}/>
+          <Route path="/artistDetail" component={ArtistDetail}/>
 
 
           <Route path="/products" component={Products}/>

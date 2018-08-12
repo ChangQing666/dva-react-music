@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import TopListDesc from '../components/music/topList/TopListDesc';
 import Songlist from '../components/music/songlist/Songlist';
 import styles from './common/index.css';
-const ToplistDetail = ({dispatch, topListDesc, songlist, player}) => {
+const ToplistDetail = ({dispatch, topListDesc, songlist}) => {
   function handlePlayAll(id){
     dispatch({
       type: 'music/playAll',
