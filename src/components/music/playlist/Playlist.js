@@ -8,10 +8,10 @@ const Playlist = ({playlist, onPlaylistPlay}) => {
   if(playlist){
     list = playlist.map((item,index)=>
       <>
-        <div className={styles.playlistItem} key={index}>
+        <div className={styles.playlistItem} key={item.id}>
           <img src="../../../assets/imgs/wave.gif" alt=""/>
           <span className={styles.number}>{index+1}</span>
-          <span onClick={()=>onPlaylistPlay(item.id)} className={styles.songName}>{item.songName}</span>
+          <span onClick={()=>onPlaylistPlay(item.id,item.copyright)} className={styles.songName}>{item.songName}</span>
           <span className={styles.singerName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
           <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
         </div>

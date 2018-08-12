@@ -34,11 +34,15 @@ const Footer = ({dispatch, player}) => {
     })
   }
 
-  function handlePlaylistPlay(id) {
-    dispatch({
-      type   : 'music/fetchPlaylistPlay',
-      payload: id
-    })
+  function handlePlaylistPlay(id,copyright) {
+    if(copyright>1){
+      alert('该歌曲无版权');
+    }else{
+      dispatch({
+        type   : 'music/fetchPlaylistPlay',
+        payload: id
+      })
+    }
   }
 
   function handleGetLyric() {

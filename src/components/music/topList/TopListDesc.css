@@ -12,6 +12,7 @@
 }
 .container>.info{
   margin-left:20px;
+  width:605px;
   position:relative;
 }
 .info .countBox{

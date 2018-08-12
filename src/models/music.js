@@ -1,3 +1,4 @@
+import {routerRedux} from 'dva/router';
 import {getToplist, getPlaylistDetail, getSongDetail, getLyric} from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 
@@ -41,8 +42,8 @@ export default {
     },
     toplistDetail(state, {payload}) {
       console.log('排行榜列表', payload);
-      const {name, coverImgUrl, description, trackCount, playCount} = payload;
-      const topListDesc = {name, coverImgUrl, description, trackCount, playCount};
+      const {id, name, coverImgUrl, description, trackCount, playCount} = payload;
+      const topListDesc = {id, name, coverImgUrl, description, trackCount, playCount};
       const tracks = payload.tracks;
       return {
         ...state,
@@ -204,14 +205,11 @@ export default {
   },
   effects: {
     * fetchToplist({payload}, {call, put}){
-      const [list0, list1, list2, list3] = yield [
-        call(getToplist, 0),
-        call(getToplist, 1),
-        call(getToplist, 2),
-        call(getToplist, 3),
-      ];
-      console.log(888,[list0, list1, list2, list3]);
-      let result = [list0, list1, list2, list3];
+      let callArr = [];
+      for(let i=0; i<24; i++){
+        callArr.push( call(getToplist, i));
+      }
+      let result = yield callArr;
       let toplist =result.map(item=>{
         let {id, name, playCount, coverImgUrl, tracks}=item.data.playlist;
         tracks = tracks.slice(0,3);
@@ -221,9 +219,7 @@ export default {
         type   :'toplist',
         payload:toplist
       })
-      console.log(899,toplist)
     },
-
     * fetchToplistDetail({payload}, {call, put}) {
       const result = yield call(getPlaylistDetail, payload);
       yield put({
@@ -249,15 +245,16 @@ export default {
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
       let songDetail = {
-        id:       song.id,
-        url:      `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
-        songName: song.name,
-        singer:   song.ar[0].name,
-        singerId: song.ar[0].id,
-        picUrl:   song.al.picUrl,
-        alId:     song.al.id,
-        alName:   song.al.name,
-        dt:       song.dt
+        id       : song.id,
+        url      : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+        songName : song.name,
+        singer   : song.ar[0].name,
+        singerId : song.ar[0].id,
+        picUrl   : song.al.picUrl,
+        alId     : song.al.id,
+        alName   : song.al.name,
+        dt       : song.dt,
+        copyright: song.copyright,
       };
       yield put({
         type: 'songDetail',
@@ -275,15 +272,16 @@ export default {
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
       const songDetail = {
-        id      : song.id,
-        url     : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
-        songName: song.name,
-        singer  : song.ar[0].name,
-        singerId: song.ar[0].id,
-        picUrl  : song.al.picUrl,
-        alId    : song.al.id,
-        alName  : song.al.name,
-        dt      : song.dt
+        id       : song.id,
+        url      : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+        songName : song.name,
+        singer   : song.ar[0].name,
+        singerId : song.ar[0].id,
+        picUrl   : song.al.picUrl,
+        alId     : song.al.id,
+        alName   : song.al.name,
+        dt       : song.dt,
+        copyright: song.copyright,
       };
       yield put({
         type: 'addToPlaylist',
@@ -430,11 +428,11 @@ export default {
   },
   subscriptions: {
     setup({dispatch, history}) {
-      history.listen(({pathname}) => {
+      history.listen(({pathname, query}) => {
         if(pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         }else if (pathname === '/toplistDetail') {
-          dispatch({type: 'fetchToplistDetail', payload: 3778678});
+          dispatch({type: 'fetchToplistDetail', payload: query && query.id||0});
         }
       })
     },

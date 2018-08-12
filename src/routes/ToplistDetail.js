@@ -16,11 +16,16 @@ const ToplistDetail = ({dispatch, topListDesc, songlist, player}) => {
       payload: id,
     });
   }
-  function handlePlayAdd(id){
-    dispatch({
-      type:'music/fetchPlayAdd',
-      payload: id
-    })
+  function handlePlayAdd(id, copyright){
+    if(copyright>1){
+      alert('该歌曲无版权')
+    }else{
+      dispatch({
+        type:'music/fetchPlayAdd',
+        payload: id
+      })
+    }
+
   }
   function handleAddToPlaylist(id){
     dispatch({

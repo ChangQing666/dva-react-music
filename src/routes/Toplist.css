@@ -55,4 +55,7 @@
   line-height:30px;
   padding:0 40px 0 10px;
   box-sizing: border-box;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
