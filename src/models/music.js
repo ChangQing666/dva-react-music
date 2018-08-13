@@ -256,15 +256,10 @@ export default {
     },
     * fetchArtistDetail({payload}, {call, put}) {
       const result = yield call(getArtistDetail, payload);
-      console.log(0, result.data);
-      console.log(1, result.data.artist);
-      console.log(4, typeof result.data.artist.name);
       const {albumSize, alias, briefDesc, id, img1v1Url, musicSize, mvSize, name, picUrl} = result.data.artist;
       const artist = {albumSize, alias, briefDesc, id, img1v1Url, musicSize, mvSize, name, picUrl};
-      const {hotSongs} = result.data;
-      const artistDetail = hotSongs;
-      console.log('111artistDetail', artistDetail);
-      let artistSongs = hotSongs.map(item => {
+      const songs = result.data.hotSongs;
+      let hotSongs = songs.map(item => {
         let id, name, fee, dt, arName, arId, alName, alId, picUrl, mv;
         id = item.id;
         name = item.name;
@@ -279,11 +274,10 @@ export default {
         return {
           id, name, fee, dt, arName, arId, alName, alId, picUrl, mv
         }
-      })
-      console.log('222artistDetail', artistSongs);
+      });
       yield put({
         type: 'artistDetail',
-        payload: {artist: result.data.artist, hotSongs: result.data.hotSongs},
+        payload: {artist, hotSongs},
       });
     },
     * fetchLyric({payload}, {call, put, select}) {
