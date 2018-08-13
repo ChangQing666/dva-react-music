@@ -28,6 +28,7 @@ export default function request(reqType, url, options) {
       .catch(err => ({ err }));
   }else{
     return fetch(url, options)
+      .then(checkStatus)
       .then(parseJSON)
       .then(data => ({ data }))
       .catch(err => ({ err }));

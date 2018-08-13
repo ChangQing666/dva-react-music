@@ -1,4 +1,3 @@
-import {routerRedux} from 'dva/router';
 import {
   getToplist,
   getPlaylistDetail,
@@ -107,8 +106,8 @@ export default {
         // 根据循环类型决定下一首歌曲的url
        if (loopType === 0||loopType === 1) {
           //单曲循环 或 循环
-          playlist.map((item, index) => {
-            if (item.id == currentSongId) {
+          playlist.forEach((item, index) => {
+            if (item.id === currentSongId) {
               currentIndex = index;
             }
           });
@@ -134,8 +133,8 @@ export default {
         // 根据循环类型决定下一首歌曲的url
         if (loopType === 0||loopType === 1) {
           //单曲循环 或 循环
-          playlist.map((item, index) => {
-            if (item.id == currentSongId) {
+          playlist.forEach((item, index) => {
+            if (item.id === currentSongId) {
               currentIndex = index;
             }
           });
@@ -464,7 +463,7 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname, query}) => {
-        if(pathname === '/toplist') {
+        if(pathname === '/') {
           dispatch({type: 'fetchToplist'});
         }else if (pathname === '/toplistDetail') {
           dispatch({type: 'fetchToplistDetail', payload: query && query.id||0});

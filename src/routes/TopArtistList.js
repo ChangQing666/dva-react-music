@@ -21,7 +21,7 @@ const TopArtistList = ({dispatch, topArtistList}) => {
                      className={s.itemContainer}
                      onClick={()=>toArtistDetail(item.id)}>
 
-                    <img className={s.pic} src={item.img1v1Url}/>
+                    <img className={s.pic} src={item.img1v1Url} alt=''/>
                     <div className={s.name}>{item.name}</div>
                 </div>
               ))

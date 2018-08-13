@@ -6,9 +6,9 @@ import Lyric from '../lyric/Lyric';
 import Playlist from '../playlist/Playlist';
 
 class Volume extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super();
+  // }
 
   render() {
     return (
@@ -28,10 +28,6 @@ class Volume extends React.Component {
 }
 
 class Loop extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let loopClass = null;
     switch (this.props.loopType) {
@@ -44,6 +40,9 @@ class Loop extends React.Component {
       case 2:
         loopClass = 'icon-suijibofang';
         break;
+      default:
+        loopClass = '';
+        break;
     }
     return (
       <i onClick={this.props.onPlayLoop} className={`${styles.loop} iconfont  ${loopClass}`}></i>
@@ -52,10 +51,6 @@ class Loop extends React.Component {
 }
 
 class ListIcon extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <span onClick={this.props.onPlaylistShow} className={styles.listIconWrapper}>
@@ -115,7 +110,7 @@ class Player extends React.Component {
     let lyricActiveNo = 1;
     let lyricArr = this.props.player.lyric;
     if (lyricArr) {
-      lyricArr.map((item, index) => {
+      lyricArr.forEach((item, index) => {
         if (index < lyricArr.length - 1) {
           if (item.time <= T && T <= lyricArr[index + 1].time) {
             lyricActiveNo = index;

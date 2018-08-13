@@ -21,8 +21,8 @@ const Toplist = ({dispatch, toplist}) => {
                      className={s.itemContainer}
                      onClick={()=>toToplistDetail(item.id)}>
                   <div className={s.picContainer}>
-                    <img src={item.coverImgUrl}/>
-                    <span>{parseInt(item.playCount/10000)}万</span>
+                    <img src={item.coverImgUrl} alt=''/>
+                    <span>{parseInt(item.playCount/10000, 10)}万</span>
                   </div>
                   <ul>
                     {

@@ -1,7 +1,6 @@
 import React from 'react';
-import {Router, Route, Switch, Link} from 'dva/router';
+import {Router, Route, Switch} from 'dva/router';
 
-import IndexPage from './routes/IndexPage';
 import Products from './routes/Products';
 import Countor from './routes/Countor';
 import ClickTimesPage from './routes/ClickTimesPage';
@@ -22,7 +21,7 @@ function RouterConfig({history}) {
         <Header/>
         <Footer/>
         <Switch>
-          <Route path="/toplist" exact component={Toplist}/>
+          <Route path="/" exact component={Toplist}/>
           <Route path="/toplistDetail"  component={ToplistDetail}/>
           <Route path="/topArtistList"  component={TopArtistList}/>
           <Route path="/artistDetail" component={ArtistDetail}/>

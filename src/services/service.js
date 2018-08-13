@@ -3,7 +3,7 @@ import MD5 from '../utils/md5';
 export function translate (input) {
   var appid = '20180802000191229';
   var key   = 'pYJP4LSYwnpX_xMIdb5g';
-  var salt  = (new Date).getTime();
+  var salt  = (new Date()).getTime();
   var query = input || 'apple';// 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
   var from  = 'en';
   var to    = 'zh';

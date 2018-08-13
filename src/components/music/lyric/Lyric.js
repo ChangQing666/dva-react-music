@@ -28,7 +28,7 @@ class Lyric extends React.Component{
     return(
       <div className={styles.lyricWrapper}>
         <div className={styles.songInfoContainer}>
-          <img className={styles.albumPic} src={this.props.songDetail.picUrl}/>
+          <img className={styles.albumPic} src={this.props.songDetail.picUrl} alt=''/>
           <div className={styles.songName}>歌曲名：{this.props.songDetail.songName}</div>
           <div className={styles.singerName}>歌手名：{this.props.songDetail.singer}</div>
           <div className={styles.albumName}>专辑名：{this.props.songDetail.alName}</div>
