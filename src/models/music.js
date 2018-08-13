@@ -482,7 +482,7 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname, query}) => {
-        if (pathname === '/') {
+        if (pathname === '/' || pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         } else if (pathname === '/toplistDetail') {
           dispatch({type: 'fetchToplistDetail', payload: query && query.id || 0});

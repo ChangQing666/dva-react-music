@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Link} from 'dva/router';
 import Player from '../components/music/player/Player';
 
 const Footer = ({dispatch, player}) => {
@@ -53,7 +52,6 @@ const Footer = ({dispatch, player}) => {
 
   return (
     <>
-      <Link to='/'>跳转</Link>
       <Player player        ={player}
               onPlay        ={handlePlayerPlay}
               onPlayPrev    ={handlePlayerPrev}

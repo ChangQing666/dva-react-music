@@ -10,7 +10,7 @@ class Header extends React.Component{
       navs:[
         {
           name: '排行榜',
-          path:'/toplist',
+          path:'/',
           id:0,
         },
          {
