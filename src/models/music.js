@@ -13,10 +13,10 @@ export default {
   state: {
     topListId: 0,
     topListDesc: {},
-    toplist:[],
+    toplist: [],
     songlist: '',
-    topArtistList:[],
-    artistDetail:{},
+    topArtistList: [],
+    artistDetail: {artist:{},hotSongs:[]},
     player: {
       isPlay: false,
       ended: false,
@@ -25,7 +25,7 @@ export default {
       playlist: [],
       loopType: 1,
       songDetail: {},
-      lyric:null,
+      lyric: null,
     }
   },
   reducers: {
@@ -41,7 +41,7 @@ export default {
         topListDesc: payload
       }
     },
-    toplist(state, {payload}){
+    toplist(state, {payload}) {
       return {
         ...state,
         toplist: payload
@@ -57,7 +57,7 @@ export default {
         songlist: tracks
       }
     },
-    topArtistList(state, {payload}){
+    topArtistList(state, {payload}) {
       return {
         ...state,
         topArtistList: payload,
@@ -81,7 +81,7 @@ export default {
     },
     addToPlaylist(state, {payload}) {
       let _playlist = [...state.player.playlist, payload];
-      let playlist =dumplicateRemoveArr(_playlist)
+      let playlist = dumplicateRemoveArr(_playlist)
       // const playlist = Array.from(new Set([...state.player.playlist, payload]));// 数组去重Array.from(new Set(arr))
       return {
         ...state,
@@ -104,7 +104,7 @@ export default {
       let currentSongUrl = null;
       if (currentSongId && playlist.length > 0) {
         // 根据循环类型决定下一首歌曲的url
-       if (loopType === 0||loopType === 1) {
+        if (loopType === 0 || loopType === 1) {
           //单曲循环 或 循环
           playlist.forEach((item, index) => {
             if (item.id === currentSongId) {
@@ -117,7 +117,7 @@ export default {
           let nextIndex = Math.floor(Math.random() * (playlist.length + 1));
           currentSongId = playlist[nextIndex].id;
         }
-        currentSongUrl =  `http://music.163.com/song/media/outer/url?id=${currentSongId}.mp3`;
+        currentSongUrl = `http://music.163.com/song/media/outer/url?id=${currentSongId}.mp3`;
       }
       let player = {...state.player, currentSongUrl, currentSongId};
       return {
@@ -131,7 +131,7 @@ export default {
       let currentSongUrl = null;
       if (currentSongId && playlist.length > 0) {
         // 根据循环类型决定下一首歌曲的url
-        if (loopType === 0||loopType === 1) {
+        if (loopType === 0 || loopType === 1) {
           //单曲循环 或 循环
           playlist.forEach((item, index) => {
             if (item.id === currentSongId) {
@@ -144,7 +144,7 @@ export default {
           let nextIndex = Math.floor(Math.random() * (playlist.length + 1));
           currentSongId = playlist[nextIndex].id;
         }
-        currentSongUrl =  `http://music.163.com/song/media/outer/url?id=${currentSongId}.mp3`;
+        currentSongUrl = `http://music.163.com/song/media/outer/url?id=${currentSongId}.mp3`;
       }
       let player = {...state.player, currentSongUrl, currentSongId};
       return {
@@ -162,7 +162,7 @@ export default {
         }
       }
     },
-    ended(state){
+    ended(state) {
       return {
         ...state,
         player: {
@@ -171,7 +171,7 @@ export default {
         }
       }
     },
-    lyric(state, {payload}){
+    lyric(state, {payload}) {
       return {
         ...state,
         player: {
@@ -180,13 +180,13 @@ export default {
         }
       }
     },
-    setCurrentSong(state, {payload}){
+    setCurrentSong(state, {payload}) {
       return {
         ...state,
         player: {
           ...state.player,
           currentSongId: payload,
-          currentSongUrl:  `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+          currentSongUrl: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
         }
       }
     },
@@ -208,14 +208,14 @@ export default {
         }
       }
     },
-    addAllToPlaylist(state, {payload}){
+    addAllToPlaylist(state, {payload}) {
       let playlist = dumplicateRemoveArr([
         ...state.player.playlist,
         ...payload
       ]);
       return {
         ...state,
-        player:{
+        player: {
           ...state.player,
           playlist,
         }
@@ -223,28 +223,28 @@ export default {
     }
   },
   effects: {
-    * fetchTopArtistList({payload}, {call, put}){
+    * fetchTopArtistList({payload}, {call, put}) {
       let result = yield call(getTopArtistList);
-      let topArtistList =result.data.list.artists;
+      let topArtistList = result.data.list.artists;
       yield put({
-        type   :'topArtistList',
-        payload:topArtistList,
+        type: 'topArtistList',
+        payload: topArtistList,
       })
     },
-    * fetchToplist({payload}, {call, put}){
+    * fetchToplist({payload}, {call, put}) {
       let callArr = [];
-      for(let i=0; i<24; i++){
-        callArr.push( call(getToplist, i));
+      for (let i = 0; i < 24; i++) {
+        callArr.push(call(getToplist, i));
       }
       let result = yield callArr;
-      let toplist =result.map(item=>{
-        let {id, name, playCount, coverImgUrl, tracks}=item.data.playlist;
-        tracks = tracks.slice(0,3);
-        return  {id, name, playCount, coverImgUrl, tracks}
+      let toplist = result.map(item => {
+        let {id, name, playCount, coverImgUrl, tracks} = item.data.playlist;
+        tracks = tracks.slice(0, 3);
+        return {id, name, playCount, coverImgUrl, tracks}
       });
       yield put({
-        type   :'toplist',
-        payload:toplist
+        type: 'toplist',
+        payload: toplist
       })
     },
     * fetchToplistDetail({payload}, {call, put}) {
@@ -256,19 +256,44 @@ export default {
     },
     * fetchArtistDetail({payload}, {call, put}) {
       const result = yield call(getArtistDetail, payload);
+      console.log(0, result.data);
+      console.log(1, result.data.artist);
+      console.log(4, typeof result.data.artist.name);
+      const {albumSize, alias, briefDesc, id, img1v1Url, musicSize, mvSize, name, picUrl} = result.data.artist;
+      const artist = {albumSize, alias, briefDesc, id, img1v1Url, musicSize, mvSize, name, picUrl};
+      const {hotSongs} = result.data;
+      const artistDetail = hotSongs;
+      console.log('111artistDetail', artistDetail);
+      let artistSongs = hotSongs.map(item => {
+        let id, name, fee, dt, arName, arId, alName, alId, picUrl, mv;
+        id = item.id;
+        name = item.name;
+        fee = item.fee;
+        dt = item.dt;
+        mv = item.mv;
+        picUrl = item.al.picUrl;
+        arName = item.ar[0].name;
+        arId = item.ar[0].id;
+        alName = item.al.name;
+        alId = item.al.id;
+        return {
+          id, name, fee, dt, arName, arId, alName, alId, picUrl, mv
+        }
+      })
+      console.log('222artistDetail', artistSongs);
       yield put({
         type: 'artistDetail',
-        payload: result.data.hotSongs,
+        payload: {artist: result.data.artist, hotSongs: result.data.hotSongs},
       });
     },
-    * fetchLyric({payload}, {call, put, select}){
+    * fetchLyric({payload}, {call, put, select}) {
       let currentSongId = null;
-      yield select(state=>{
+      yield select(state => {
         currentSongId = state.music.player.currentSongId;
       })
       const result = yield call(getLyric, currentSongId);
       let lyric = result.data.lrc.lyric;
-      console.log('ci',lyric);
+      console.log('ci', lyric);
       lyric = formatLyric(lyric);
       yield put({
         type: 'lyric',
@@ -279,15 +304,15 @@ export default {
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
       let songDetail = {
-        id       : song.id,
-        url      : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
-        songName : song.name,
-        singer   : song.ar[0].name,
-        singerId : song.ar[0].id,
-        picUrl   : song.al.picUrl,
-        alId     : song.al.id,
-        alName   : song.al.name,
-        dt       : song.dt,
+        id: song.id,
+        url: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+        songName: song.name,
+        singer: song.ar[0].name,
+        singerId: song.ar[0].id,
+        picUrl: song.al.picUrl,
+        alId: song.al.id,
+        alName: song.al.name,
+        dt: song.dt,
         copyright: song.copyright,
       };
       yield put({
@@ -299,22 +324,22 @@ export default {
         payload
       });
     },
-    * fetchAddToPlaylist({payload}, {call, put}){ // 添加到播放列表
+    * fetchAddToPlaylist({payload}, {call, put}) { // 添加到播放列表
       // 1.根据该歌曲id，
       // 2.查询该 {歌曲url 歌曲ID，歌手名字，歌手ID，歌曲时长}
       // 3.添加到state.playlist
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
       const songDetail = {
-        id       : song.id,
-        url      : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
-        songName : song.name,
-        singer   : song.ar[0].name,
-        singerId : song.ar[0].id,
-        picUrl   : song.al.picUrl,
-        alId     : song.al.id,
-        alName   : song.al.name,
-        dt       : song.dt,
+        id: song.id,
+        url: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+        songName: song.name,
+        singer: song.ar[0].name,
+        singerId: song.ar[0].id,
+        picUrl: song.al.picUrl,
+        alId: song.al.id,
+        alName: song.al.name,
+        dt: song.dt,
         copyright: song.copyright,
       };
       yield put({
@@ -322,7 +347,7 @@ export default {
         payload: songDetail,
       })
     },
-    * fetchPlayAdd({payload}, {call, put}){ //播放并添加到列表
+    * fetchPlayAdd({payload}, {call, put}) { //播放并添加到列表
       yield put({
         type: 'setCurrentSong',
         payload,
@@ -378,7 +403,7 @@ export default {
         type: 'play',
       })
     },
-    * fetchPlayerEnded({payload}, {call, put, select}){
+    * fetchPlayerEnded({payload}, {call, put, select}) {
       yield put({
         type: 'pause',
       });
@@ -386,7 +411,7 @@ export default {
       yield select(state => {
         loopType = state.music.player.loopType;
       });
-      if(loopType === 0){
+      if (loopType === 0) {
         let currentSongId = null;
         yield select(state => {
           currentSongId = state.music.player.currentSongId;
@@ -398,13 +423,13 @@ export default {
         yield put({
           type: 'play',
         });
-      }else{
+      } else {
         yield put({
           type: 'fetchPlayerNext'
         });
       }
     },
-    * fetchPlaylistPlay({payload}, {call, put}){  // 从播放列表播放
+    * fetchPlaylistPlay({payload}, {call, put}) {  // 从播放列表播放
       yield put({
         type: 'setCurrentSong',
         payload,
@@ -417,7 +442,7 @@ export default {
         type: 'play',
       });
     },
-    * playAll({payload}, {call, put, takeEvery, select}){
+    * playAll({payload}, {call, put, takeEvery, select}) {
       // 1.根据歌单id查询歌曲列表
       // 2.遍历列表根据每个id 添加到播放列表
       // 3.将播放列表第一项id设为当前播放歌曲
@@ -425,17 +450,17 @@ export default {
       // 5.播放
       let result = yield  call(getPlaylistDetail, payload);
       let tracks = result.data.playlist.tracks;
-      tracks = tracks.map(song=>{
+      tracks = tracks.map(song => {
         const songItem = {
-          id      : song.id,
-          url     : `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`,
+          id: song.id,
+          url: `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`,
           songName: song.name,
-          singer  : song.ar[0].name,
+          singer: song.ar[0].name,
           singerId: song.ar[0].id,
-          picUrl  : song.al.picUrl,
-          alId    : song.al.id,
-          alName  : song.al.name,
-          dt      : song.dt
+          picUrl: song.al.picUrl,
+          alId: song.al.id,
+          alName: song.al.name,
+          dt: song.dt
         };
         return songItem;
       });
@@ -444,8 +469,8 @@ export default {
         payload: tracks,
       });
       let currentSongId = null;
-      yield select(state=>{
-        currentSongId= state.music.player.playlist[0].id;
+      yield select(state => {
+        currentSongId = state.music.player.playlist[0].id;
       });
       yield put({
         type: 'setCurrentSong',
@@ -463,14 +488,14 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname, query}) => {
-        if(pathname === '/') {
+        if (pathname === '/') {
           dispatch({type: 'fetchToplist'});
-        }else if (pathname === '/toplistDetail') {
-          dispatch({type: 'fetchToplistDetail', payload: query && query.id||0});
-        }else if(pathname === '/topArtistList'){
+        } else if (pathname === '/toplistDetail') {
+          dispatch({type: 'fetchToplistDetail', payload: query && query.id || 0});
+        } else if (pathname === '/topArtistList') {
           dispatch({type: 'fetchTopArtistList'});
-        }else if(pathname === '/artistDetail'){
-          dispatch({type: 'fetchArtistDetail',payload: query && query.id||0});
+        } else if (pathname === '/artistDetail') {
+          dispatch({type: 'fetchArtistDetail', payload: query && query.id || 3684});
         }
       })
     },
