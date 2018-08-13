@@ -277,7 +277,7 @@ export default {
       });
       yield put({
         type: 'artistDetail',
-        payload: {artist, hotSongs},
+        payload: {artist, hotSongs:songs},
       });
     },
     * fetchLyric({payload}, {call, put, select}) {

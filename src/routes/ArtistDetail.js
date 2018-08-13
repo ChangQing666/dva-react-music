@@ -2,8 +2,15 @@ import React from 'react';
 import {connect} from 'dva';
 import styles from './common/index.css';
 import s from './ArtistDetail.css'
-
-const ArtistInfo = ({name, id, alias, img1v1Url, briefDesc,musicSize, albumSize, mvSize, onPlayAll})=>{
+import Songlist from '../components/music/songlist/Songlist';
+const ArtistInfo = ({dispatch, name, id, alias, img1v1Url, briefDesc,musicSize, albumSize, mvSize})=>{
+  function handlePlayAll(id){
+    alert(id)
+    dispatch({
+      type: 'music/playAll',
+      payload:id,
+    })
+  }
   return (
     <div className={s.infoWrapper}>
       <img src={img1v1Url} alt=""/>
@@ -20,7 +27,7 @@ const ArtistInfo = ({name, id, alias, img1v1Url, briefDesc,musicSize, albumSize,
         </div>
         <div>
           <button  className={`iconfont icon-bofang1 ${s.btnPlayAll}`}
-                   onClick={() => onPlayAll(id)}>播放热门歌曲</button>
+                   onClick={() => handlePlayAll(id)}>播放热门歌曲</button>
         </div>
       </div>
     </div>
@@ -38,24 +45,17 @@ const Tabs = () => {
   )
 }
 
-const hotSongs = ({hotSongs}) => {
-  return(
-    <div></div>
-  )
-}
 class ArtistDetail extends React.Component{
   constructor(props){
     super(props);
   }
   render(){
     const {artist, hotSongs} = this.props.artistDetail;
-    let list = hotSongs.map(item=>(<div>{item.name}</div>));
     return(
       <>
         <div className={styles.container}>
-          {/*<ArtistInfo name={artist.name} alias={artist.alias} picUrl={artist.picUrl}/>*/}
-          <ArtistInfo {...artist}/>
-          {list}
+          <ArtistInfo dispatch={this.props.dispatch} {...artist}/>
+          <Songlist dispatch={this.props.dispatch} songlist={hotSongs}/>
         </div>
       </>
     )
@@ -64,7 +64,7 @@ class ArtistDetail extends React.Component{
 
 function mapStateToProps(state){
   return {
-    artistDetail     : state.music.artistDetail,
+    artistDetail: state.music.artistDetail,
   }
 }
 

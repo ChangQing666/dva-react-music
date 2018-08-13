@@ -2,7 +2,30 @@ import React from 'react';
 import styles from './Songlist.css';
 import {formatTime} from "../../../utils/tool";
 
-const Songlist = ({songlist, onPlay, onPlayAdd, onAddToPlaylist}) => {
+const Songlist = ({songlist,dispatch}) => {
+  function onPlay(id){
+    dispatch({
+      type: 'music/fetchSongDetail',
+      payload: id,
+    });
+  }
+  function onPlayAdd(id, copyright){
+    if(copyright>1){
+      alert('该歌曲无版权')
+    }else{
+      dispatch({
+        type:'music/fetchPlayAdd',
+        payload: id
+      })
+    }
+  }
+  function onAddToPlaylist(id){
+    dispatch({
+      type:'music/fetchAddToPlaylist',
+      payload: id
+    })
+  }
+
   let list = null;
   let title =(
     <div className={styles.songlistItem}>

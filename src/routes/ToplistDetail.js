@@ -10,33 +10,10 @@ const ToplistDetail = ({dispatch, topListDesc, songlist}) => {
       payload:id,
     })
   }
-  function handlePlay(id){
-    dispatch({
-      type: 'music/fetchSongDetail',
-      payload: id,
-    });
-  }
-  function handlePlayAdd(id, copyright){
-    if(copyright>1){
-      alert('该歌曲无版权')
-    }else{
-      dispatch({
-        type:'music/fetchPlayAdd',
-        payload: id
-      })
-    }
-
-  }
-  function handleAddToPlaylist(id){
-    dispatch({
-      type:'music/fetchAddToPlaylist',
-      payload: id
-    })
-  }
   return(
     <div className={styles.container}>
       <TopListDesc topListDesc={topListDesc} onPlayAll={handlePlayAll}/>
-      <Songlist songlist={songlist} onPlay={handlePlay} onPlayAdd={handlePlayAdd} onAddToPlaylist={handleAddToPlaylist}/>
+      <Songlist dispatch={dispatch} songlist={songlist}/>
     </div>
   )
 }
