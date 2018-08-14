@@ -5,7 +5,7 @@ import Player from '../components/music/player/Player';
 const Footer = ({dispatch, player}) => {
   function handlePlayerPlay() {
     dispatch({
-      type: 'music/playerPlay',
+      type: 'music/fetchPlayerPlay',
     })
   }
 

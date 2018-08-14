@@ -52,6 +52,8 @@
   height:65px;
   background: url('../../../assets/imgs/cover.png') no-repeat;
   background-size: contain;
+}
+.picWrapper.playing{
   animation: rotate-animation 20s infinite linear;
 }
 .pic{

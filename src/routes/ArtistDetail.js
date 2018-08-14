@@ -55,7 +55,7 @@ const MVlist = ({dispatch, mvs}) => {
     })
   }
   let list = mvs.map(item => (
-    <div className={s.mvItemContainer} onClick={()=>handleGetMvDetail(item.id)}>
+    <div key={item.id} className={s.mvItemContainer} onClick={()=>handleGetMvDetail(item.id)}>
       <div className={s.itemPicContainer}>
         <img src={item.imgurl16v9} alt=""/>
       </div>

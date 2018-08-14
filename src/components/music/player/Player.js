@@ -6,10 +6,6 @@ import Lyric from '../lyric/Lyric';
 import Playlist from '../playlist/Playlist';
 
 class Volume extends React.Component {
-  // constructor(props) {
-  //   super();
-  // }
-
   render() {
     return (
       <>
@@ -51,6 +47,7 @@ class Loop extends React.Component {
 }
 
 class ListIcon extends React.Component {
+
   render() {
     return (
       <span onClick={this.props.onPlaylistShow} className={styles.listIconWrapper}>
@@ -70,13 +67,13 @@ class Player extends React.Component {
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.handlePlaylistShow = this.handlePlaylistShow.bind(this);
     this.state = {
-      currentTime: 0,
-      duration: 0,
-      percent: 0,
-      volume: 0.5,
+      currentTime   : 0,
+      duration      : 0,
+      percent       : 0,
+      volume        : 0.5,
       isShowPlaylist: false,
-      muted: false,
-      lyricActiveNo: 0,
+      muted         : false,
+      lyricActiveNo : 0,
     }
   }
 
@@ -131,7 +128,7 @@ class Player extends React.Component {
     this.setState({
       isShowPlaylist: !this.state.isShowPlaylist,
     });
-    this.props.onGetLyric();
+    // this.props.onGetLyric();
   }
 
   componentDidUpdate() {
@@ -143,7 +140,7 @@ class Player extends React.Component {
     setInterval(() => {
       this.setState({
         currentTime: _player.currentTime,
-        percent: _player.currentTime * 100 / (this.props.player.songDetail.dt / 1000)
+        percent    : _player.currentTime * 100 / (this.props.player.songDetail.dt / 1000)
       })
     }, 1000)
   }
@@ -151,7 +148,7 @@ class Player extends React.Component {
   render() {
     return (
       <>
-        <div className={`${styles.playerWrapper}  ${this.state.isShowPlaylist? styles.transparent : ''}`}>
+        <div className={`${styles.playerWrapper}  ${this.state.isShowPlaylist ? styles.transparent : ''}`}>
           <div className={styles.playerContainer}>
             <div className={styles.controlContainer}>
               <i onClick={this.props.onPlayPrev}
@@ -167,7 +164,7 @@ class Player extends React.Component {
               </i>
             </div>
             <div className={styles.durationContainer}>
-              <div className={styles.picWrapper}>
+              <div className={`${styles.picWrapper} ${this.props.player.isPlay ? styles.playing : ''}`}>
                 <img className={styles.pic} src={this.props.player.songDetail.picUrl} alt=""/>
               </div>
               <div className={styles.songName}>
@@ -195,7 +192,7 @@ class Player extends React.Component {
                  onEnded={this.props.onPlayEnded}
                  onTimeUpdate={this.onTimeUpdate}
                  src={this.props.player.currentSongUrl}
-                 >
+          >
             您的浏览器不支持 audio 标签。
           </audio>
         </div>
@@ -213,11 +210,12 @@ class Player extends React.Component {
             </div>
             <div className={styles.playlistLyricWrapper}>
               <div className={styles.playlistLyricContainer}
-                  >
+              >
                 <Playlist playlist={this.props.player.playlist}
                           onPlaylistPlay={this.props.onPlaylistPlay}
                 />
-                {<Lyric lyric={this.props.player.lyric} songDetail={this.props.player.songDetail} lyricActiveNo={this.state.lyricActiveNo}/>}
+                {<Lyric lyric={this.props.player.lyric} songDetail={this.props.player.songDetail}
+                        lyricActiveNo={this.state.lyricActiveNo}/>}
               </div>
             </div>
           </>

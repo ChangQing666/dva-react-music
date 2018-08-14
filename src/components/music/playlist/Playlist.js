@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './Playlist.css';
 import {formatTime} from "../../../utils/tool";
 
-const Playlist = ({playlist, onPlaylistPlay}) => {
+const Playlist = ({onPlaylistPlay}) => {
   let list = null;
-
+  let playlist = JSON.parse(localStorage.getItem('_PLAYLIST'));
   if(playlist){
     list = playlist.map((item,index)=>
       <>

@@ -22,11 +22,11 @@ export default {
     player       : {
       isPlay        : false,
       ended         : false,
-      currentSongId : null,
-      currentSongUrl: null,
-      playlist      : [],
+      currentSongId : localStorage.getItem('currentSongId'),
+      currentSongUrl: localStorage.getItem('currentSongUrl'),
+      playlist      : localStorage.getItem('_PLAYLIST')?JSON.parse(localStorage.getItem('_PLAYLIST')):[],
       loopType      : 1,
-      songDetail    : {},
+      songDetail    : localStorage.getItem('songDetail')?JSON.parse(localStorage.getItem('songDetail')):{},
       lyric         : null,
     }
   },
@@ -85,6 +85,7 @@ export default {
     },
 
     songDetail(state, {payload}) {
+      localStorage.setItem('songDetail',JSON.stringify(payload));
       return {
         ...state,
         player: {
@@ -95,8 +96,9 @@ export default {
     },
     addToPlaylist(state, {payload}) {
       let _playlist = [...state.player.playlist, payload];
-      let playlist = dumplicateRemoveArr(_playlist)
+      let playlist = dumplicateRemoveArr(_playlist);
       // const playlist = Array.from(new Set([...state.player.playlist, payload]));// 数组去重Array.from(new Set(arr))
+      localStorage.setItem('_PLAYLIST',JSON.stringify(playlist));
       return {
         ...state,
         player: {
@@ -195,6 +197,8 @@ export default {
       }
     },
     setCurrentSong(state, {payload}) {
+      localStorage.setItem('currentSongId',payload);
+      localStorage.setItem('currentSongUrl',`http://music.163.com/song/media/outer/url?id=${payload}.mp3`);
       return {
         ...state,
         player: {
@@ -386,6 +390,15 @@ export default {
         type: 'fetchAddToPlaylist',
         payload,
       });
+    },
+    * fetchPlayerPlay({payload},{call,put,select}){
+      yield put({
+        type   : 'fetchSongDetail',
+        payload: localStorage.getItem('currentSongId'),
+      });
+      yield put({
+        type: 'playerPlay',
+      })
     },
     * fetchPlayerPrev({payload}, {call, put, select}) {
       yield put({
