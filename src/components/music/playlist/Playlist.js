@@ -9,7 +9,7 @@ const Playlist = ({playlist, onPlaylistPlay}) => {
     list = playlist.map((item,index)=>
       <>
         <div className={styles.playlistItem} key={item.id}>
-          <img src="../../../assets/imgs/wave.gif" alt=""/>
+          <img className={styles.playingGif} src="../../../assets/imgs/wave.gif" alt=""/>
           <span className={styles.number}>{index+1}</span>
           <span onClick={()=>onPlaylistPlay(item.id,item.copyright)} className={styles.songName}>{item.songName}</span>
           <span className={styles.singerName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
