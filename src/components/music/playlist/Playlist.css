@@ -29,16 +29,23 @@
 }
 .playingGif{
   position:absolute;
-  left:20px;
-  top:15px;
-  width:20px;
-  height:20px;
+  left:29px;
+  top:16px;
+  width:14px;
+  height:14px;
   z-index:10;
+  opacity:0;
 }
 .number{
   width:50px;
   text-align: right;
   color:rgba(255,255,255,.8);
+}
+.playingItem .playingGif{
+  opacity: 1;
+}
+.playingItem .number{
+  color:rgba(255,255,255,0);
 }
 .songName{
   width:68%;

@@ -231,6 +231,7 @@ export default {
         ...state.player.playlist,
         ...payload
       ]);
+      localStorage.setItem('_PLAYLIST',JSON.stringify(playlist));
       return {
         ...state,
         player: {
@@ -499,18 +500,20 @@ export default {
         };
         return songItem;
       });
-      yield put({
-        type   : 'addAllToPlaylist',
-        payload: tracks,
-      });
-      let currentSongId = null;
-      yield select(state => {
-        currentSongId = state.music.player.playlist[0].id;
-      });
+      let currentSongId = tracks[0].id;
       yield put({
         type   : 'setCurrentSong',
         payload: currentSongId,
       });
+      yield put({
+        type   : 'addAllToPlaylist',
+        payload: tracks,
+      });
+      // let currentSongId = null;
+      // yield select(state => {
+      //   currentSongId = state.music.player.playlist[0].id;
+      // });
+      //
       yield put({
         type   : 'fetchSongDetail',
         payload: currentSongId
@@ -522,11 +525,13 @@ export default {
   },
   subscriptions: {
     setup({dispatch, history}) {
-      history.listen(({pathname, query}) => {
+      history.listen(({pathname, query, params, search}) => {
+        console.log(11,search)
         if (pathname === '/' || pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         } else if (pathname === '/toplistDetail') {
-          dispatch({type: 'fetchToplistDetail', payload: query && query.id || 0});
+          let id = search.split('=')[1];
+          dispatch({type: 'fetchToplistDetail', payload: id || 0});
         } else if (pathname === '/topArtistList') {
           dispatch({type: 'fetchTopArtistList'});
         } else if (pathname === '/artistDetail') {

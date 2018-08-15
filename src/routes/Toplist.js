@@ -3,16 +3,18 @@ import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import styles from './common/index.css';
 import s from './Toplist.css'
+import Carousel from './common/Carousel';
 const Toplist = ({dispatch, toplist}) => {
   function toToplistDetail(id){
     dispatch(routerRedux.push({
-      pathname:'/toplistDetail',
+      pathname:'/toplistDetail?id='+id,
       query:{id},
     }));
   }
   return(
     <>
       <div className={styles.container}>
+        <Carousel/>
         <div className={s.title}>排行榜</div>
         <div className={s.toplistWrapper}>
             {

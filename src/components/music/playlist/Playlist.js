@@ -5,11 +5,12 @@ import {formatTime} from "../../../utils/tool";
 const Playlist = ({onPlaylistPlay}) => {
   let list = null;
   let playlist = JSON.parse(localStorage.getItem('_PLAYLIST'));
+  let currentSongId =localStorage.getItem('currentId');
   if(playlist){
     list = playlist.map((item,index)=>
       <>
-        <div className={styles.playlistItem} key={item.id}>
-          <img className={styles.playingGif} src="../../../assets/imgs/wave.gif" alt=""/>
+        <div className={`${localStorage.getItem('currentId')==item.id ? styles.playingItem + styles.playlistItem : styles.playlistItem }`} key={item.id}>
+          <img className={styles.playingGif} src="https://y.gtimg.cn/mediastyle/yqq/img/wave.gif" alt=""/>
           <span className={styles.number}>{index+1}</span>
           <span onClick={()=>onPlaylistPlay(item.id,item.copyright)} className={styles.songName}>{item.songName}</span>
           <span className={styles.singerName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
