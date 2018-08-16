@@ -240,6 +240,17 @@ export default {
           playlist,
         }
       };
+    },
+    playlistDel(state,{payload}){
+      let playlist = state.player.playlist.filter(item=>item.id!==payload);
+      localStorage.setItem('_PLAYLIST',JSON.stringify(playlist));
+      return {
+        ...state,
+        player: {
+          ...state.player,
+          playlist,
+        }
+      }
     }
   },
   effects      : {

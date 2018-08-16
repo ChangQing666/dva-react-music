@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import styles from './common/index.css';
 import s from './ArtistDetail.css'
 import Songlist from '../components/music/songlist/Songlist';
-
+import queryString from 'queryString';
 const ArtistInfo = ({dispatch, name, id, alias, img1v1Url, briefDesc, musicSize, albumSize, mvSize}) => {
   function handlePlayAll(id) {
     alert(id)
@@ -78,6 +78,12 @@ class ArtistDetail extends React.Component {
     super(props);
   }
 
+  componentDidUpdate() {
+    alert(123)
+    const {id} = queryString.parse(this.props.location.search.split('?')[1]);
+    this.props.dispatch({type: 'fetchArtistDetail', payload:id || 3684});
+    this.props.dispatch({type: 'fetchArtistMV', payload: id || 3684});
+  }
   render() {
     const {artist, hotSongs} = this.props.artistDetail;
     const mvs = this.props.mvs;

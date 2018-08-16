@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route, Switch} from 'dva/router';
+import {BrowserRouter, Router, Route, Switch} from 'dva/router';
 
 import Products from './routes/Products';
 import Countor from './routes/Countor';
