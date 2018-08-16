@@ -7,6 +7,7 @@ import {
   getArtistDetail, getArtistMV,getMvDetail
 } from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
+import queryString from 'queryString';
 
 export default {
   namespace    : 'music',
@@ -413,6 +414,10 @@ export default {
         currentSongId = state.music.player.currentSongId;
       });
       yield put({
+        type   : 'setCurrentSong',
+        payload: currentSongId,
+      });
+      yield put({
         type   : 'fetchSongDetail',
         payload: currentSongId
       });
@@ -430,6 +435,10 @@ export default {
       let currentSongId = null;
       yield select(state => {
         currentSongId = state.music.player.currentSongId;
+      });
+      yield put({
+        type   : 'setCurrentSong',
+        payload: currentSongId,
       });
       yield put({
         type   : 'fetchSongDetail',
@@ -526,7 +535,6 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname, query, params, search}) => {
-        console.log(11,search)
         if (pathname === '/' || pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         } else if (pathname === '/toplistDetail') {
@@ -535,8 +543,9 @@ export default {
         } else if (pathname === '/topArtistList') {
           dispatch({type: 'fetchTopArtistList'});
         } else if (pathname === '/artistDetail') {
-          dispatch({type: 'fetchArtistDetail', payload: query && query.id || 3684});
-          dispatch({type: 'fetchArtistMV', payload: query && query.id || 3684});
+          const {id} = queryString.parse(search.split('?')[1]);
+          dispatch({type: 'fetchArtistDetail', payload:id || 3684});
+          dispatch({type: 'fetchArtistMV', payload: id || 3684});
         }
       })
     },
