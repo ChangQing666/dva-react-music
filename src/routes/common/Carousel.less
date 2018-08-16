@@ -1,21 +1,22 @@
 .container {
   width: 746px;
-  height: 177px;
+  height: 200px;
   margin: 30px auto;
-  border: 1px solid #fff;
   position: relative;
   transform-style: preserve-3d;
   perspective: 470px;
   .slider {
     width: 470px;
     height: 175px;
+    border-radius:5px;
     position: absolute;
     left: 50%;
     top: 0;
-    transform: translate3d(-50%, 0, -880px);
-    transition: all 500ms ease-in-out;
     z-index:1;
-    border-radius:5px;
+    cursor: pointer;
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), color-stop(88%, transparent) , to(rgba(250,250,250,.3)));
+    transform: translate3d(-50%, 0, -880px);
+    transition: transform 500ms ease-out;
     &:before{
       position: absolute;
       content: "";
