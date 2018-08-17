@@ -1,8 +1,7 @@
 .playlistContainer{
   box-sizing: border-box;
-  width:60%;
+  width:600px;
   height:100%;
-
 }
 .listContent{
   width:100%;
@@ -27,9 +26,9 @@
   background-color: #fff;
   opacity: .02;
 }
-.playingGif{
+.playlistItem .playingGif{
   position:absolute;
-  left:29px;
+  left:36px;
   top:16px;
   width:14px;
   height:14px;
@@ -45,26 +44,49 @@
   opacity: 1;
 }
 .playingItem .number{
+  display:inline-flex;
+  width:50px;
   color:rgba(255,255,255,0);
 }
 .songName{
-  width:68%;
+  width:255px;
   box-sizing: border-box;
   padding-left:8px;
-  cursor:pointer;
   text-align:left;
+  position:relative;
+  padding-right:5px;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.songName:hover{
-  color:#31c27c;
-  transition: all linear 0.3s;
+.btnContainer{
+  width:90px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
 }
-.songName:first-child:hover{
-  color:inherit;
-  cursor: no-drop;
+.btnDel,.btnPlay{
+  color:rgba(255,255,255,.6);
+  font-size:20px;
+  z-index:10;
+  cursor:pointer;
+  margin:0 5px;
+}
+.btnDel:hover,.btnPlay:hover{
+  color:#fff;
+}
+.playlistItem:hover .btnContainer{
+  visibility: visible;
 }
 .singerName{
-  width:30%;
+  width:155px;
   padding-left:15px;
+  box-sizing: border-box;
+  cursor:pointer;
+}
+.singerName:hover{
+  color:#31c27c;
 }
 .dt{
   width:50px;

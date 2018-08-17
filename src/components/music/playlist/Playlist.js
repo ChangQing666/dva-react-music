@@ -2,18 +2,46 @@ import React from 'react';
 import styles from './Playlist.css';
 import {formatTime} from "../../../utils/tool";
 
-const Playlist = ({onPlaylistPlay}) => {
+const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
   let list = null;
   let playlist = JSON.parse(localStorage.getItem('_PLAYLIST'));
-  let currentSongId =localStorage.getItem('currentId');
+  // let currentSongId =localStorage.getItem('currentId');
+  function onPlaylistPlay(id,copyright) {
+    if(copyright>1){
+      alert('该歌曲无版权');
+    }else{
+      dispatch({
+        type   : 'music/fetchPlaylistPlay',
+        payload: id
+      })
+    }
+  }
+
+  function onPlaylistDel(id){
+    dispatch({
+      type:'music/playlistDel',
+      payload:id,
+    })
+  }
+
+
   if(playlist){
     list = playlist.map((item,index)=>
       <>
-        <div className={`${localStorage.getItem('currentId')==item.id ? styles.playingItem + styles.playlistItem : styles.playlistItem }`} key={item.id}>
+        <div className={`${currentSongId===item.id ? styles.playingItem + ' ' +styles.playlistItem : styles.playlistItem }`} key={item.id}>
           <img className={styles.playingGif} src="https://y.gtimg.cn/mediastyle/yqq/img/wave.gif" alt=""/>
           <span className={styles.number}>{index+1}</span>
-          <span onClick={()=>onPlaylistPlay(item.id,item.copyright)} className={styles.songName}>{item.songName}</span>
-          <span className={styles.singerName} onClick={()=>alert(item.singerId)}>{item.singer}</span>
+          <span className={styles.songName}
+                onClick={()=>onPlaylistPlay(item.id,item.copyright)}>
+                {item.songName}
+          </span>
+          <span className={styles.btnContainer}>
+              <i className={`iconfont icon-play_icon ${styles.btnPlay}`}
+                 onClick={()=>onPlaylistPlay(item.id,item.copyright)}></i>
+              <i className={`iconfont icon-delete ${styles.btnDel}`}
+                 onClick={()=>onPlaylistDel(item.id)}></i>
+          </span>
+          <span className={styles.singerName} onClick={()=>toArtistDetail(item.singerId)}>{item.singer}</span>
           <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
         </div>
         <i className={styles.itemLine}></i>
@@ -24,9 +52,10 @@ const Playlist = ({onPlaylistPlay}) => {
     <div className={styles.playlistContainer}>
       <i className={styles.itemLine}></i>
       <div className={styles.playlistItem}>
-        <img src="../../../assets/imgs/wave.gif" alt=""/>
+        <img src="" alt=""/>
         <span className={styles.number}></span>
         <span className={styles.songName}>歌曲</span>
+        <span className={styles.btnContainer}></span>
         <span className={styles.singerName}>歌手</span>
         <span className={styles.dt}>时长</span>
       </div>

@@ -6,8 +6,7 @@ import s from './TopArtistList.css'
 const TopArtistList = ({dispatch, topArtistList}) => {
   function toArtistDetail(id){
     dispatch(routerRedux.push({
-      pathname:'/artistDetail',
-      query:{id},
+      pathname:'/artistDetail?id='+id
     }));
   }
   return(

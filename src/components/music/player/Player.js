@@ -4,7 +4,7 @@ import styles from './Player.css';
 import {formatTime} from "../../../utils/tool";
 import Lyric from '../lyric/Lyric';
 import Playlist from '../playlist/Playlist';
-
+import {routerRedux} from 'dva/router';
 class Volume extends React.Component {
   render() {
     return (
@@ -66,6 +66,7 @@ class Player extends React.Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.handlePlaylistShow = this.handlePlaylistShow.bind(this);
+    this.handleToArtistDetail = this.handleToArtistDetail.bind(this);
     this.state = {
       currentTime   : 0,
       duration      : 0,
@@ -130,7 +131,14 @@ class Player extends React.Component {
     });
     // this.props.onGetLyric();
   }
-
+  handleToArtistDetail(id){
+    this.setState({
+      isShowPlaylist: false,
+    });
+    this.props.dispatch(routerRedux.push({
+      pathname:'/artistDetail?id='+id
+    }));
+  }
   componentDidUpdate() {
     this.handlePlay();
   }
@@ -211,8 +219,9 @@ class Player extends React.Component {
             <div className={styles.playlistLyricWrapper}>
               <div className={styles.playlistLyricContainer}
               >
-                <Playlist playlist={this.props.player.playlist}
-                          onPlaylistPlay={this.props.onPlaylistPlay}
+                <Playlist currentSongId={this.props.player.currentSongId}
+                          toArtistDetail={this.handleToArtistDetail}
+                          dispatch={this.props.dispatch}
                 />
                 {<Lyric lyric={this.props.player.lyric} songDetail={this.props.player.songDetail}
                         lyricActiveNo={this.state.lyricActiveNo}/>}
