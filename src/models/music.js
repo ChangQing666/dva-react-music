@@ -529,11 +529,6 @@ export default {
         type   : 'addAllToPlaylist',
         payload: tracks,
       });
-      // let currentSongId = null;
-      // yield select(state => {
-      //   currentSongId = state.music.player.playlist[0].id;
-      // });
-      //
       yield put({
         type   : 'fetchSongDetail',
         payload: currentSongId
@@ -544,8 +539,8 @@ export default {
     }
   },
   subscriptions: {
-    keyboardWatcher({dispatch}){
-      key('⌘+up, ctrl+up', ()=>{dispatch({type: 'up'})})
+    keyboardWatcher({dispatch}){// 监听键盘事件()=>dispatch({type:xx,payload:xxx})
+      key('⌘+up, ctrl+up', ()=>alert('up'))
     },
     setup({dispatch, history}) {
       history.listen(({pathname, query, params, search}) => {
@@ -557,9 +552,9 @@ export default {
         } else if (pathname === '/topArtistList') {
           dispatch({type: 'fetchTopArtistList'});
         } else if (pathname === '/artistDetail') {
-          const {id} = queryString.parse(search.split('?')[1]);
-          dispatch({type: 'fetchArtistDetail', payload:id || 3684});
-          dispatch({type: 'fetchArtistMV', payload: id || 3684});
+          // const {id} = queryString.parse(search.split('?')[1]);
+          // dispatch({type: 'fetchArtistDetail', payload:id || 3684});
+          // dispatch({type: 'fetchArtistMV', payload: id || 3684});
         }
       })
     },

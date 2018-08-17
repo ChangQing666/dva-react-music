@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import Player from '../components/music/player/Player';
+import Player from '../../components/music/player/Player';
 
 const Footer = ({dispatch, player}) => {
   function handlePlayerPlay() {

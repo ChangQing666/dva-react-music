@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
+import {withRouter} from 'dva/router'
 import styles from './common/index.css';
 import s from './ArtistDetail.css'
 import Songlist from '../components/music/songlist/Songlist';
@@ -76,13 +77,20 @@ const MVlist = ({dispatch, mvs}) => {
 class ArtistDetail extends React.Component {
   constructor(props) {
     super(props);
+    this.fetchArtistDetail = this.fetchArtistDetail.bind(this);
   }
-
-  componentDidUpdate() {
-    alert(123)
-    const {id} = queryString.parse(this.props.location.search.split('?')[1]);
-    this.props.dispatch({type: 'fetchArtistDetail', payload:id || 3684});
-    this.props.dispatch({type: 'fetchArtistMV', payload: id || 3684});
+  fetchArtistDetail(){
+    const {id} = this.props.match.params;
+    this.props.dispatch({type: 'fetchArtistDetail', payload:id});
+    this.props.dispatch({type: 'fetchArtistMV', payload: id});
+  }
+  componentDidMount() {
+    console.log('详情页', this.props);
+    this.fetchArtistDetail();
+  }
+  componentWillReceiveProps(nextProps){
+    console.log('receive详情页', nextProps);
+    this.fetchArtistDetail();
   }
   render() {
     const {artist, hotSongs} = this.props.artistDetail;
