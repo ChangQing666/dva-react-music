@@ -17,10 +17,6 @@ const app = dva({
 // app.use({});
 
 // 3. Model
-app.model(require('./models/products').default);
-app.model(require('./models/countor').default);
-app.model(require('./models/clickTimes').default);
-app.model(require('./models/trasnlator').default);
 app.model(require('./models/music').default);
 // 4. Router
 app.router(require('./router').default);

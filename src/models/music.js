@@ -8,7 +8,7 @@ import {
 } from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 import queryString from 'queryString';
-
+import key from 'keymaster';
 export default {
   namespace    : 'music',
   state        : {
@@ -544,6 +544,9 @@ export default {
     }
   },
   subscriptions: {
+    keyboardWatcher({dispatch}){
+      key('⌘+up, ctrl+up', ()=>{dispatch({type: 'up'})})
+    },
     setup({dispatch, history}) {
       history.listen(({pathname, query, params, search}) => {
         if (pathname === '/' || pathname === '/toplist') {
