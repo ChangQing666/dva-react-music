@@ -29,23 +29,30 @@ class Carousel extends React.Component{
         }
       ]
     }
+    this.handleNext = this.handleNext.bind(this);
+    this.handlePrev = this.handlePrev.bind(this);
   }
 
   handleNext(){
     let currentIndex = ++this.state.currentIndex % this.state.sliders.length;
-    this.setState({
-      currentIndex,
-    })
+    this.setState({currentIndex});
   }
   handlePrev(){
     let currentIndex = this.state.currentIndex === 0 ? this.state.sliders.length - 1 : this.state.currentIndex - 1;
-    this.setState({
-      currentIndex,
-    })
+    this.setState({currentIndex});
+  }
+  handleDotClick(currentIndex){
+    this.setState({currentIndex});
+  }
+  componentDidMount(){
+    this.timer = setInterval(this.handleNext,4000)
+  }
+  componentWillUnmount(){
+    clearInterval(this.timer);
   }
   render(){
     const slidersData = this.state.sliders;
-    const a = (index)=>{
+    const setSliderClass = (index)=>{
       let next = this.state.currentIndex === (this.state.sliders.length - 1) ? 0 : this.state.currentIndex + 1;
       let prev = this.state.currentIndex === 0 ? this.state.sliders.length - 1 : this.state.currentIndex - 1;
       switch (index) {
@@ -58,19 +65,16 @@ class Carousel extends React.Component{
         default:
           return '';
       }
-    }
-
+    };
 
     const sliders = slidersData.map((item, index)=>(
       <div key={index}
-          className={
-            `${styles.slider}
-            ${a(index)}
-            `
-            }
-      style={{backgroundImage:`url(${item.picUrl}`}}>
+           className={`${styles.slider} ${setSliderClass(index)}`}
+           style={{backgroundImage:`url(${item.picUrl}`}}>
       </div>
-    ))
+    ));
+    const dots = slidersData.map((item, index)=>(<i onClick={()=>this.handleDotClick(index)}></i>));
+
     return (
         <div className={styles.container}>
           {sliders}
@@ -79,6 +83,7 @@ class Carousel extends React.Component{
                onClick={()=>this.handlePrev()}>{'<'}</div>
           <div className={styles.btn+' '+styles.btnNext}
                onClick={()=>this.handleNext()}>{'>'}</div>
+          <div className={styles.dotsContainer}>{dots}</div>
         </div>
     )
   }
