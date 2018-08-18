@@ -5,7 +5,6 @@ import {formatTime} from "../../../utils/tool";
 const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
   let list = null;
   let playlist = JSON.parse(localStorage.getItem('_PLAYLIST'));
-  // let currentSongId =localStorage.getItem('currentId');
   function onPlaylistPlay(id,copyright) {
     if(copyright>1){
       alert('该歌曲无版权');
@@ -27,8 +26,8 @@ const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
 
   if(playlist){
     list = playlist.map((item,index)=>
-      <>
-        <div className={`${currentSongId===item.id ? styles.playingItem + ' ' +styles.playlistItem : styles.playlistItem }`} key={item.id}>
+      <div key={item.id}>
+        <div className={`${currentSongId===item.id ? styles.playingItem + ' ' +styles.playlistItem : styles.playlistItem }`} >
           <img className={styles.playingGif} src="https://y.gtimg.cn/mediastyle/yqq/img/wave.gif" alt=""/>
           <span className={styles.number}>{index+1}</span>
           <span className={styles.songName}
@@ -45,8 +44,10 @@ const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
           <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
         </div>
         <i className={styles.itemLine}></i>
-      </>
+      </div>
     )
+  }else{
+    list=null;
   }
   return(
     <div className={styles.playlistContainer}>
@@ -60,7 +61,7 @@ const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
         <span className={styles.dt}>时长</span>
       </div>
       <i className={styles.itemLine}></i>
-      <div div className={styles.listContent}>
+      <div className={styles.listContent}>
         {list}
       </div>
     </div>

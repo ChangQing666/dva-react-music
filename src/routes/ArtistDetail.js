@@ -79,18 +79,18 @@ class ArtistDetail extends React.Component {
     super(props);
     this.fetchArtistDetail = this.fetchArtistDetail.bind(this);
   }
-  fetchArtistDetail(){
-    const {id} = this.props.match.params;
-    this.props.dispatch({type: 'fetchArtistDetail', payload:id});
-    this.props.dispatch({type: 'fetchArtistMV', payload: id});
+  fetchArtistDetail(id){
+    this.props.dispatch({type: 'music/fetchArtistDetail', payload:id});
+    this.props.dispatch({type: 'music/fetchArtistMV', payload: id});
   }
   componentDidMount() {
-    console.log('详情页', this.props);
-    this.fetchArtistDetail();
+    const {id} = this.props.match.params;
+    this.fetchArtistDetail(id);
   }
   componentWillReceiveProps(nextProps){
-    console.log('receive详情页', nextProps);
-    this.fetchArtistDetail();
+    if(this.props.match.params.id!==nextProps.match.params.id){
+      this.fetchArtistDetail(nextProps.match.params.id);
+    }
   }
   render() {
     const {artist, hotSongs} = this.props.artistDetail;

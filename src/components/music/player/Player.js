@@ -136,7 +136,7 @@ class Player extends React.Component {
       isShowPlaylist: false,
     });
     this.props.dispatch(routerRedux.push({
-      pathname:'/artistDetail?id='+id
+      pathname:'/artistDetail/'+id
     }));
   }
   componentDidUpdate() {
