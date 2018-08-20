@@ -1,14 +1,24 @@
-.container{
+#wrapper{
   position:absolute;
   top:55px;
   bottom:75px;
   left:0;
   right:0;
-  width:980px;
+  /*width:980px;*/
+  width:100%;
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin: 0 auto;
   background:#fff;
   overflow-y: scroll;
 }
-.container::-webkit-scrollbar {
+#wrapper::-webkit-scrollbar {
   width: 0!important;
 }
+.container{
+  max-width:1200px;
+  display:table;
+  margin:0 auto;
+}
+

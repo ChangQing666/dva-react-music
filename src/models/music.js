@@ -1,21 +1,36 @@
 import {
+  getRecPlaylist,
+  getRecNewSong,
+  getRecMv,
+  getRecDj,
+  getRecNewAlbum,
   getToplist,
   getPlaylistDetail,
   getSongDetail,
   getLyric,
   getTopArtistList,
-  getArtistDetail, getArtistMV,getMvDetail
+  getArtistDetail,
+  getArtistMV,
+  getMvDetail,
+  getBanner
 } from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
-import queryString from 'queryString';
 import key from 'keymaster';
 export default {
   namespace    : 'music',
   state        : {
+    banner:[],
+    home: {
+      playlist:[],
+      newSong:[],
+      mv:[],
+      dj:[],
+      newAlbum:[],
+    },
     topListId    : 0,
     topListDesc  : {},
     toplist      : [],
-    songlist     : '',
+    songlist     : [],
     topArtistList: [],
     artistDetail : {artist: {}, hotSongs: []},
     artistMV     : [],
@@ -32,6 +47,57 @@ export default {
     }
   },
   reducers     : {
+    banner(state, {payload}){
+      return {
+        ...state,
+        banner:payload,
+      }
+    },
+    recPlaylist(state, {payload}){
+      return {
+        ...state,
+        home:{
+          ...state.home,
+          playlist:payload
+        },
+      }
+    },
+    recNewSong(state, {payload}){
+      return {
+        ...state,
+        home:{
+          ...state.home,
+          newSong:payload
+        },
+      }
+    },
+    recMv(state, {payload}){
+      return {
+        ...state,
+        home:{
+          ...state.home,
+          mv:payload
+        },
+      }
+    },
+    recDj(state, {payload}){
+      return {
+        ...state,
+        home:{
+          ...state.home,
+          dj:payload
+        },
+      }
+    },
+    recNewAlbum(state, {payload}){
+      return {
+        ...state,
+        home:{
+          ...state.home,
+          newAlbum:payload
+        },
+      }
+    },
     topListId(state, {payload}) {
       return {
         ...state,
@@ -254,6 +320,54 @@ export default {
     }
   },
   effects      : {
+    * fetchBanner({payload}, {call, put}){
+      let result = yield call(getBanner);
+      let banner = result.data.banners;
+      yield put({
+        type: 'banner',
+        payload: banner,
+      })
+    },
+    * fetchRecPlaylist({payload}, {call, put}){
+      let result = yield call(getRecPlaylist);
+      let playlist = result.data.result;
+      yield put({
+        type: 'recPlaylist',
+        payload: playlist,
+      })
+    },
+    * fetchRecNewSong({payload}, {call, put}){
+      let result = yield call(getRecNewSong);
+      let newSong = result.data.result;
+      yield put({
+        type: 'recNewSong',
+        payload: newSong,
+      })
+    },
+   * fetchRecMv({payload}, {call, put}){
+        let result = yield call(getRecMv);
+        let mv = result.data.result;
+        yield put({
+          type: 'recMv',
+          payload: mv,
+        })
+      },
+    * fetchRecDj({payload}, {call, put}){
+      let result = yield call(getRecDj);
+      let dj = result.data.result;
+      yield put({
+        type: 'recDj',
+        payload: dj,
+      })
+    },
+    * fetchRecNewAlbum({payload}, {call, put}){
+      let result = yield call(getRecNewAlbum);
+      let newAlbum = result.data.result;
+      yield put({
+        type: 'recNewAlbum',
+        payload: newAlbum,
+      })
+    },
     * fetchTopArtistList({payload}, {call, put}) {
       let result = yield call(getTopArtistList);
       let topArtistList = result.data.list.artists;
@@ -544,7 +658,7 @@ export default {
     },
     setup({dispatch, history}) {
       history.listen(({pathname, query, params, search}) => {
-        if (pathname === '/' || pathname === '/toplist') {
+        if (pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         } else if (pathname === '/toplistDetail') {
           let id = search.split('=')[1];
