@@ -5,6 +5,11 @@ import styles from './common/index.css';
 import {playlistWrapper,ant_carousel,playlistCarousel,playlistItem, cover,mask,icon_play,name,playcount} from './Home.less';
 import Slider from "react-slick";
 const RecPlaylist = ({dispatch, recPlaylist}) => {
+  function toPlaylist(id){
+    dispatch(routerRedux.push({
+      pathname:'/playlist/'+id,
+    }));
+  }
   return (
     <div className={playlistWrapper}>
       <Slider   dots={true}
@@ -13,7 +18,7 @@ const RecPlaylist = ({dispatch, recPlaylist}) => {
                 slidesToScroll={5}
                 infinite={true}
                 autoplay={true}
-                autoplaySpeed={5000}
+                autoplaySpeed={10000000}
                 className={ant_carousel}>
         {
           recPlaylist.map((item, index) => {
@@ -22,10 +27,10 @@ const RecPlaylist = ({dispatch, recPlaylist}) => {
                 <div className={cover}>
                   <img src={item.picUrl} alt=""/>
                   <i className={mask}></i>
-                  <i className={icon_play} onClick={()=>alert(item.picUrl)}></i>
+                  <i className={icon_play} onClick={()=>toPlaylist(item.id)}></i>
                 </div>
                 <div className={name}>{item.name}</div>
-                <div className={playcount}>{item.playCount}</div>
+                <div className={playcount}>播放量：{parseInt(item.playCount/10000)}万</div>
               </div>
             )
           })
@@ -79,7 +84,7 @@ class Home extends React.Component{
       <>
         <div className={styles.container}>
           <RecNewAlbum/>
-          <RecPlaylist recPlaylist={this.props.home.playlist}/>
+          <RecPlaylist recPlaylist={this.props.home.playlist} dispatch={this.props.dispatch}/>
         </div>
       </>
     )

@@ -392,7 +392,7 @@ export default {
         payload: toplist
       })
     },
-    * fetchToplistDetail({payload}, {call, put}) {
+    * fetchPlaylist({payload}, {call, put}) {
       const result = yield call(getPlaylistDetail, payload);
       yield put({
         type   : 'toplistDetail',
@@ -661,8 +661,8 @@ export default {
         if (pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         } else if (pathname === '/toplistDetail') {
-          let id = search.split('=')[1];
-          dispatch({type: 'fetchToplistDetail', payload: id || 0});
+          // let id = search.split('=')[1];
+          // dispatch({type: 'fetchToplistDetail', payload: id || 0});
         } else if (pathname === '/topArtistList') {
           dispatch({type: 'fetchTopArtistList'});
         } else if (pathname === '/artistDetail') {
