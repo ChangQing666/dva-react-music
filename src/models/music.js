@@ -362,7 +362,7 @@ export default {
     },
     * fetchRecNewAlbum({payload}, {call, put}){
       let result = yield call(getRecNewAlbum);
-      let newAlbum = result.data.result;
+      let newAlbum = result.data.albums;
       yield put({
         type: 'recNewAlbum',
         payload: newAlbum,
