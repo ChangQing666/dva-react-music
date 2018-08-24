@@ -30,6 +30,11 @@ export function getRecNewAlbum(){
   return request('json',`${apiPath.REC_NEWALBUM}`,{method:'get'});
 }
 
+// 获取专辑详情
+export function getAlbum(id){
+  return request('json',`${apiPath.ALBUM}?id=${id}`,{method:'get'});
+}
+
 
 // 获取排行榜列表
 export function getToplist(id){

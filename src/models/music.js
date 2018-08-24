@@ -4,6 +4,7 @@ import {
   getRecMv,
   getRecDj,
   getRecNewAlbum,
+  getAlbum,
   getToplist,
   getPlaylistDetail,
   getSongDetail,
@@ -27,6 +28,7 @@ export default {
       dj:[],
       newAlbum:[],
     },
+    album:{},
     topListId    : 0,
     topListDesc  : {},
     toplist      : [],
@@ -96,6 +98,12 @@ export default {
           ...state.home,
           newAlbum:payload
         },
+      }
+    },
+     album(state, {payload}){
+      return {
+        ...state,
+        album:payload
       }
     },
     topListId(state, {payload}) {
@@ -366,6 +374,14 @@ export default {
       yield put({
         type: 'recNewAlbum',
         payload: newAlbum,
+      })
+    },
+    * fetchAlbum({payload}, {call, put}){
+      let result = yield call(getAlbum);
+      let album = result.data;
+      yield put({
+        type: 'album',
+        payload: album,
       })
     },
     * fetchTopArtistList({payload}, {call, put}) {
