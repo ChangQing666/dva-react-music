@@ -1,6 +1,9 @@
 const domain = `http://localhost:3000`;
 const apiPath = {
   BANNER:          `${domain}/banner`,
+  SEARCH:          `${domain}/search`,
+  SEARCH_SUGGEST:  `${domain}/search/suggest`,
+
   REC_PLAYLIST:    `${domain}/personalized?limit=20`,//推荐歌单
   REC_NEWSONG:     `${domain}/personalized/newsong?limit=10`,//推荐新音乐
   REC_MV:          `${domain}/personalized/mv`,//推荐mv

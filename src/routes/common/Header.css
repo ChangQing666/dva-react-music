@@ -9,6 +9,7 @@
   display:flex;
   justify-content: start;
   align-items: center;
+  position:relative;
 }
 .navItem{
   text-align:center;

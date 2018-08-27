@@ -5,6 +5,17 @@ import request from '../utils/request';
 export function getBanner(){
   return request('json',`${apiPath.BANNER}`,{method:'get'});
 }
+
+// 获取search
+export function getSearch(keyword){
+  return request('json',`${apiPath.SEARCH}?keywords=${keyword}`,{method:'get'});
+}
+
+// 获取searchSuggest
+export function getSearchSuggest(keyword){
+  return request('json',`${apiPath.SEARCH_SUGGEST}?keywords=${keyword}`,{method:'get'});
+}
+
 // 获取推荐歌单
 export function getRecPlaylist(){
   return request('json',`${apiPath.REC_PLAYLIST}`,{method:'get'});

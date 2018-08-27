@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {Link} from 'dva/router';
+import Search from './Search'
 import styles from './Header.css'
 class Header extends React.Component{
   constructor(props){
@@ -50,7 +51,9 @@ class Header extends React.Component{
       <div className={styles.navWrapper}>
         <ul className={styles.navContainer}>
           {Navs}
+          <Search/>
         </ul>
+
       </div>
     )
   }

@@ -13,7 +13,9 @@ import {
   getArtistDetail,
   getArtistMV,
   getMvDetail,
-  getBanner
+  getBanner,
+  getSearch,
+  getSearchSuggest,
 } from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 import key from 'keymaster';
@@ -29,6 +31,8 @@ export default {
       dj: [],
       newAlbum: [],
     },
+    search:{},
+    searchSuggest:{},
     album: {
       songs: [],
       album: {},
@@ -57,6 +61,18 @@ export default {
       return {
         ...state,
         banner: payload,
+      }
+    },
+    search(state, payload){
+      return {
+        ...state,
+        search: payload
+      }
+    },
+    searchSuggest(state, payload){
+      return {
+        ...state,
+        searchSuggest: payload
       }
     },
     recPlaylist(state, {payload}) {
@@ -341,6 +357,22 @@ export default {
       yield put({
         type: 'banner',
         payload: banner,
+      })
+    },
+    * fetchSearch({payload}, {call, put}){
+      let result = yield call(getSearch, payload);
+      let search = result.data.result;
+      yield put({
+        type: 'search',
+        payload: search,
+      })
+    },
+    * fetchSearchSuggest({payload}, {call, put}){
+      let result = yield call(getSearchSuggest, payload);
+      let searchSuggest = result.data.result;
+      yield put({
+        type: 'searchSuggest',
+        payload: searchSuggest,
       })
     },
     * fetchRecPlaylist({payload}, {call, put}) {
