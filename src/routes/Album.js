@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import Songlist from '../components/music/songlist/Songlist';
-import styles from './common/index.css';
+import styles from './Album.less';
 
 const AlbumDesc = ({albumDesc, dispatch}) => {
   function  handlePlayAll(id){
@@ -11,10 +11,24 @@ const AlbumDesc = ({albumDesc, dispatch}) => {
     })
   }
   return (
-    <div>
-
+    <div className={styles.descWrapper}>
+      <div>
+        {/*{albumDesc.artist}*/}
+      </div>
+      <img src={albumDesc.picUrl} alt=""/>
+      <div className={styles.descContainer}>
+        <h6>{albumDesc.name}</h6>
+        <p>歌手: <span>{false}</span></p>
+        <p>发行时间：{albumDesc.publishTime}</p>
+        <p>发行公司：{albumDesc.company}</p>
+        <div>
+          专辑介绍： {albumDesc.description}
+        </div>
+        <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`}
+                onClick={() => handlePlayAll(albumDesc.id)}> 播放全部
+        </button>
+      </div>
     </div>
-
   )
 }
 
@@ -39,15 +53,17 @@ class Album extends React.Component{
   render(){
     return(
       <div className={styles.container}>
-        <AlbumDesc topListDesc={this.props.album.album}/>
-        <Songlist dispatch={this.props.dispatch} songlist={this.props.album.songs}/>
+        {/*<div>{JSON.stringify(this.props.album.name)}</div>*/}
+        <AlbumDesc albumDesc={this.props.album} dispatch={this.props.dispatch}/>
+        <Songlist  songlist={this.props.songs}  dispatch={this.props.dispatch}/>
       </div>
     )
   }
 }
 function mapStateToProps(state){
   return {
-    album: state.music.album,
+    songs: state.music.album.songs,
+    album: state.music.album.album,
   }
 }
 

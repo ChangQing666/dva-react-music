@@ -38,4 +38,12 @@ const formatLyric = function(str){
   });
   return lyric;
 }
-export {formatTime, dumplicateRemoveArr, formatLyric};
+
+const splitArr = function(arr, step) {
+  let R = [], F;
+  for (F = 0; F < arr.length;) {
+    R.push(arr.slice(F, F += step))
+  }
+  return R
+}
+export {formatTime, dumplicateRemoveArr, formatLyric, splitArr};

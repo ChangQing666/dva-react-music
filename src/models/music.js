@@ -17,93 +17,101 @@ import {
 } from '../services/musicService';
 import {dumplicateRemoveArr, formatLyric} from "../utils/tool";
 import key from 'keymaster';
+
 export default {
-  namespace    : 'music',
-  state        : {
-    banner:[],
+  namespace: 'music',
+  state: {
+    banner: [],
     home: {
-      playlist:[],
-      newSong:[],
-      mv:[],
-      dj:[],
-      newAlbum:[],
+      playlist: [],
+      newSong: [],
+      mv: [],
+      dj: [],
+      newAlbum: [],
     },
-    album:{},
-    topListId    : 0,
-    topListDesc  : {},
-    toplist      : [],
-    songlist     : [],
+    album: {
+      songs: [],
+      album: {},
+    },
+    topListId: 0,
+    topListDesc: {},
+    toplist: [],
+    songlist: [],
     topArtistList: [],
-    artistDetail : {artist: {}, hotSongs: []},
-    artistMV     : [],
-    mvDetail     : {},
-    player       : {
-      isPlay        : false,
-      ended         : false,
-      currentSongId : localStorage.getItem('currentSongId'),
+    artistDetail: {artist: {}, hotSongs: []},
+    artistMV: [],
+    mvDetail: {},
+    player: {
+      isPlay: false,
+      ended: false,
+      currentSongId: localStorage.getItem('currentSongId'),
       currentSongUrl: localStorage.getItem('currentSongUrl'),
-      playlist      : localStorage.getItem('_PLAYLIST')?JSON.parse(localStorage.getItem('_PLAYLIST')):[],
-      loopType      : 1,
-      songDetail    : localStorage.getItem('songDetail')?JSON.parse(localStorage.getItem('songDetail')):{},
-      lyric         : null,
+      playlist: localStorage.getItem('_PLAYLIST') ? JSON.parse(localStorage.getItem('_PLAYLIST')) : [],
+      loopType: 1,
+      songDetail: localStorage.getItem('songDetail') ? JSON.parse(localStorage.getItem('songDetail')) : {},
+      lyric: null,
     }
   },
-  reducers     : {
-    banner(state, {payload}){
+  reducers: {
+    banner(state, {payload}) {
       return {
         ...state,
-        banner:payload,
+        banner: payload,
       }
     },
-    recPlaylist(state, {payload}){
+    recPlaylist(state, {payload}) {
       return {
         ...state,
-        home:{
+        home: {
           ...state.home,
-          playlist:payload
+          playlist: payload
         },
       }
     },
-    recNewSong(state, {payload}){
+    recNewSong(state, {payload}) {
       return {
         ...state,
-        home:{
+        home: {
           ...state.home,
-          newSong:payload
+          newSong: payload
         },
       }
     },
-    recMv(state, {payload}){
+    recMv(state, {payload}) {
       return {
         ...state,
-        home:{
+        home: {
           ...state.home,
-          mv:payload
+          mv: payload
         },
       }
     },
-    recDj(state, {payload}){
+    recDj(state, {payload}) {
       return {
         ...state,
-        home:{
+        home: {
           ...state.home,
-          dj:payload
+          dj: payload
         },
       }
     },
-    recNewAlbum(state, {payload}){
+    recNewAlbum(state, {payload}) {
       return {
         ...state,
-        home:{
+        home: {
           ...state.home,
-          newAlbum:payload
+          newAlbum: payload
         },
       }
     },
-     album(state, {payload}){
+    album(state, {payload}) {
       return {
         ...state,
-        album:payload
+        album: {
+          ...state.album,
+          songs: payload.songs,
+          album: payload.album,
+        }
       }
     },
     topListId(state, {payload}) {
@@ -158,9 +166,8 @@ export default {
         mvDetail: payload,
       }
     },
-
     songDetail(state, {payload}) {
-      localStorage.setItem('songDetail',JSON.stringify(payload));
+      localStorage.setItem('songDetail', JSON.stringify(payload));
       return {
         ...state,
         player: {
@@ -173,7 +180,7 @@ export default {
       let _playlist = [...state.player.playlist, payload];
       let playlist = dumplicateRemoveArr(_playlist);
       // const playlist = Array.from(new Set([...state.player.playlist, payload]));// 数组去重Array.from(new Set(arr))
-      localStorage.setItem('_PLAYLIST',JSON.stringify(playlist));
+      localStorage.setItem('_PLAYLIST', JSON.stringify(playlist));
       return {
         ...state,
         player: {
@@ -272,13 +279,13 @@ export default {
       }
     },
     setCurrentSong(state, {payload}) {
-      localStorage.setItem('currentSongId',payload);
-      localStorage.setItem('currentSongUrl',`http://music.163.com/song/media/outer/url?id=${payload}.mp3`);
+      localStorage.setItem('currentSongId', payload);
+      localStorage.setItem('currentSongUrl', `http://music.163.com/song/media/outer/url?id=${payload}.mp3`);
       return {
         ...state,
         player: {
           ...state.player,
-          currentSongId : payload,
+          currentSongId: payload,
           currentSongUrl: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
         }
       }
@@ -306,7 +313,7 @@ export default {
         ...state.player.playlist,
         ...payload
       ]);
-      localStorage.setItem('_PLAYLIST',JSON.stringify(playlist));
+      localStorage.setItem('_PLAYLIST', JSON.stringify(playlist));
       return {
         ...state,
         player: {
@@ -315,9 +322,9 @@ export default {
         }
       };
     },
-    playlistDel(state,{payload}){
-      let playlist = state.player.playlist.filter(item=>item.id!==payload);
-      localStorage.setItem('_PLAYLIST',JSON.stringify(playlist));
+    playlistDel(state, {payload}) {
+      let playlist = state.player.playlist.filter(item => item.id !== payload);
+      localStorage.setItem('_PLAYLIST', JSON.stringify(playlist));
       return {
         ...state,
         player: {
@@ -327,8 +334,8 @@ export default {
       }
     }
   },
-  effects      : {
-    * fetchBanner({payload}, {call, put}){
+  effects: {
+    * fetchBanner({payload}, {call, put}) {
       let result = yield call(getBanner);
       let banner = result.data.banners;
       yield put({
@@ -336,7 +343,7 @@ export default {
         payload: banner,
       })
     },
-    * fetchRecPlaylist({payload}, {call, put}){
+    * fetchRecPlaylist({payload}, {call, put}) {
       let result = yield call(getRecPlaylist);
       let playlist = result.data.result;
       yield put({
@@ -344,7 +351,7 @@ export default {
         payload: playlist,
       })
     },
-    * fetchRecNewSong({payload}, {call, put}){
+    * fetchRecNewSong({payload}, {call, put}) {
       let result = yield call(getRecNewSong);
       let newSong = result.data.result;
       yield put({
@@ -352,15 +359,15 @@ export default {
         payload: newSong,
       })
     },
-   * fetchRecMv({payload}, {call, put}){
-        let result = yield call(getRecMv);
-        let mv = result.data.result;
-        yield put({
-          type: 'recMv',
-          payload: mv,
-        })
-      },
-    * fetchRecDj({payload}, {call, put}){
+    * fetchRecMv({payload}, {call, put}) {
+      let result = yield call(getRecMv);
+      let mv = result.data.result;
+      yield put({
+        type: 'recMv',
+        payload: mv,
+      })
+    },
+    * fetchRecDj({payload}, {call, put}) {
       let result = yield call(getRecDj);
       let dj = result.data.result;
       yield put({
@@ -368,7 +375,7 @@ export default {
         payload: dj,
       })
     },
-    * fetchRecNewAlbum({payload}, {call, put}){
+    * fetchRecNewAlbum({payload}, {call, put}) {
       let result = yield call(getRecNewAlbum);
       let newAlbum = result.data.albums;
       yield put({
@@ -376,9 +383,10 @@ export default {
         payload: newAlbum,
       })
     },
-    * fetchAlbum({payload}, {call, put}){
-      let result = yield call(getAlbum);
+    * fetchAlbum({payload}, {call, put}) {
+      let result = yield call(getAlbum, payload);
       let album = result.data;
+      console.log(333, album.album)
       yield put({
         type: 'album',
         payload: album,
@@ -388,7 +396,7 @@ export default {
       let result = yield call(getTopArtistList);
       let topArtistList = result.data.list.artists;
       yield put({
-        type   : 'topArtistList',
+        type: 'topArtistList',
         payload: topArtistList,
       })
     },
@@ -404,14 +412,14 @@ export default {
         return {id, name, playCount, coverImgUrl, tracks}
       });
       yield put({
-        type   : 'toplist',
+        type: 'toplist',
         payload: toplist
       })
     },
     * fetchPlaylist({payload}, {call, put}) {
       const result = yield call(getPlaylistDetail, payload);
       yield put({
-        type   : 'toplistDetail',
+        type: 'toplistDetail',
         payload: result.data.playlist,
       });
     },
@@ -437,21 +445,21 @@ export default {
         }
       });
       yield put({
-        type   : 'artistDetail',
+        type: 'artistDetail',
         payload: {artist, hotSongs: songs},
       });
     },
     * fetchArtistMV({payload}, {call, put}) {
       const result = yield call(getArtistMV, payload);
       yield put({
-        type   : 'artistMV',
+        type: 'artistMV',
         payload: result.data.mvs,
       });
     },
     * fetchMvDetail({payload}, {call, put}) {
       const result = yield call(getMvDetail, payload);
       yield put({
-        type   : 'mvDetail',
+        type: 'mvDetail',
         payload: result.data.data,
       })
     },
@@ -465,7 +473,7 @@ export default {
       console.log('ci', lyric);
       lyric = formatLyric(lyric);
       yield put({
-        type   : 'lyric',
+        type: 'lyric',
         payload: lyric,
       });
     },
@@ -473,19 +481,19 @@ export default {
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
       let songDetail = {
-        id       : song.id,
-        url      : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
-        songName : song.name,
-        singer   : song.ar[0].name,
-        singerId : song.ar[0].id,
-        picUrl   : song.al.picUrl,
-        alId     : song.al.id,
-        alName   : song.al.name,
-        dt       : song.dt,
+        id: song.id,
+        url: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+        songName: song.name,
+        singer: song.ar[0].name,
+        singerId: song.ar[0].id,
+        picUrl: song.al.picUrl,
+        alId: song.al.id,
+        alName: song.al.name,
+        dt: song.dt,
         copyright: song.copyright,
       };
       yield put({
-        type   : 'songDetail',
+        type: 'songDetail',
         payload: songDetail
       });
       yield put({
@@ -500,19 +508,19 @@ export default {
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
       const songDetail = {
-        id       : song.id,
-        url      : `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
-        songName : song.name,
-        singer   : song.ar[0].name,
-        singerId : song.ar[0].id,
-        picUrl   : song.al.picUrl,
-        alId     : song.al.id,
-        alName   : song.al.name,
-        dt       : song.dt,
+        id: song.id,
+        url: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,
+        songName: song.name,
+        singer: song.ar[0].name,
+        singerId: song.ar[0].id,
+        picUrl: song.al.picUrl,
+        alId: song.al.id,
+        alName: song.al.name,
+        dt: song.dt,
         copyright: song.copyright,
       };
       yield put({
-        type   : 'addToPlaylist',
+        type: 'addToPlaylist',
         payload: songDetail,
       })
     },
@@ -534,9 +542,9 @@ export default {
         payload,
       });
     },
-    * fetchPlayerPlay({payload},{call,put,select}){
+    * fetchPlayerPlay({payload}, {call, put, select}) {
       yield put({
-        type   : 'fetchSongDetail',
+        type: 'fetchSongDetail',
         payload: localStorage.getItem('currentSongId'),
       });
       yield put({
@@ -555,11 +563,11 @@ export default {
         currentSongId = state.music.player.currentSongId;
       });
       yield put({
-        type   : 'setCurrentSong',
+        type: 'setCurrentSong',
         payload: currentSongId,
       });
       yield put({
-        type   : 'fetchSongDetail',
+        type: 'fetchSongDetail',
         payload: currentSongId
       });
       yield put({
@@ -578,11 +586,11 @@ export default {
         currentSongId = state.music.player.currentSongId;
       });
       yield put({
-        type   : 'setCurrentSong',
+        type: 'setCurrentSong',
         payload: currentSongId,
       });
       yield put({
-        type   : 'fetchSongDetail',
+        type: 'fetchSongDetail',
         payload: currentSongId,
       });
       yield put({
@@ -603,7 +611,7 @@ export default {
           currentSongId = state.music.player.currentSongId;
         });
         yield put({
-          type   : 'fetchSongDetail',
+          type: 'fetchSongDetail',
           payload: currentSongId
         });
         yield put({
@@ -621,7 +629,7 @@ export default {
         payload,
       });
       yield put({
-        type   : 'fetchSongDetail',
+        type: 'fetchSongDetail',
         payload: payload
       });
       yield put({
@@ -638,29 +646,29 @@ export default {
       let tracks = result.data.playlist.tracks;
       tracks = tracks.map(song => {
         const songItem = {
-          id      : song.id,
-          url     : `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`,
+          id: song.id,
+          url: `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`,
           songName: song.name,
-          singer  : song.ar[0].name,
+          singer: song.ar[0].name,
           singerId: song.ar[0].id,
-          picUrl  : song.al.picUrl,
-          alId    : song.al.id,
-          alName  : song.al.name,
-          dt      : song.dt
+          picUrl: song.al.picUrl,
+          alId: song.al.id,
+          alName: song.al.name,
+          dt: song.dt
         };
         return songItem;
       });
       let currentSongId = tracks[0].id;
       yield put({
-        type   : 'setCurrentSong',
+        type: 'setCurrentSong',
         payload: currentSongId,
       });
       yield put({
-        type   : 'addAllToPlaylist',
+        type: 'addAllToPlaylist',
         payload: tracks,
       });
       yield put({
-        type   : 'fetchSongDetail',
+        type: 'fetchSongDetail',
         payload: currentSongId
       });
       yield put({
@@ -669,16 +677,15 @@ export default {
     }
   },
   subscriptions: {
-    keyboardWatcher({dispatch}){// 监听键盘事件()=>dispatch({type:xx,payload:xxx})
-      key('⌘+up, ctrl+up', ()=>alert('up'))
+    keyboardWatcher({dispatch}) {// 监听键盘事件()=>dispatch({type:xx,payload:xxx})
+      key('⌘+up, ctrl+up', () => alert('up'))
     },
     setup({dispatch, history}) {
       history.listen(({pathname, query, params, search}) => {
         if (pathname === '/toplist') {
           dispatch({type: 'fetchToplist'});
         } else if (pathname === '/toplistDetail') {
-          // let id = search.split('=')[1];
-          // dispatch({type: 'fetchToplistDetail', payload: id || 0});
+
         } else if (pathname === '/topArtistList') {
           dispatch({type: 'fetchTopArtistList'});
         } else if (pathname === '/artistDetail') {

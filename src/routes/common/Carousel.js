@@ -150,10 +150,10 @@ class Carousel extends React.Component{
         <div className={styles.container}>
           {sliders}
 
-          <div className={styles.btn+' '+styles.btnPrev}
-               onClick={()=>this.handlePrev()}>{'<'}</div>
-          <div className={styles.btn+' '+styles.btnNext}
-               onClick={()=>this.handleNext()}>{'>'}</div>
+          {/*<div className={styles.btn+' '+styles.btnPrev}*/}
+               {/*onClick={()=>this.handlePrev()}>{'<'}</div>*/}
+          {/*<div className={styles.btn+' '+styles.btnNext}*/}
+               {/*onClick={()=>this.handleNext()}>{'>'}</div>*/}
           <div className={styles.dotsContainer}>{dots}</div>
         </div>
     )

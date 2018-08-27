@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import styles from './common/index.css';
+import styles from '../common/index.css';
+import {splitArr} from "../../utils/tool";
 import {
   title,
   playlistWrapper,
@@ -20,6 +21,8 @@ import {
   artists
 } from './Home.less';
 import Slider from "react-slick";
+import RecNewSong from './RecNewSong'
+
 
 const RecPlaylist = ({dispatch, recPlaylist}) => {
   function toPlaylist(id) {
@@ -71,17 +74,9 @@ const RecNewAlbum = ({dispatch, recNewAlbum}) => {
     return output;
   }
 
-  function splitArr(arr, step) {
-    var R = [], F;
-    for (F = 0; F < arr.length;) {
-      R.push(arr.slice(F, F += step))
-    }
-    return R
-  }
-
-  function toPlaylist(id) {
+  function toAlbum(id) {
     dispatch(routerRedux.push({
-      pathname: '/playlist/' + id,
+      pathname: '/album/' + id,
     }));
   }
   return (
@@ -106,10 +101,10 @@ const RecNewAlbum = ({dispatch, recNewAlbum}) => {
                           <div className={cover}>
                             <img src={i.picUrl} alt=""/>
                             <i className={mask}></i>
-                            <i className={icon_play} onClick={() => toPlaylist(i.id)}></i>
+                            <i className={icon_play} onClick={() => toAlbum(i.id)}></i>
                           </div>
-                          <div className={name} onClick={() => toPlaylist(i.id)}>{i.name}</div>
-                          <div className={artists} onClick={() => toPlaylist(i.id)}>{
+                          <div className={name} onClick={() => toAlbum(i.id)}>{i.name}</div>
+                          <div className={artists} onClick={() => toAlbum(i.id)}>{
                             formatArtistsName(i.artists)
                           }</div>
                         </div>
@@ -124,21 +119,16 @@ const RecNewAlbum = ({dispatch, recNewAlbum}) => {
 
   )
 }
-const RecNewSong = ({recNewSong}) => {
+
+
+const RecMv = ({dispatch, recMv}) => {
   return (
     <div>
 
     </div>
   )
 }
-const RecMv = ({recMv}) => {
-  return (
-    <div>
-
-    </div>
-  )
-}
-const RecDj = ({recDj}) => {
+const RecDj = ({dispatch, recDj}) => {
   return (
     <div>
 
@@ -154,10 +144,10 @@ class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'music/fetchRecPlaylist'
-    })
+    });
     this.props.dispatch({
       type: 'music/fetchRecNewAlbum'
-    })
+    });
   }
 
   render() {
@@ -165,6 +155,7 @@ class Home extends React.Component {
       <>
         <div className={styles.container}>
           <RecNewAlbum recNewAlbum={this.props.home.newAlbum} dispatch={this.props.dispatch}/>
+          <RecNewSong recNewSong={this.props.home.newSong} dispatch={this.props.dispatch}/>
           <RecPlaylist recPlaylist={this.props.home.playlist} dispatch={this.props.dispatch}/>
         </div>
       </>

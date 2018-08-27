@@ -1,0 +1,263 @@
+.title{
+  color:#000;
+  padding-top:30px;
+  padding-bottom:18px;
+  font-size:34px;
+  text-align:center;
+  font-weight:bold;
+}
+.newSongWrapper{
+  width:100%;
+  height:274px;
+  margin: 0 auto 60px;
+  .slick-arrow{
+    display:none;
+  }
+  .newSong_carousel{
+    width: 1200px;
+    height: 333px;
+    .newSongItemContainer{
+      width: 1200px;
+      height: 333px;
+      display:flex;
+      justify-content: start;
+      align-items: start;
+    }
+    .newSongItem{
+      width:370px;
+      height:111px;
+      box-sizing: border-box;
+      margin-right:30px;
+      display:inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow:hidden;
+      &:nth-child(4), &:nth-child(5), &:nth-child(6){
+        border-top:1px solid #f2f2f2;
+        border-bottom: 1px solid #f2f2f2;
+      }
+      .cover {
+        width: 86px;
+        height: 86px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        > img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          transform: scale(1) translateZ(0);
+          transition: transform .75s;
+        }
+        .mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #000;
+          opacity: 0;
+          transition: opacity .5s;
+        }
+        .icon_play {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 70px;
+          height: 70px;
+          margin: -35px;
+          opacity: 0;
+          background-image: url('https://y.gtimg.cn/mediastyle/yqq/img/cover_play.png?max_age=2592000&v=88abebcbc1242dbbbbc836cc3e04a006');
+          transform: scale(.3) translateZ(0);
+          transition-property: opacity, transform;
+          transition-duration: .5s;
+        }
+        &:hover {
+          img {
+            transform: scale(1.07) translateZ(0);
+            transition: transform .75s cubic-bezier(0, 1, .75, 1);
+          }
+          .mask {
+            opacity: .2;
+          }
+          .icon_play {
+            opacity: .9;
+            transform: scale(.7) translateZ(0);
+            transition-property: opacity, transform;
+            transition-duration: .5s;
+            cursor: pointer;
+          }
+        }
+      }
+      .name{
+        width: 186px;
+        div{
+          font-weight: 400;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-height: 20px;
+          color:#000;
+          margin-top:15px;
+          cursor:pointer;
+          &:hover{
+            color:#31c27c;
+          }
+        }
+        p{
+         line-height: 20px;
+          &:hover{
+            color:#31c27c;
+          }
+        }
+      }
+      .duration{
+        color: #999;
+        width:40px;
+      }
+    }
+  }
+}
+.newAlbumWrapper{
+  width:100%;
+  height:608px;
+  margin: 0 auto 30px;
+  .newAlbum_carousel{
+    width: 1200px;
+    height: 100%;
+    .newAlbumItemContainer{
+      width:1200px;
+      display:flex!important;
+      justify-content: start;
+      flex-wrap: wrap;
+      .newAlbumItem{
+        width:220px;
+        height:100%;
+        margin-right:25px;
+        padding-bottom:25px;
+        &:nth-child(5n){
+          margin-right: 0;
+        }
+        .cover{
+          width:220px;
+          height:220px;
+          position:relative;
+          overflow:hidden;
+          cursor:pointer;
+          margin-bottom:15px;
+          >img{
+            display:block;
+            width:100%;
+            height:100%;
+            transform: scale(1) translateZ(0);
+            transition: transform .75s;
+          }
+          .mask{
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background:#000;
+            opacity: 0;
+            transition: opacity .5s;
+          }
+          .icon_play{
+            position:absolute;
+            left:50%;
+            top:50%;
+            width:70px;
+            height:70px;
+            margin:-35px;
+            opacity:0;
+            background-image:url('https://y.gtimg.cn/mediastyle/yqq/img/cover_play.png?max_age=2592000&v=88abebcbc1242dbbbbc836cc3e04a006');
+            transform: scale(.7) translateZ(0);
+            transition-property: opacity,transform;
+            transition-duration: .5s;
+          }
+          &:hover{
+            img {
+              transform: scale(1.07) translateZ(0);
+              transition: transform .75s cubic-bezier(0,1,.75,1);
+            }
+            .mask{
+              opacity:.2;
+            }
+            .icon_play{
+              opacity: .9;
+              transform: scale(1) translateZ(0);
+              transition-property: opacity,transform;
+              transition-duration: .5s;
+              cursor: pointer;
+            }
+          }
+        }
+        .name{
+          max-width: 100%;
+          font-weight: 400;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-height: 22px;
+          max-height: 44px;
+          color:#000;
+          margin-top:15px;
+          cursor:pointer;
+          &:hover{
+            color:#31c27c;
+          }
+        }
+        .artists{
+          color: #999;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-height: 22px;
+        }
+      }
+    }
+
+  }
+
+}
+:global{
+  .slick-arrow {
+    width:45px;
+    height:85px;
+    background: rgba(0,0,0,.03);
+    &.slick-prev{
+      top:40%;
+      left:-50px;
+    }
+    &.slick-next{
+      top:40%;
+      right:-50px;
+    }
+    &:hover{
+      background:rgba(0,0,0,.04);
+    }
+  }
+  .slick-dots li{
+    width:12px;
+    height:12px;
+    button{
+      width:12px;
+      height:12px;
+      &:before{
+        width:12px;
+        height:12px;
+        opacity:.03;
+      }
+    }
+    &.slick-active{
+      button{
+        &:before{
+          width:12px;
+          height:12px;
+          opacity:.05;
+        }
+      }
+    }
+  }
+}
+

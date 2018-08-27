@@ -3,7 +3,8 @@ import {BrowserRouter, Router, Route, Switch} from 'dva/router';
 
 import Header from './routes/common/Header';
 import Footer from './routes/common/Footer';
-import Home from './routes/Home';
+import Home from './routes/Home/Home';
+import Album from './routes/Album';
 import Toplist from './routes/Toplist';
 import Playlist from './routes/Playlist';
 import TopArtistList from './routes/TopArtistList';
@@ -17,6 +18,7 @@ function RouterConfig({history}) {
         <div id={styles.wrapper}>
             <Switch>
               <Route path="/" exact component={Home}/>
+              <Route path="/album/:id" component={Album}/>
               <Route path="/topList"  component={Toplist}/>
               <Route path="/Playlist/:id"  component={Playlist}/>
               <Route path="/topArtistList"  component={TopArtistList}/>
