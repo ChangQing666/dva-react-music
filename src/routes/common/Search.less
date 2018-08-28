@@ -1,20 +1,104 @@
 .container{
   position:absolute;
-  width:200px;
+  width:250px;
   height:41px;
   top:7px;
   right:0;
+
   .searchInputWrapper{
     height:41px;
+    position:relative;
+    .iconSearch{
+      position:absolute;
+      right:7px;
+      top:50%;
+      transform:translate(0, -50%);
+      font-size:25px;
+      color:#bdbdbd;
+      cursor:pointer;
+      &:hover{
+        color:#31c27c;
+      }
+    }
     input{
-      width:100%;
-      height:100%;
+      position:absolute;
+      z-index:10;
+      width:41px;
+      height:41px;
+      right:0;
       box-sizing: border-box;
-      padding: 0 30px;
+      padding:0;
       border-radius:21px;
-      border:none;
       outline:none;
       box-shadow: none;
+      transition:all .5s;
+      border:1px solid #fff;
+      background:transparent;
+      color:transparent;
+      cursor:pointer;
+      &:hover{
+        border-color:#31c27c;
+        box-shadow: 0 0 5px rgba(109,207,246,.5);
+      }
+
+    }
+  }
+  &.active{
+    input{
+      width:250px;
+      padding: 0 35px 0 20px;
+      border:1px solid #31c27c;
+      background:#fff;
+      color:#333;
+      cursor:auto;
+      box-shadow: 0 0 5px rgba(109,207,246,.5);
+      transition:all .5s;
+      +i{
+        z-index:100;
+      }
+    }
+    .suggestWrapper{
+      height:auto;
+      transition: all .5s;
+    }
+  }
+  .suggestWrapper{
+    position:absolute;
+    top:46px;
+    width:250px;
+    box-sizing: border-box;
+    padding:10px 10px;
+    border:1px solid #31c27c;
+    border-radius:5px;
+    z-index:100;
+    background:#2c323b;
+    box-shadow: 0 0 15px rgba(109,207,246,.5);
+    color:#fff;
+    height:0;
+    transition:all .5s;
+    .iconMusic,.iconSinger,.iconAlbum,.iconMV{
+      font-size:20px;
+      color:#fff;
+    }
+    .title{
+      line-height:25px;
+      font-size:18px;
+      color:#31c27c;
+    }
+    .item{
+      font-size:13px;
+      width:100%;
+      box-sizing: border-box;
+      line-height:25px;
+      text-align:left;
+      padding:0 10px 0 25px;
+      overflow:hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor:pointer;
+      &:hover{
+        color:#31c27c;
+      }
     }
   }
 }

@@ -32,7 +32,7 @@ export default {
       newAlbum: [],
     },
     search:{},
-    searchSuggest:{},
+    searchSuggest:{songlist:[]},
     album: {
       songs: [],
       album: {},
@@ -69,7 +69,7 @@ export default {
         search: payload
       }
     },
-    searchSuggest(state, payload){
+    searchSuggest(state, {payload}){
       return {
         ...state,
         searchSuggest: payload
@@ -369,7 +369,9 @@ export default {
     },
     * fetchSearchSuggest({payload}, {call, put}){
       let result = yield call(getSearchSuggest, payload);
+      console.log(666, result)
       let searchSuggest = result.data.result;
+      console.log(777,searchSuggest )
       yield put({
         type: 'searchSuggest',
         payload: searchSuggest,
