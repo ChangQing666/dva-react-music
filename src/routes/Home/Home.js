@@ -155,7 +155,7 @@ class Home extends React.Component {
       <>
         <div className={styles.container}>
           <RecNewAlbum recNewAlbum={this.props.home.newAlbum} dispatch={this.props.dispatch}/>
-          <RecNewSong recNewSong={this.props.home.newSong} dispatch={this.props.dispatch}/>
+          {this.props.home.newSong && this.props.home.newSong.length>0 && <RecNewSong recNewSong={this.props.home.newSong} dispatch={this.props.dispatch}/>}
           <RecPlaylist recPlaylist={this.props.home.playlist} dispatch={this.props.dispatch}/>
         </div>
       </>

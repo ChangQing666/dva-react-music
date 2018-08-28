@@ -4,7 +4,7 @@ import {routerRedux} from 'dva/router'
 import styles from './Search.less';
 
 const Suggest = ({searchSuggest, dispatch}) => {
-  const {songs, artists, playlists, albums, mvs} = searchSuggest;
+  const {songs, artists, albums, mvs} = searchSuggest;
   function toArtistDetail(id){
     dispatch(routerRedux.push({
       pathname:'/artistDetail/'+id

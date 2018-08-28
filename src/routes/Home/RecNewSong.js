@@ -49,7 +49,7 @@ class RecNewSong extends React.Component{
                   autoplay={false}
                   className={styles.newSong_carousel}>
             {
-              splitArr(this.props.recNewSong, 9).map((item, index) => {
+              this.props.recNewSong &&  this.props.recNewSong.length>0 && splitArr(this.props.recNewSong, 9).map((item, index) => {
                 return (
                   <div className={styles.newSongItemContainer}  key={index}>
                     {
