@@ -31,6 +31,10 @@ export default {
       dj: [],
       newAlbum: [],
     },
+    song: {
+      songDetail:{},
+      songLyric:[],
+    },
     search:{},
     searchSuggest:{songlist:[]},
     album: {
@@ -128,6 +132,12 @@ export default {
           songs: payload.songs,
           album: payload.album,
         }
+      }
+    },
+    song(state, {payload}){
+      return {
+        ...state,
+        song: payload,
       }
     },
     topListId(state, {payload}) {
@@ -424,6 +434,17 @@ export default {
       yield put({
         type: 'album',
         payload: album,
+      })
+    },
+    * fetchSong({payload}, {call, put}) {
+      let songDetail = yield call(getSongDetail, payload);
+      songDetail = songDetail.data.songs;
+      let songLyric = yield call(getLyric, payload);
+      songLyric = formatLyric(songLyric.data.lrc.lyric);
+      const song = {songDetail,songLyric};
+      yield put({
+        type: 'song',
+        payload: song,
       })
     },
     * fetchTopArtistList({payload}, {call, put}) {
