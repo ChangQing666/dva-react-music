@@ -139,6 +139,11 @@ class Player extends React.Component {
       pathname:'/artistDetail/'+id
     }));
   }
+  toSong(id){
+    this.props.dispatch(routerRedux.push({
+      pathname:'/song/'+id
+    }));
+  }
   componentDidUpdate() {
     this.handlePlay();
   }
@@ -175,8 +180,10 @@ class Player extends React.Component {
               <div className={`${styles.picWrapper} ${this.props.player.isPlay ? styles.playing : ''}`}>
                 <img className={styles.pic} src={this.props.player.songDetail.picUrl} alt=""/>
               </div>
-              <div className={styles.songName}>
-                {this.props.player.songDetail.songName}
+              <div className={styles.songSingerName} >
+                <span  className={styles.songName}
+                       onClick={()=>this.toSong(this.props.player.songDetail.id)}
+                      >{this.props.player.songDetail.songName}</span>
                 <span className={styles.singerName}>{this.props.player.songDetail.singer}</span>
               </div>
               <div className={styles.progressContainer}>

@@ -78,13 +78,19 @@
     transform: rotate(360deg);
   }
 }
-.songName{
+.songSingerName{
   position:absolute;
   left: 75px;
   top:17px;
   line-height:14px;
   font-size:12px;
   color:#fff;
+}
+.songName{
+  cursor:pointer;
+}
+.songName:hover{
+  color:#31c27c;
 }
 .singerName{
    margin-left:10px;

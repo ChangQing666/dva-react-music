@@ -1,4 +1,5 @@
 import React from 'react';
+import {routerRedux} from 'dva/router';
 import styles from './Playlist.css';
 import {formatTime} from "../../../utils/tool";
 
@@ -23,7 +24,11 @@ const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
     })
   }
 
-
+  function toSong(id){
+    dispatch(routerRedux.push({
+      pathname:'/song/'+id
+    }));
+  }
   if(playlist){
     list = playlist.map((item,index)=>
       <div key={item.id}>
@@ -31,7 +36,7 @@ const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
           <img className={styles.playingGif} src="https://y.gtimg.cn/mediastyle/yqq/img/wave.gif" alt=""/>
           <span className={styles.number}>{index+1}</span>
           <span className={styles.songName}
-                onClick={()=>onPlaylistPlay(item.id,item.copyright)}>
+                onClick={()=>toSong(item.id)}>
                 {item.songName}
           </span>
           <span className={styles.btnContainer}>

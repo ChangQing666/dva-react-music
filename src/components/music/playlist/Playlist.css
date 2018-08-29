@@ -58,6 +58,11 @@
   overflow:hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
+
+}
+.songName:hover{
+  color:#31c27c;
 }
 .btnContainer{
   width:90px;
