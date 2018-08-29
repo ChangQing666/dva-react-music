@@ -9,19 +9,24 @@ class Header extends React.Component{
       activeNavId: 0,
       navs:[
         {
-          name: '排行榜',
+          name: '首页',
           path:'/',
           id:0,
+        },
+        {
+          name: '排行榜',
+          path:'/toplist',
+          id:1,
         },
          {
           name: '歌手',
           path:'/topArtistList',
-          id:1,
+          id:2,
         },
          {
           name: '歌单',
           path:'/toplist',
-          id:2,
+          id:3,
         },
       ]
     }

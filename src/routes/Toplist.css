@@ -3,6 +3,8 @@
   justify-content: start;
   align-content: flex-start;
   flex-wrap: wrap;
+  width:980px;
+  margin: 0 auto;
 }
 .title{
   line-height:100px;

@@ -6,5 +6,5 @@ const serve = require('koa-static');
 const main = serve(path.join(__dirname+'/dist'));
 app.use(main);
 app.listen(3005, function(){
-  console.log("本地服务已启动，端口3001:  http://localhost:3001/");
+  console.log("本地服务已启动，端口3005:  http://localhost:3001/");
 })

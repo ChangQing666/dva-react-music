@@ -1,6 +1,36 @@
 import apiPath from '../config/apiPath';
 import request from '../utils/request';
 
+// 获取banners
+export function getBanner(){
+  return request('json',`${apiPath.BANNER}`,{method:'get'});
+}
+// 获取推荐歌单
+export function getRecPlaylist(){
+  return request('json',`${apiPath.REC_PLAYLIST}`,{method:'get'});
+}
+
+// 获取推荐新歌
+export function getRecNewSong(){
+  return request('json',`${apiPath.REC_NEWSONG}`,{method:'get'});
+}
+
+// 获取推荐MV
+export function getRecMv(){
+  return request('json',`${apiPath.REC_MV}`,{method:'get'});
+}
+
+// 获取推荐DJ
+export function getRecDj(){
+  return request('json',`${apiPath.REC_DJ}`,{method:'get'});
+}
+
+// 获取推荐专辑
+export function getRecNewAlbum(){
+  return request('json',`${apiPath.REC_NEWALBUM}`,{method:'get'});
+}
+
+
 // 获取排行榜列表
 export function getToplist(id){
   return request('json',`${apiPath.TOP_LIST}?idx=${id}`,{method:'get'});

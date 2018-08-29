@@ -7,8 +7,7 @@ import Carousel from './common/Carousel';
 const Toplist = ({dispatch, toplist}) => {
   function toToplistDetail(id){
     dispatch(routerRedux.push({
-      pathname:'/toplistDetail?id='+id,
-      query:{id},
+      pathname:'/playlist/'+id,
     }));
   }
   return(
