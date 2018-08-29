@@ -1,45 +1,60 @@
 import React from 'react';
 import {connect} from 'dva';
-import Songlist from '../components/music/songlist/Songlist';
 import styles from './Song.less';
+import {copyText} from "../utils/tool";
 
-const Lyric = ({lyric}) => {
-  return (
-    <div>
-
-    </div>
-  )
-}
-
-const SongDesc = ({SongDesc, dispatch}) => {
-  function  handlePlay(id){
+const SongDetail = ({songDetail, dispatch}) => {
+  function handlePlay(id){
     dispatch({
-      type: 'music/play',
-      payload:id,
+      type:'music/fetchPlayAdd',
+      payload: id
     })
   }
   return (
-    <div className={styles.descWrapper}>
-      <img src={SongDesc.al.picUrl} alt=""/>
+    <div className={styles.songDetailWrapper}>
+      <img src={songDetail.al && songDetail.al.picUrl} alt=""/>
       <div className={styles.descContainer}>
-        <h6>{SongDesc.name}</h6>
-        <p>歌手: <span>{SongDesc.ar[0].name}</span></p>
-        <p>所属专辑：{SongDesc.al.name}</p>
-
+        <h6>{songDetail.name}</h6>
+        <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手： <span>{songDetail.ar && songDetail.ar[0].name}</span></p>
+        <p>所属专辑：<span>{songDetail.al && songDetail.al.name}</span></p>
+        <p>发行时间：{songDetail.publishTime}</p>
         <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`}
-                onClick={() => handlePlay(SongDesc.id)}> 播放
+                onClick={() => handlePlay(songDetail.id)}> 播放
         </button>
       </div>
-      <Lyric/>
     </div>
   )
 }
-
+function copyLyric(songLyric){
+  let lyric = '';
+  if(songLyric && songLyric.length>0){
+    songLyric.forEach(item=>lyric+= ' \n '+ item.text);
+  }
+  copyText(lyric)
+}
+const Lyric = ({songLyric}) => {
+  return (
+    <div className={styles.lyricWrapper}>
+      <p>
+        歌词
+        <i className={`iconfont icon-copy ${styles.iconCopy}`}
+           onClick={()=>copyLyric(songLyric)}></i>
+      </p>
+      {
+        songLyric && songLyric.length>0 && songLyric.map(item => (
+          <div>
+            {item.text}
+          </div>
+        ))
+      }
+    </div>
+  )
+}
 
 class Song extends React.Component{
   constructor(props) {
     super(props);
-    this.fetchAlbum = this.fetchAlbum.bind(this);
+    this.fetchSong = this.fetchSong.bind(this);
   }
   fetchSong(id){
     this.props.dispatch({type: 'music/fetchSong', payload:id});
@@ -56,8 +71,8 @@ class Song extends React.Component{
   render(){
     return(
       <div className={styles.container}>
-        <SongDesc songDesc={this.props.song.songDetail} dispatch={this.props.dispatch}/>
-        <Lyric  lyrict={this.props.song.songLyric}  dispatch={this.props.dispatch}/>
+        <SongDetail songDetail={this.props.song.songDetail} dispatch={this.props.dispatch}/>
+        <Lyric      songLyric={this.props.song.songLyric}   dispatch={this.props.dispatch}/>
       </div>
     )
   }

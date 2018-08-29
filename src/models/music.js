@@ -438,7 +438,7 @@ export default {
     },
     * fetchSong({payload}, {call, put}) {
       let songDetail = yield call(getSongDetail, payload);
-      songDetail = songDetail.data.songs;
+      songDetail = songDetail.data.songs[0];
       let songLyric = yield call(getLyric, payload);
       songLyric = formatLyric(songLyric.data.lrc.lyric);
       const song = {songDetail,songLyric};
@@ -525,7 +525,7 @@ export default {
       })
       const result = yield call(getLyric, currentSongId);
       let lyric = result.data.lrc.lyric;
-      console.log('ci', lyric);
+      console.log('歌词', lyric);
       lyric = formatLyric(lyric);
       yield put({
         type: 'lyric',

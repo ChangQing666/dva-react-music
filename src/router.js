@@ -9,6 +9,7 @@ import Toplist from './routes/Toplist';
 import Playlist from './routes/Playlist';
 import TopArtistList from './routes/TopArtistList';
 import ArtistDetail from './routes/ArtistDetail';
+import Song from './routes/Song';
 import styles from './routes/common/index.css'
 function RouterConfig({history}) {
   return (
@@ -19,6 +20,7 @@ function RouterConfig({history}) {
             <Switch>
               <Route path="/" exact component={Home}/>
               <Route path="/album/:id" component={Album}/>
+              <Route path="/song/:id" component={Song}/>
               <Route path="/topList"  component={Toplist}/>
               <Route path="/Playlist/:id"  component={Playlist}/>
               <Route path="/topArtistList"  component={TopArtistList}/>

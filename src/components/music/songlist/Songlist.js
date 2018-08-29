@@ -1,4 +1,5 @@
 import React from 'react';
+import {routerRedux} from 'dva/router'
 import styles from './Songlist.css';
 import {formatTime} from "../../../utils/tool";
 
@@ -25,6 +26,11 @@ const Songlist = ({songlist,dispatch}) => {
       payload: id
     })
   }
+  function toSong(id){
+    dispatch(routerRedux.push({
+      pathname:'/song/'+id
+    }));
+  }
 
   let list = null;
   let title =(
@@ -38,7 +44,7 @@ const Songlist = ({songlist,dispatch}) => {
   if(songlist){
     list = songlist.map((item,index)=>
       <div className={styles.songlistItem} key={index}>
-        <span onClick={()=>onPlay(item.id)} className={styles.songName}>{item.name}</span>
+        <span onClick={()=>toSong(item.id)} className={styles.songName}>{item.name}</span>
         <span className={styles.controlContainer}>
           <i onClick={()=>onPlayAdd(item.id, item.copyright)} className={`iconfont icon-play_icon ${styles.play}` }></i>
           <i onClick={()=>onAddToPlaylist(item.id)} className={`iconfont icon-add ${styles.add}` }></i>

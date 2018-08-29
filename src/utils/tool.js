@@ -46,4 +46,16 @@ const splitArr = function(arr, step) {
   }
   return R
 }
-export {formatTime, dumplicateRemoveArr, formatLyric, splitArr};
+
+const copyText =  function(txt){
+  let oInput = document.createElement('input');
+  oInput.value = txt;
+  document.body.appendChild(oInput);
+  oInput.select(); // 选择对象
+  document.execCommand("Copy"); // 执行浏览器复制命令
+  oInput.className = 'oInput';
+  oInput.style.display='none';
+  alert('歌词复制成功');
+}
+
+export {formatTime, dumplicateRemoveArr, formatLyric, splitArr, copyText};
