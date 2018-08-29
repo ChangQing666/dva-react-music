@@ -21,6 +21,13 @@
   color:#fff;
   font-size:18px;
 }
+.navItem a:hover{
+  text-decoration: none;
+  color:#31c27c;
+}
+.navItem a:focus{
+  text-decoration: none;
+}
 .navActive a{
   color:#31c27c;
   font-size:18px;

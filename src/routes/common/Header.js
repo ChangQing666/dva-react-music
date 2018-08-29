@@ -6,8 +6,9 @@ import styles from './Header.css'
 class Header extends React.Component{
   constructor(props){
     super(props);
+    const activeNavId = localStorage.getItem('activeNavId') || 0;
     this.state={
-      activeNavId: 0,
+      activeNavId,
       navs:[
         {
           name: '首页',
@@ -36,24 +37,29 @@ class Header extends React.Component{
   handleClickNav(id){
     this.setState({
       activeNavId: id,
-    })
+    },()=>localStorage.setItem('activeNavId',id))
+  }
+  componentDidMount(){
+    const activeNavId = localStorage.getItem('activeNavId');
+    this.setState({
+      activeNavId
+    });
   }
   render(){
     const NavsData = this.state.navs;
     const Navs = NavsData.map((item, index)=>(
       <li key={index}
           onClick={()=>this.handleClickNav(item.id)}
-          className={`${styles.navItem} ${this.state.activeNavId === item.id ? styles.navActive : ''}`}>
+          className={`${styles.navItem} ${this.state.activeNavId == item.id ? styles.navActive : ''}`}>
         <Link to={item.path}>{item.name}</Link>
       </li>
-    ))
+    ));
     return (
       <div className={styles.navWrapper}>
         <ul className={styles.navContainer}>
           {Navs}
           <Search/>
         </ul>
-
       </div>
     )
   }

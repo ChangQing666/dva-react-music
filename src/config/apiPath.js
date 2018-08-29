@@ -1,4 +1,4 @@
-const domain = `http://47.52.165.75:3000`;
+const domain = `https://music-api.jasonlook.com`;
 const apiPath = {
   BANNER:          `${domain}/banner`,
   SEARCH:          `${domain}/search`,

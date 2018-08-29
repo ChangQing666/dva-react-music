@@ -35,6 +35,8 @@
 .infoContainer{
   margin-left:20px;
   padding-right:30px;
+  width:930px;
+  box-sizing: border-box;
 }
 .infoContainer>p{
   overflow:hidden;

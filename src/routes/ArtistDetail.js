@@ -1,13 +1,10 @@
 import React from 'react';
 import {connect} from 'dva';
-import {withRouter} from 'dva/router'
 import styles from './common/index.css';
 import s from './ArtistDetail.css'
 import Songlist from '../components/music/songlist/Songlist';
-import queryString from 'queryString';
 const ArtistInfo = ({dispatch, name, id, alias, img1v1Url, briefDesc, musicSize, albumSize, mvSize}) => {
   function handlePlayAll(id) {
-    alert(id)
     dispatch({
       type   : 'music/artistPlayAll',
       payload: id,
