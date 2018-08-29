@@ -1,13 +1,44 @@
-descWrapper{
-  dispaly:flex;
+.descWrapper{
+  display:flex;
   justify-content: start;
-  align-items: center;
-  >img{
-    width:250px;
-    height:250px;
+  align-items:start;
+  margin-top:40px;
+  margin-bottom:45px;
+  .imgWrapper{
+    position:relative;
+    width:300px;
+    .coverMask{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 300px;
+      height: 266px;
+      background: url('https://y.gtimg.cn/mediastyle/yqq/img/album_cover.png?max_age=2592000&v=38b0c07edbf02967081562b016d3ef14') 0 0 no-repeat;
+      pointer-events: none;
+    }
+    >img{
+      display:block;
+      width:250px;
+      height:250px;
+    }
   }
-  .descContainer{
 
+  .descContainer{
+    width:890px;
+    margin-left:45px;
+    padding-top:15px;
+    h6{
+      line-height:50px;
+      font-size:31px;
+    }
+    p{
+      font-size:16px;
+      color:#333;
+      span{
+        color:#31c27c;
+        cursor:pointer;
+      }
+    }
   }
 }
 
@@ -24,4 +55,28 @@ descWrapper{
 }
 .btnPlayAll:hover{
   background:#2caf6f;
+}
+
+.lyricWrapper{
+  margin-top:45px;
+  margin-bottom:50px;
+  p{
+    font-size: 20px;
+    font-weight: 500;
+    margin-right: 10px;
+    margin-bottom:10px;
+  }
+  .iconCopy{
+    margin-left:8px;
+    font-size:18px;
+    color:#666;
+    cursor:pointer;
+    &:hover{
+      color:#31c27c;
+    }
+  }
+  div{
+    line-height:26px;
+
+  }
 }

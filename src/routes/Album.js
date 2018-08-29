@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import Songlist from '../components/music/songlist/Songlist';
 import styles from './Album.less';
+import {timestampToTime} from "../utils/tool";
 
 const AlbumDesc = ({albumDesc, dispatch}) => {
   function  handlePlayAll(id){
@@ -12,14 +13,14 @@ const AlbumDesc = ({albumDesc, dispatch}) => {
   }
   return (
     <div className={styles.descWrapper}>
-      <div>
-        {/*{albumDesc.artist}*/}
+      <div className={styles.imgWrapper}>
+        <img src={albumDesc.picUrl} alt=""/>
+        <i className={styles.coverMask}></i>
       </div>
-      <img src={albumDesc.picUrl} alt=""/>
       <div className={styles.descContainer}>
         <h6>{albumDesc.name}</h6>
-        <p>歌手: <span>{false}</span></p>
-        <p>发行时间：{albumDesc.publishTime}</p>
+        <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手： <span>{albumDesc.artist && albumDesc.artist.name}</span></p>
+        <p>发行时间：{timestampToTime(albumDesc.publishTime)}</p>
         <p>发行公司：{albumDesc.company}</p>
         <div>
           专辑介绍： {albumDesc.description}
@@ -53,7 +54,6 @@ class Album extends React.Component{
   render(){
     return(
       <div className={styles.container}>
-        {/*<div>{JSON.stringify(this.props.album.name)}</div>*/}
         <AlbumDesc albumDesc={this.props.album} dispatch={this.props.dispatch}/>
         <Songlist  songlist={this.props.songs}  dispatch={this.props.dispatch}/>
       </div>

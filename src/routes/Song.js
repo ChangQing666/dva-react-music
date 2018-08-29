@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import styles from './Song.less';
-import {copyText} from "../utils/tool";
+import {copyText, timestampToTime} from "../utils/tool";
 
 const SongDetail = ({songDetail, dispatch}) => {
   function handlePlay(id){
@@ -17,7 +17,7 @@ const SongDetail = ({songDetail, dispatch}) => {
         <h6>{songDetail.name}</h6>
         <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手： <span>{songDetail.ar && songDetail.ar[0].name}</span></p>
         <p>所属专辑：<span>{songDetail.al && songDetail.al.name}</span></p>
-        <p>发行时间：{songDetail.publishTime}</p>
+        <p>发行时间：{timestampToTime(songDetail.publishTime)}</p>
         <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`}
                 onClick={() => handlePlay(songDetail.id)}> 播放
         </button>
