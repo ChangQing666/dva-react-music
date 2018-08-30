@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import styles from './Song.less';
-import {copyText, timestampToTime} from "../utils/tool";
+import {copyText, timestampToTime} from "../../utils/tool";
 
 const SongDetail = ({songDetail, dispatch}) => {
   function handlePlay(id){
@@ -46,8 +46,8 @@ function copyLyric(songLyric){
   let lyric = '';
   if(songLyric && songLyric.length>0){
     songLyric.forEach(item=>lyric+= ' \n '+ item.text);
+    copyText(lyric)
   }
-  copyText(lyric)
 }
 const Lyric = ({songLyric}) => {
   return (

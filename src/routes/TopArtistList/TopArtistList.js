@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import styles from './common/index.css';
+import styles from '../common/index.css';
 import s from './TopArtistList.css'
 const TopArtistList = ({dispatch, topArtistList}) => {
   function toArtistDetail(id){

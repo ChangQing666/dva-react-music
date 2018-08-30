@@ -164,7 +164,7 @@ export default {
       const tracks = payload.tracks;
       return {
         ...state,
-        topListDesc,
+        topListDesc:payload,
         songlist: tracks
       }
     },

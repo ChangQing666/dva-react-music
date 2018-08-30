@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'dva';
-import styles from './common/index.css';
+import styles from '../common/index.css';
 import s from './ArtistDetail.css'
-import Songlist from '../components/music/songlist/Songlist';
+import Songlist from '../../components/music/songlist/Songlist';
 const ArtistInfo = ({dispatch, name, id, alias, img1v1Url, briefDesc, musicSize, albumSize, mvSize}) => {
   function handlePlayAll(id) {
     dispatch({

@@ -1,0 +1,53 @@
+.container{
+  display:flex;
+  padding: 45px 25px;
+  width:100%;
+  justify-content: start;
+}
+.container>img{
+  display:block;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+}
+.container>.info{
+  margin-left:45px;
+  width:605px;
+  position:relative;
+  >div{
+    line-height:35px;
+    font-size:16px;
+  }
+  span{
+    margin: 0 5px;
+    cursor:pointer;
+    &:hover{
+      color:#31c27c;
+    }
+  }
+  .title{
+    line-height:50px;
+    font-size:38px;
+    color:#000;
+    font-weight:bold;
+    margin-bottom:15px;
+    margin-top:10px;
+  }
+
+}
+
+.btnPlayAll{
+  margin-top:10px;
+  width:128px;
+  line-height:30px;
+  outline:none;
+  background:#31c27c;
+  color:#fff;
+  border-radius:5px;
+  box-shadow: none;
+  text-align:center;
+  cursor:pointer;
+}
+.btnPlayAll:hover{
+  background:#2caf6f;
+}

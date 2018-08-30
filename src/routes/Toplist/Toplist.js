@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import styles from './common/index.css';
+import styles from '../common/index.css';
 import s from './Toplist.css'
-import Carousel from './common/Carousel';
+import Carousel from '../common/Carousel';
 
 const Toplist = ({dispatch, toplist}) => {
   function toToplistDetail(id){

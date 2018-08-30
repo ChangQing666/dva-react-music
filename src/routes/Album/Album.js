@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import Songlist from '../components/music/songlist/Songlist';
+import Songlist from '../../components/music/songlist/Songlist';
 import styles from './Album.less';
-import {timestampToTime} from "../utils/tool";
+import {timestampToTime} from "../../utils/tool";
 
 const AlbumDesc = ({albumDesc, dispatch}) => {
   function  handlePlayAll(id){
@@ -70,7 +70,6 @@ class Album extends React.Component{
         <div  className={styles.listWrapper}>
           <div className={styles.listContainer}>
             <Songlist  songlist={this.props.songs}  dispatch={this.props.dispatch}/>
-
           </div>
           <div className={styles.descriptionContainer}>
             <h5>简介</h5>

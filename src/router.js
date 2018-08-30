@@ -4,12 +4,12 @@ import {BrowserRouter, Router, Route, Switch} from 'dva/router';
 import Header from './routes/common/Header';
 import Footer from './routes/common/Footer';
 import Home from './routes/Home/Home';
-import Album from './routes/Album';
-import Toplist from './routes/Toplist';
-import Playlist from './routes/Playlist';
-import TopArtistList from './routes/TopArtistList';
-import ArtistDetail from './routes/ArtistDetail';
-import Song from './routes/Song';
+import Album from './routes/Album/Album';
+import Toplist from './routes/Toplist/Toplist';
+import Playlist from './routes/Playlist/Playlist';
+import TopArtistList from './routes/TopArtistList/TopArtistList';
+import ArtistDetail from './routes/ArtistDetail/ArtistDetail';
+import Song from './routes/Song/Song';
 import styles from './routes/common/index.css'
 function RouterConfig({history}) {
   return (
