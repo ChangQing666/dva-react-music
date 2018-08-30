@@ -9,7 +9,7 @@ const PlaylistDesc = ({topListDesc, onPlayAll}) => {
         <div className={styles.title}>{topListDesc.name}</div>
         <div>
           标&nbsp;&nbsp;&nbsp;&nbsp;签：{
-          topListDesc.tags && topListDesc.tags.map(item=><span>{item}</span>)
+          topListDesc.tags && topListDesc.tags.map((item,index)=><span key={index}>{item}</span>)
         }
         </div>
         <div >
