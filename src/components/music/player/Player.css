@@ -48,10 +48,10 @@
   position: absolute;
   left: 0;
   top: 5px;
-  width:65px;
+  width:66px;
   height:65px;
-  background: url('../../../assets/imgs/cover.png') no-repeat;
-  background-size: contain;
+  background: url('../../../assets/imgs/coverBg_01.png') no-repeat;
+  background-size: 100% auto;
 }
 .picWrapper.playing{
   animation: rotate-animation 20s infinite linear;
@@ -63,9 +63,7 @@
   position:absolute;
   top:50%;
   left:50%;
-  margin-left:-21px;
-  margin-top:-20px;
-
+  transform:translate(-50%,-50%);
 }
 @keyframes rotate-animation {
   0% {
