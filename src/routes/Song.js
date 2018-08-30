@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 import styles from './Song.less';
 import {copyText, timestampToTime} from "../utils/tool";
 
@@ -10,14 +11,30 @@ const SongDetail = ({songDetail, dispatch}) => {
       payload: id
     })
   }
+  function toArtistDetail(id){
+    dispatch(routerRedux.push({
+      pathname:'/artistDetail/'+id
+    }));
+  }
+  function toAlbum(id){
+    dispatch(routerRedux.push({
+      pathname:'/album/'+id
+    }));
+  }
   return (
     <div className={styles.songDetailWrapper}>
       <img src={songDetail.al && songDetail.al.picUrl} alt=""/>
       <div className={styles.descContainer}>
         <h6>{songDetail.name}</h6>
-        <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手： <span>{songDetail.ar && songDetail.ar[0].name}</span></p>
-        <p>所属专辑：<span>{songDetail.al && songDetail.al.name}</span></p>
-        <p>发行时间：{timestampToTime(songDetail.publishTime)}</p>
+        <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手：
+          <span onClick={()=>toArtistDetail(songDetail.ar[0].id)}>{songDetail.ar && songDetail.ar[0].name}</span>
+        </p>
+        <p>所属专辑：
+          <span onClick={()=>toAlbum(songDetail.al.id)}>{songDetail.al && songDetail.al.name}</span>
+        </p>
+        <p>发行时间：
+          {timestampToTime(songDetail.publishTime)}
+        </p>
         <button className={`iconfont icon-bofang1 ${styles.btnPlayAll}`}
                 onClick={() => handlePlay(songDetail.id)}> 播放
         </button>
@@ -41,8 +58,8 @@ const Lyric = ({songLyric}) => {
            onClick={()=>copyLyric(songLyric)}></i>
       </p>
       {
-        songLyric && songLyric.length>0 && songLyric.map(item => (
-          <div>
+        songLyric && songLyric.length>0 && songLyric.map((item,index) => (
+          <div key={index}>
             {item.text}
           </div>
         ))

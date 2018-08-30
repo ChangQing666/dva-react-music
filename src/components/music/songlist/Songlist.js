@@ -1,15 +1,9 @@
 import React from 'react';
 import {routerRedux} from 'dva/router'
-import styles from './Songlist.css';
+import styles from './Songlist.less';
 import {formatTime} from "../../../utils/tool";
 
 const Songlist = ({songlist,dispatch}) => {
-  function onPlay(id){
-    dispatch({
-      type: 'music/fetchSongDetail',
-      payload: id,
-    });
-  }
   function onPlayAdd(id, copyright){
     if(copyright>1){
       alert('该歌曲无版权')
@@ -29,6 +23,16 @@ const Songlist = ({songlist,dispatch}) => {
   function toSong(id){
     dispatch(routerRedux.push({
       pathname:'/song/'+id
+    }));
+  }
+ function toArtistDetail(id){
+    dispatch(routerRedux.push({
+      pathname:'/artistDetail/'+id
+    }));
+  }
+  function toAlbum(id){
+    dispatch(routerRedux.push({
+      pathname:'/album/'+id
     }));
   }
 
@@ -51,8 +55,10 @@ const Songlist = ({songlist,dispatch}) => {
           <a className={`iconfont icon-download ${styles.download}`}  href={`http://music.163.com/song/media/outer/url?id=${item.id}.mp3`}  download={item.name}></a>
           <i className={`iconfont icon-share ${styles.share}` }></i>
         </span>
-        <span className={styles.arName}>{item.ar[0].name}</span>
-        <span className={styles.alName}>{item.al.name}</span>
+        <span onClick={()=>toArtistDetail(item.ar[0].id)}
+              className={styles.arName}>{item.ar[0].name}</span>
+        <span onClick={()=>toAlbum(item.al.id)}
+              className={styles.alName}>{item.al.name}</span>
         <span className={styles.dt}>{formatTime(item.dt/1000)}</span>
       </div>
     )

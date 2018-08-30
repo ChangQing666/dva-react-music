@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
 import Songlist from '../components/music/songlist/Songlist';
 import styles from './Album.less';
 import {timestampToTime} from "../utils/tool";
@@ -11,6 +12,11 @@ const AlbumDesc = ({albumDesc, dispatch}) => {
       payload:id,
     })
   }
+  function toArtistDetail(id){
+    dispatch(routerRedux.push({
+      pathname:'/artistDetail/'+id
+    }));
+  }
   return (
     <div className={styles.descWrapper}>
       <div className={styles.imgWrapper}>
@@ -19,7 +25,9 @@ const AlbumDesc = ({albumDesc, dispatch}) => {
       </div>
       <div className={styles.descContainer}>
         <h6>{albumDesc.name}</h6>
-        <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手： <span>{albumDesc.artist && albumDesc.artist.name}</span></p>
+        <p>歌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手：
+          <span onClick={()=>toArtistDetail(albumDesc.artist.id)}>{albumDesc.artist && albumDesc.artist.name}</span>
+        </p>
         <p>发行时间：{timestampToTime(albumDesc.publishTime)}</p>
         <p>发行公司：{albumDesc.company}</p>
         <div>

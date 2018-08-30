@@ -82,6 +82,7 @@
   position:absolute;
   left: 75px;
   top:17px;
+  z-index:10;
   line-height:14px;
   font-size:12px;
   color:#fff;
@@ -89,12 +90,13 @@
 .songName{
   cursor:pointer;
 }
-.songName:hover{
+.songName:hover,.singerName:hover{
   color:#31c27c;
 }
 .singerName{
    margin-left:10px;
    color:#9b9b9b;
+   cursor:pointer;
 }
 .progressContainer{
   width:530px;

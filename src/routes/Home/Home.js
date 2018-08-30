@@ -79,6 +79,12 @@ const RecNewAlbum = ({dispatch, recNewAlbum}) => {
       pathname: '/album/' + id,
     }));
   }
+   function toArtistDetail(id) {
+    dispatch(routerRedux.push({
+      pathname: '/artistDetail/' + id,
+    }));
+  }
+
   return (
     <>
       <div className={title}>新碟首发</div>
@@ -104,7 +110,7 @@ const RecNewAlbum = ({dispatch, recNewAlbum}) => {
                             <i className={icon_play} onClick={() => toAlbum(i.id)}></i>
                           </div>
                           <div className={name} onClick={() => toAlbum(i.id)}>{i.name}</div>
-                          <div className={artists} onClick={() => toAlbum(i.id)}>{
+                          <div className={artists} onClick={() => toArtistDetail(i.artist.id)}>{
                             formatArtistsName(i.artists)
                           }</div>
                         </div>

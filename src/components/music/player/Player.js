@@ -67,6 +67,7 @@ class Player extends React.Component {
     this.handleCurrentTimeChange = this.handleCurrentTimeChange.bind(this);
     this.handlePlaylistShow = this.handlePlaylistShow.bind(this);
     this.handleToArtistDetail = this.handleToArtistDetail.bind(this);
+    this.handleToSong = this.handleToSong.bind(this);
     this.state = {
       currentTime   : 0,
       duration      : 0,
@@ -129,7 +130,6 @@ class Player extends React.Component {
     this.setState({
       isShowPlaylist: !this.state.isShowPlaylist,
     });
-    // this.props.onGetLyric();
   }
   handleToArtistDetail(id){
     this.setState({
@@ -139,11 +139,15 @@ class Player extends React.Component {
       pathname:'/artistDetail/'+id
     }));
   }
-  toSong(id){
+  handleToSong(id){
+    this.setState({
+      isShowPlaylist: false,
+    });
     this.props.dispatch(routerRedux.push({
       pathname:'/song/'+id
     }));
   }
+
   componentDidUpdate() {
     this.handlePlay();
   }
@@ -182,9 +186,12 @@ class Player extends React.Component {
               </div>
               <div className={styles.songSingerName} >
                 <span  className={styles.songName}
-                       onClick={()=>this.toSong(this.props.player.songDetail.id)}
+                       onClick={()=>this.handleToSong(this.props.player.songDetail.id)}
                       >{this.props.player.songDetail.songName}</span>
-                <span className={styles.singerName}>{this.props.player.songDetail.singer}</span>
+                <span className={styles.singerName}
+                      onClick={()=>this.handleToArtistDetail(this.props.player.songDetail.singerId)}>
+                      {this.props.player.songDetail.singer}
+                </span>
               </div>
               <div className={styles.progressContainer}>
                 <Slider className={styles.progress}
@@ -227,6 +234,7 @@ class Player extends React.Component {
               <div className={styles.playlistLyricContainer}
               >
                 <Playlist currentSongId={this.props.player.currentSongId}
+                          toSong={this.handleToSong}
                           toArtistDetail={this.handleToArtistDetail}
                           dispatch={this.props.dispatch}
                 />

@@ -3,7 +3,7 @@ import {routerRedux} from 'dva/router';
 import styles from './Playlist.css';
 import {formatTime} from "../../../utils/tool";
 
-const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
+const Playlist = ({dispatch,currentSongId,toArtistDetail,toSong}) => {
   let list = null;
   let playlist = JSON.parse(localStorage.getItem('_PLAYLIST'));
   function onPlaylistPlay(id,copyright) {
@@ -24,11 +24,7 @@ const Playlist = ({dispatch,currentSongId,toArtistDetail}) => {
     })
   }
 
-  function toSong(id){
-    dispatch(routerRedux.push({
-      pathname:'/song/'+id
-    }));
-  }
+
   if(playlist){
     list = playlist.map((item,index)=>
       <div key={item.id}>
