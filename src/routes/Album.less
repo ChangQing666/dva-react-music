@@ -41,7 +41,41 @@
     }
   }
 }
+.listWrapper{
+  width:100%;
+  display:flex;
+  justify-content: space-between;
 
+}
+.listContainer{
+  width:880px;
+  display:flex
+}
+.descriptionContainer{
+  width:290px;
+  h5{
+    line-height:52px;
+    font-size:28px;
+    margin-bottom:0;
+  }
+  p{
+    height:144px;
+    overflow:hidden;
+    line-height:24px;
+    margin-bottom:0;
+    color:#333;
+    &.showMore{
+      height:auto;
+    }
+  }
+  span{
+    cursor:pointer;
+    color:#000;
+    &:hover{
+      color:#31c27c;
+    }
+  }
+}
 .btnPlayAll{
   width:128px;
   line-height:30px;
