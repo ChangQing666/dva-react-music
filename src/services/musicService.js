@@ -59,6 +59,10 @@ export function getPlaylistDetail(id){
 export function getSongDetail(id){
   return request('json',`${apiPath.SONG_DETAIL}?ids=${id}`,{method:'get'});
 }
+// 获取歌曲url
+export function getMusicUrl(id){
+  return request('json',`${apiPath.MUSIC_URL}?id=${id}`,{method:'get'});
+}
 // 歌词
 export function getLyric(id){
   return request('json',`${apiPath.LYRIC}?id=${id}`,{method:'get'});

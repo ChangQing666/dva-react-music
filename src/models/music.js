@@ -9,6 +9,7 @@ import {
   getPlaylistDetail,
   getSongDetail,
   getLyric,
+  getMusicUrl,
   getTopArtistList,
   getArtistDetail,
   getArtistMV,
@@ -518,6 +519,11 @@ export default {
         payload: result.data.data,
       })
     },
+    * fetchMusicUrl({payload},{call,put}){
+      const result = yield put(getMusicUrl, payload);
+      let musicUrl = result.data.data[0].url;
+      console.log(222, musicUrl)
+    },
     * fetchLyric({payload}, {call, put, select}) {
       let currentSongId = null;
       yield select(state => {
@@ -535,6 +541,9 @@ export default {
     * fetchSongDetail({payload}, {call, put}) {
       const result = yield call(getSongDetail, payload);
       const song = result.data.songs[0];
+      let musicUrl =  yield call(getMusicUrl, payload);
+      // musicUrl = musicUrl.data.data[0].url;
+      console.log(333,musicUrl)
       let songDetail = {
         id: song.id,
         url: `http://music.163.com/song/media/outer/url?id=${payload}.mp3`,

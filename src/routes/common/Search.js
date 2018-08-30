@@ -10,10 +10,21 @@ const Suggest = ({searchSuggest, dispatch}) => {
       pathname:'/artistDetail/'+id
     }));
   }
+  function toSong(id){
+      dispatch(routerRedux.push({
+        pathname:'/song/'+id
+      }));
+  }
+  function toAlbum(id){
+      dispatch(routerRedux.push({
+        pathname:'/album/'+id
+      }));
+  }
 
   const SongsList = songs && songs.length>0 && songs.map(item=>(
     <div className={styles.item}
-         key={item.id}>
+         key={item.id}
+         onClick={()=>toSong(item.id)}>
       {item.name}-{item.artists[0].name}
     </div>
   ))
@@ -44,7 +55,8 @@ const Suggest = ({searchSuggest, dispatch}) => {
 
   const AlbumsList = albums && albums.length>0 && albums.map(item=>(
     <div className={styles.item}
-         key={item.id}>
+         key={item.id}
+         onClick={()=>toAlbum(item.id)}>
       {item.name}-{item.artist.name}
     </div>
   ));

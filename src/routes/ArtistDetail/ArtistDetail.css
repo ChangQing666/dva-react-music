@@ -99,11 +99,11 @@
 }
 .mvItemContainer{
   width:230px;
-  margin-right:20px;
+  margin-right:10px;
   margin-bottom:30px;
   cursor: pointer;
 }
-.mvItemContainer:nth-child(4n){
+.mvItemContainer:nth-child(5n){
   margin-right:0;
 }
 .mvItemContainer img{
