@@ -5,6 +5,7 @@ import {formatTime} from "../../../utils/tool";
 import Lyric from '../lyric/Lyric';
 import Playlist from '../playlist/Playlist';
 import {routerRedux} from 'dva/router';
+
 class Volume extends React.Component {
   render() {
     return (
@@ -80,8 +81,9 @@ class Player extends React.Component {
   }
 
   handlePlay() {
+    console.log(123)
     if (this.props.player.isPlay) {
-      this.player.play();
+      this.player.oncanplaythrough =  ()=>this.player.play();
     } else {
       this.player.pause();
     }
@@ -119,7 +121,7 @@ class Player extends React.Component {
             lyricActiveNo = index;
           }
         }
-      })
+      });
       this.setState({
         lyricActiveNo,
       });
@@ -149,9 +151,18 @@ class Player extends React.Component {
   }
 
   componentDidUpdate() {
-    this.handlePlay();
+    // this.handlePlay();
   }
-
+  componentWillReceiveProps(nextProps){
+    // console.log(456,nextProps.player.isPlay)
+    // console.log(678,this.player.networkState)
+    // console.log(666,this.player.buffered)
+    // if(this.player.networkState!=1&&nextProps.player.isPlay){
+    //   this.props.dispatch({
+    //     type:'music/pause'
+    //   })
+    // }
+  }
   componentDidMount() {
     const _player = this.player;
     setInterval(() => {
@@ -174,7 +185,7 @@ class Player extends React.Component {
               <i onClick={this.props.onPlay}
                  className={
                    `iconfont
-                ${!this.props.player.isPlay ? 'icon-bofang ' + styles.bofang : 'icon-zanting ' + styles.zanting}`}>
+                    ${!this.props.player.isPlay ? 'icon-bofang ' + styles.bofang : 'icon-zanting ' + styles.zanting}`}>
               </i>
               <i onClick={this.props.onPlayNext}
                  className={`iconfont icon-xiayishou ${styles.xiayishou}`}>
@@ -238,12 +249,12 @@ class Player extends React.Component {
                           toArtistDetail={this.handleToArtistDetail}
                           dispatch={this.props.dispatch}
                 />
-                {<Lyric lyric={this.props.player.lyric} songDetail={this.props.player.songDetail}
-                        lyricActiveNo={this.state.lyricActiveNo}/>}
+                <Lyric lyric={this.props.player.lyric}
+                       songDetail={this.props.player.songDetail}
+                       lyricActiveNo={this.state.lyricActiveNo}/>
               </div>
             </div>
           </>
-
         }
       </>
 
