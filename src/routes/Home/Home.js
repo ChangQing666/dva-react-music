@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
+import {withRouter, routerRedux} from 'dva/router';
 import styles from '../common/index.css';
 import {splitArr} from "../../utils/tool";
+import {Table} from 'antd';
 import {
   title,
   playlistWrapper,
@@ -22,7 +23,31 @@ import {
 } from './Home.less';
 import Slider from "react-slick";
 import RecNewSong from './RecNewSong'
+const dataSource = [{
+  key: '1',
+  name: '胡彦斌',
+  age: 32,
+  address: '西湖区湖底公园1号'
+}, {
+  key: '2',
+  name: '胡彦祖',
+  age: 42,
+  address: '西湖区湖底公园1号'
+}];
 
+const columns = [{
+  title: '姓名',
+  dataIndex: 'name',
+  key: 'name',
+}, {
+  title: '年龄',
+  dataIndex: 'age',
+  key: 'age',
+}, {
+  title: '住址',
+  dataIndex: 'address',
+  key: 'address',
+}];
 
 const RecPlaylist = ({dispatch, recPlaylist}) => {
   function toPlaylist(id) {
@@ -155,7 +180,13 @@ class Home extends React.Component {
       type: 'music/fetchRecNewAlbum'
     });
   }
-
+  componentWillReceiveProps(nextProps){
+    console.log(1,this.props,nextProps)
+    console.log(2,nextProps)
+    // if(this.props.match.params.id!==nextProps.match.params.id){
+    //   this.fetchAlbum(nextProps.match.params.id);
+    // }
+  }
   render() {
     return (
       <>
@@ -175,4 +206,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Home);
+export default withRouter(connect(mapStateToProps)(Home));

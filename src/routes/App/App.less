@@ -1,0 +1,109 @@
+.loaderWrapper{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  background:rgba(0,0,0,.6);
+  z-index:100;
+  .loader{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    span{
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      display:inline-block;
+      position:absolute;
+      left:50%;
+      margin-left:-10px;
+      -webkit-animation:3s infinite linear;
+      -moz-animation:3s infinite linear;
+      -o-animation:3s infinite linear;
+      &:nth-child(1){
+        background:#E84C3D;
+        -webkit-animation:kiri 1.2s infinite linear;
+        -moz-animation:kiri 1.2s infinite linear;
+        -o-animation:kiri 1.2s infinite linear;
+      }
+      &:nth-child(2){
+        background:#F1C40F;
+        z-index:100;
+      }
+      &:nth-child(3){
+        background:#2FCC71;
+        -webkit-animation:kanan 1.2s infinite linear;
+        -moz-animation:kanan 1.2s infinite linear;
+        -o-animation:kanan 1.2s infinite linear;
+      }
+    }
+    @-webkit-keyframes kanan {
+      0% {-webkit-transform:translateX(20px);
+      }
+
+      50%{-webkit-transform:translateX(-20px);
+      }
+
+      100%{-webkit-transform:translateX(20px);
+        z-index:200;
+      }
+    }
+    @-moz-keyframes kanan {
+      0% {-moz-transform:translateX(20px);
+      }
+
+      50%{-moz-transform:translateX(-20px);
+      }
+
+      100%{-moz-transform:translateX(20px);
+        z-index:200;
+      }
+    }
+    @-o-keyframes kanan {
+      0% {-o-transform:translateX(20px);
+      }
+
+      50%{-o-transform:translateX(-20px);
+      }
+
+      100%{-o-transform:translateX(20px);
+        z-index:200;
+      }
+    }
+
+
+
+
+    @-webkit-keyframes kiri {
+      0% {-webkit-transform:translateX(-20px);
+        z-index:200;
+      }
+      50%{-webkit-transform:translateX(20px);
+      }
+      100%{-webkit-transform:translateX(-20px);
+      }
+    }
+
+    @-moz-keyframes kiri {
+      0% {-moz-transform:translateX(-20px);
+        z-index:200;
+      }
+      50%{-moz-transform:translateX(20px);
+      }
+      100%{-moz-transform:translateX(-20px);
+      }
+    }
+    @-o-keyframes kiri {
+      0% {-o-transform:translateX(-20px);
+        z-index:200;
+      }
+      50%{-o-transform:translateX(20px);
+      }
+      100%{-o-transform:translateX(-20px);
+      }
+    }
+
+  }
+}
