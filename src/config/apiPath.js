@@ -1,4 +1,4 @@
-const domain = `https://music-api.jasonlook.com`;
+const domain = `http://cqfee.top:3000`;
 const apiPath = {
   BANNER:          `${domain}/banner`,
   SEARCH:          `${domain}/search`,
