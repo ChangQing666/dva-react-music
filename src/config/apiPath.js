@@ -1,4 +1,4 @@
-const domain = `http://cqfee.top:3000`;
+const domain = `http://api.cqfee.top`;
 const apiPath = {
   BANNER:          `${domain}/banner`,
   SEARCH:          `${domain}/search`,
@@ -20,6 +20,6 @@ const apiPath = {
   ARTISTS:         `${domain}/artists`,         // 歌手单曲 /artists?id=1203045
   TOP_ARTISTS_LIST:`${domain}/toplist/artist`,         // 歌手榜 /artists
   ARTISTS_MV      :`${domain}/artist/mv`,         // 歌手榜 /artists
-  MV_DETAIL      :`${domain}/mv`,         // 歌手榜 /artists
+  MV_DETAIL       :`${domain}/mv`,         // 歌手榜 /artists
 }
 export default apiPath;
