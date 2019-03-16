@@ -1,4 +1,4 @@
-const domain = `http://music.cqfee.top/api`;
+const domain = `https://www.cqfee.top/api`;
 const apiPath = {
   BANNER:          `${domain}/banner`,
   SEARCH:          `${domain}/search`,
