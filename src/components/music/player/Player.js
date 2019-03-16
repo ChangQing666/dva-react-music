@@ -81,9 +81,9 @@ class Player extends React.Component {
   }
 
   handlePlay() {
-    console.log(123)
     if (this.props.player.isPlay) {
-      this.player.oncanplaythrough =  ()=>this.player.play();
+      this.player.play();
+      // this.player.oncanplaythrough =  ()=>this.player.play();
     } else {
       this.player.pause();
     }
@@ -151,7 +151,7 @@ class Player extends React.Component {
   }
 
   componentDidUpdate() {
-    // this.handlePlay();
+    this.handlePlay();
   }
   componentWillReceiveProps(nextProps){
     // console.log(456,nextProps.player.isPlay)
@@ -164,6 +164,7 @@ class Player extends React.Component {
     // }
   }
   componentDidMount() {
+    // this.handlePlay();
     const _player = this.player;
     setInterval(() => {
       this.setState({
