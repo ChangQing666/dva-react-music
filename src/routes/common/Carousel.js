@@ -141,7 +141,7 @@ class Carousel extends React.Component{
     const sliders = slidersData.map((item, index)=>(
       <div key={index}
            className={`${styles.slider} ${setSliderClass(index)}`}
-           style={{backgroundImage:`url(${item.picUrl}`}}>
+           style={{backgroundImage:`url(${item.imageUrl}`, backgroundSize: `100%`}}>
       </div>
     ));
     const dots = slidersData.map((item, index)=>(<i key={index} onClick={()=>this.handleDotClick(index)}></i>));

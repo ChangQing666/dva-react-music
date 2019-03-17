@@ -61,12 +61,12 @@ export function getSongDetail(id){
 }
 // 获取歌曲url
 export function getMusicUrl(id){
-  // return request('json',`${apiPath.MUSIC_URL}?id=${id}&proxy=http://39.104.104.12:9520`,{method:'get'});
-  return `http://music.163.com/song/media/outer/url?id=${id}.mp3`;
+  return request('json',`${apiPath.MUSIC_URL}?id=${id}`,{method:'get'});
+  // return `http://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
-// 歌词
-export function getLyric(id){
-  return request('json',`${apiPath.LYRIC}?id=${id}`,{method:'get'});
+// 检查音乐是否可用
+export function getCheckMusic(id){
+  return request('json',`${apiPath.CHECK_MUSIC}?id=${id}`,{method:'get'});
 }
 // 歌手榜
 export function getTopArtistList(){

@@ -23,6 +23,7 @@ function checkStatus(response) {
 export default function request(reqType, url, options) {
   if(reqType==='jsonp'){
     return fetchJsonp(url, options)
+      .then(checkStatus)
       .then(parseJSON)
       .then(data => ({ data }))
       .catch(err => ({ err }));

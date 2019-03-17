@@ -8,6 +8,7 @@ import {
   getToplist,
   getPlaylistDetail,
   getSongDetail,
+  getCheckMusic,
   getLyric,
   getMusicUrl,
   getTopArtistList,
@@ -216,6 +217,12 @@ export default {
         }
       }
     },
+    canPlay(state, {payload}) {
+      return {
+        ...state,
+        isCanPlay: payload,
+      }
+    },
     playerPlay(state) {
       let player = {...state.player, isPlay: !state.player.isPlay};
       return {
@@ -307,6 +314,7 @@ export default {
     },
     setCurrentSong(state, {payload}) {
       localStorage.setItem('currentSongId', payload);
+
       localStorage.setItem('currentSongUrl', `http://music.163.com/song/media/outer/url?id=${payload}.mp3`);
       return {
         ...state,
@@ -519,10 +527,17 @@ export default {
         payload: result.data.data,
       })
     },
+    * fetchCanPlay({payload}, {call, put}){
+      const result = yield call(getCheckMusic, payload);
+      yield put({
+        type: 'canPlay',
+        payload: result.data.success,
+      })
+    },
     * fetchMusicUrl({payload},{call,put}){
       const result = yield put(getMusicUrl, payload);
       let musicUrl = result.data.data[0].url;
-      console.log(222, musicUrl)
+      console.log('musicUrl:', musicUrl)
     },
     * fetchLyric({payload}, {call, put, select}) {
       let currentSongId = null;
@@ -702,7 +717,7 @@ export default {
     },
     * playAll({payload}, {call, put, takeEvery, select}) {
       // 1.根据歌单id查询歌曲列表
-      // 2.遍历列表根据每个id 添加到播放列表
+      // 2.遍历列表根据每个id 添加到播放列表(添加前需要检查音乐是否可播放)
       // 3.将播放列表第一项id设为当前播放歌曲
       // 4.获取歌曲详情
       // 5.播放
@@ -722,22 +737,31 @@ export default {
         };
         return songItem;
       });
+      yield put({
+        type: 'addAllToPlaylist',
+        payload: tracks,
+      });
       let currentSongId = tracks[0].id;
       yield put({
         type: 'setCurrentSong',
         payload: currentSongId,
       });
       yield put({
-        type: 'addAllToPlaylist',
-        payload: tracks,
-      });
-      yield put({
         type: 'fetchSongDetail',
         payload: currentSongId
       });
-      yield put({
-        type: 'play',
-      });
+      let canPlay = yield call(getCheckMusic, currentSongId);
+      console.log(1, canPlay ? canPlay.data.success : false);
+      let isCanPlay = canPlay ? canPlay.data.success : false;
+      if(isCanPlay) {
+        yield put({
+          type: 'play',
+        });
+      }else {
+        yield put({
+          type: 'fetchPlayerNext',
+        })
+      }
     }
   },
   subscriptions: {
