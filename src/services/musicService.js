@@ -64,9 +64,9 @@ export function getMusicUrl(id){
   return request('json',`${apiPath.MUSIC_URL}?id=${id}`,{method:'get'});
   // return `http://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
-// 检查音乐是否可用
-export function getCheckMusic(id){
-  return request('json',`${apiPath.CHECK_MUSIC}?id=${id}`,{method:'get'});
+// 歌词
+export function getLyric(id){
+  return request('json',`${apiPath.LYRIC}?id=${id}`,{method:'get'});
 }
 // 歌手榜
 export function getTopArtistList(){
